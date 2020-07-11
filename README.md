@@ -1,6 +1,5 @@
 ### Hey buddy 👋, Welcome to my github 
 
-
 One of the hard-days in my life was a farewell to my school and I can never forget a great saying that my teacher had told me, which is a rule to my life. Those words motivated me to increase productivity and added great value to my life, thereafter, it has changed my lifestyle.
   
 - **The little things you do daily, that will make a huge difference over the time.**
@@ -25,6 +24,10 @@ Now I can develop projects on Cosmos/Tendermint, Ethereum, and Hyperledger Fabri
 ### The qualities you can find in me :bowtie:
 - I constantly learn because I never like to settle
 - I focus on making high-quality decisions 
+
+### Hobbies: 
+  - Reading Books 📖 : Finance, Lifestyles
+  - Swimming : 🏊‍♂️
 
 So, the passion to learn new things remains with me. There's certainly yet more to learn, problems to solve and more to build. For this, I am very grateful.
 
