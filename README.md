@@ -1,4 +1,4 @@
-### Hi there 👋
+### Hi there 👋, Welcome to my github 
 
 
 One of the hard-days in my life was a farewell to my school and I can never forget a great saying that my teacher had told me, which is a rule to my life. Those words motivated me to increase productivity and added great value to my life, thereafter, it has changed my lifestyle.
@@ -19,7 +19,7 @@ I began my career as an intern and started learning, developing Decentralized Ap
 Now I can develop projects on Cosmos/Tendermint, Ethereum, and Hyperledger Fabric.
 
 ### Skills: 👨‍💻
-  - Programming Languages: C, Python, Golang, Java, JavaScript
+  - Programming Languages: C, Python, Golang,Rust, Java, JavaScript
   - Designing & Modeling: Adobe Illustrator, After Effects, Maya 
 
 ### The qualities you can find in me :bowtie:
