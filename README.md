@@ -18,11 +18,11 @@ I began my career as an intern and started learning, developing Decentralized Ap
 
 Now I can develop projects on Cosmos/Tendermint, Ethereum, and Hyperledger Fabric.
 
-Skills: 
+### Skills: 👨‍💻
   - Programming Languages: C, Python, Golang, Java, JavaScript
   - Designing & Modeling: Adobe Illustrator, After Effects, Maya 
 
-The qualities you can find in me
+### The qualities you can find in me :bowtie:
 - I constantly learn because I never like to settle
 - I focus on making high-quality decisions 
 
