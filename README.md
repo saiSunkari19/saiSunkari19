@@ -1,4 +1,4 @@
-### Hi buddy 👋, Welcome to my github 
+### Hey buddy 👋, Welcome to my github 
 
 
 One of the hard-days in my life was a farewell to my school and I can never forget a great saying that my teacher had told me, which is a rule to my life. Those words motivated me to increase productivity and added great value to my life, thereafter, it has changed my lifestyle.
