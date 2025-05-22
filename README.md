@@ -35,10 +35,10 @@ Today, I am proficient in developing blockchain solutions across various platfor
 
 ### Languages
 
-* ![Rust](https://raw.githubusercontent.com/devicons/devicon/master/icons/rust/rust-plain.svg) Rust
-* ![Go](https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original.svg) Go
-* ![Python](https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg) Python
-* ![TypeScript](https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg) TypeScript
+* <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-line.svg" width="24"/> Rust  
+* <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original.svg" width="24"/> Go  
+* <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" width="24"/> Python  
+* <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" width="24"/> TypeScript  
 * Move
 
 ### Frameworks & Platforms
