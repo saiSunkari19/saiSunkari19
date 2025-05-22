@@ -1,48 +1,101 @@
-### Hey buddy 👋, Welcome to my github 
+# 👋 Hi, I'm Sai Krishna Sunkari
 
-One of the hard-days in my life was a farewell to my school and I can never forget a great saying that my teacher had told me, which is a rule to my life. Those words motivated me to increase productivity and added great value to my life, thereafter, it has changed my lifestyle.
-  
-- **The little things you do daily, that will make a huge difference over the time.**
-Precisely
-     -   1.01^365^ = 37.8  
-     -   0.99^365^ = 0.03
+🔗  Portfolio | 🐦 [Twitter](https://twitter.com/saisunkari19) | 📫 [Email](mailto:saisunkari19@protonmail.com)
 
-Hi! I'm **Sai Krishna Sunkari** and I am passionately curious.
+---
+### Motto:
 
-My career experience and skills evolved from my childhood hobbies: exploring, understanding how things work around me.  Since I was a high school student, I started writing the code and it became habitual. Starting with the 'Hello World' program to developing the 'Attendance Management System' as the major project and few projects in between.
+> <i>"The little things you do daily make a huge difference over time."</i>
+> **1.01^365 = 37.8**   
+> **0.99^365 = 0.03**  
+> **Uptime**: ∞ (always building)
 
-This passion carried throughout my education and has handed me a job that I love to do.
+I'm a passionate blockchain enginner/architect  experienced in multiple ecosystems including 
 
-I began my career as an intern and started learning, developing Decentralized Applications (dApps) using Ethereum Blockchain. The more I knew about Etheruem, the more I understood its cons, developing the dApps. Over time, I choose Cosmos (app chains) over Ethereum Blockchain to develop the projects.
+- EVM Based chains (Ethereum, Base, Linea, Polygon), 
+- Solana, 
+- Sui, Aptos & Movement, 
+- AppChains  Frame works like Cosmos. 
 
-Now I can develop projects on Cosmos/Tendermint, Ethereum, and Hyperledger Fabric.
+I specialize in decentralized applications (dApps), smart contract development, and cryptographic solutions.
 
-### Skills: 👨‍💻
-  - Programming Languages: C, Python, Golang, Rust, Java, JavaScript
-  - Designing & Modeling: Adobe Illustrator, After Effects, Maya 
+---
 
-### The qualities you can find in me :bowtie:
-- I constantly learn because I never like to settle
-- I focus on making high-quality decisions 
+## 🚀 About Me
 
-### Hobbies: 
-  - Reading Books 📖 : Finance, Lifestyles
-  - Swimming : 🏊‍♂️
+I began coding during high school, starting with simple "Hello World" programs and evolving into complex systems like an Attendance Management System. This early passion shaped my academic journey and professional career, driving my curiosity and expertise in blockchain technologies.
 
-So, the passion to learn new things remains with me. There's certainly yet more to learn, problems to solve and more to build. For this, I am very grateful.
+Starting as an intern developing Ethereum-based dApps, I quickly recognized limitations within Ethereum and expanded my skills into Cosmos (app chains) and other advanced ecosystems.
 
+Today, I am proficient in developing blockchain solutions across various platforms / blockchains and love diving deep into new stacks.
 
-<!--
-**saiSunkari19/saiSunkari19** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+---
 
-Here are some ideas to get you started:
+## 🛠️ Technologies & Tools
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+### Languages
+
+* ![Rust](https://raw.githubusercontent.com/devicons/devicon/master/icons/rust/rust-plain.svg) Rust
+* ![Go](https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original.svg) Go
+* ![Python](https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg) Python
+* ![TypeScript](https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg) TypeScript
+* Move
+
+### Frameworks & Platforms
+
+* Solidity (EVM chains)
+* Cosmwasm (Rust) 
+* Cosmos (Cosmos SDK, Tendermint)
+* Sui (Move)
+* Solana (Anchor, Rust)
+* Node.js
+
+### DevOps & Tools
+
+* Docker, Kubernetes
+* Azure, GCP
+* Git, CI/CD, Grafana, Prometheus
+
+---
+
+## 📊 GitHub Stats
+
+![Sai's GitHub Stats](https://github-readme-stats.vercel.app/api?username=saisunkari19\&show_icons=true\&theme=radical)
+
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs?username=saisunkari19\&layout=compact)
+
+![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=saisunkari19)
+
+---
+
+## 🏆 GitHub Trophies
+
+![GitHub Trophies](https://github-profile-trophy.vercel.app/?username=saisunkari19)
+
+---
+
+## 📈 Contribution Activity
+
+![Contribution Snake](https://github.com/saisunkari19/saisunkari19/blob/output/github-contribution-grid-snake.svg)
+
+---
+
+## 🌟 Qualities & Interests
+
+* Constant learner and explorer 🚀
+* Passionate about high-quality decision-making and effective problem-solving
+
+**Hobbies:**
+
+* 📖 Reading books (Finance, Lifestyle)
+* 🏊‍♂️ Swimming
+
+---
+
+## 📬 Let's Connect
+
+Feel free to reach out for collaborations on **DeFi**, discussions around **Cosmos and EVM**, or simply to network!
+
+* 🌐 Portfolio
+* 🐦 [Twitter](https://twitter.com/saisunkari19)
+* 📧 [Email](mailto:saisunkari19@protonmail.com)
