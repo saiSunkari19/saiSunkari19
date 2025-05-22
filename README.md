@@ -60,9 +60,10 @@ Today, I am proficient in developing blockchain solutions across various platfor
 
 ## 📊 GitHub Stats
 
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs?username=saisunkari19\&layout=compact)
+
 ![Sai's GitHub Stats](https://github-readme-stats.vercel.app/api?username=saisunkari19\&show_icons=true\&theme=radical)
 
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs?username=saisunkari19\&layout=compact)
 
 ![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=saisunkari19)
 
