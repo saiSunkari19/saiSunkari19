@@ -5,7 +5,7 @@
 ---
 ### Motto:
 
-> <i>"The little things you do daily make a huge difference over time."</i>
+> <i>"The little things you do daily make a huge difference over time."</i> </br>
 > **1.01^365 = 37.8**   
 > **0.99^365 = 0.03**  
 > **Uptime**: ∞ (always building)
