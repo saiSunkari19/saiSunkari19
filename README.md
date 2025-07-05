@@ -10,24 +10,25 @@
 > **0.99^365 = 0.03**  
 > **Uptime**: ∞ (always building)
 
-I'm a passionate blockchain enginner/architect  experienced in multiple ecosystems including 
+I'm a passionate Blockchain and AI Engineer/Architect  experienced in multiple ecosystems including 
 
+- AI & Agentic Frameworks
 - EVM Based chains (Ethereum, Base, Linea, Polygon), 
 - Solana, 
 - Sui, Aptos & Movement, 
 - AppChains  Frame works like Cosmos. 
 
-I specialize in decentralized applications (dApps), smart contract development, and cryptographic solutions.
+I specialize in decentralized applications (dApps), smart contract development, and the convergence of AI and Crypto, including autonomous agents and cryptographic solutions.
 
 ---
 
 ## 🚀 About Me
 
-I began coding during high school, starting with simple "Hello World" programs and evolving into complex systems like an Attendance Management System. This early passion shaped my academic journey and professional career, driving my curiosity and expertise in blockchain technologies.
+I began coding during high school, starting with simple "Hello World" programs and evolving into complex systems like an Attendance Management System. This early passion shaped my academic  journey and professional career, driving my curiosity and expertise in blockchain technologies.
 
-Starting as an intern developing Ethereum-based dApps, I quickly recognized limitations within Ethereum and expanded my skills into Cosmos (app chains) and other advanced ecosystems.
+Starting as an intern developing Ethereum-based dApps, I quickly recognised limitations within Ethereum and expanded my skills into Cosmos (app chains) and other advanced ecosystems.
 
-Today, I am proficient in developing blockchain solutions across various platforms / blockchains and love diving deep into new stacks.
+Today, I am proficient in developing blockchain solutions across various platforms. My current focus is on the intersection of **Blockchain and AI**, where I leverage cutting-edge agentic frameworks like LangGraph and CrewAI to build autonomous systems that interact with decentralised protocols. I love diving deep into new stacks that push the boundaries of what's possible.
 
 ---
 
@@ -49,6 +50,11 @@ Today, I am proficient in developing blockchain solutions across various platfor
 * Sui (Move)
 * Solana (Anchor, Rust)
 * Node.js
+
+### AI & Agentic Frameworks
+* Frameworks: Eliza, LangGraph/Langchain, CrewAI
+* Protocols & Architectures: Agent Commerce Protocol, GAME, MCP, A2A Protocol
+* Concepts & Models: Agent-Based Modelling, RAG, Finetuning
 
 ### DevOps & Tools
 
