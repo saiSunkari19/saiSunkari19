@@ -1,0 +1,41 @@
+---
+const stats = [
+  { count: 7, suffix: '+', label: 'years shipping' },
+  { count: 10, suffix: '+', label: 'chains shipped on' },
+  { count: 13, suffix: '+', label: 'products shipped' },
+  { count: 2, suffix: '', label: 'industry awards' },
+];
+---
+<section class="section stats">
+  <div class="wrap stats-grid">
+    {stats.map((s, i) => (
+      <div data-reveal data-delay={i * 80} class="stat">
+        <div class="stat-num" data-count={s.count} data-suffix={s.suffix}>{s.count}{s.suffix}</div>
+        <div class="stat-label">{s.label}</div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .stats { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .stat { padding: 32px 0 32px 32px; border-right: 1px solid var(--line); }
+  .stat:first-child { padding-left: 0; }
+  .stat:last-child { border-right: 0; }
+  .stat-num {
+    font-family: var(--f-serif);
+    font-size: clamp(34px, 5vw, 42px);
+    color: var(--head-2);
+    line-height: 1;
+  }
+  .stat-label { font-size: 12.5px; color: var(--dim); margin-top: 6px; letter-spacing: .5px; }
+
+  @media (max-width: 639px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat { padding: 26px 0 26px 24px; }
+    .stat:nth-child(2n) { border-right: 0; }
+    .stat:nth-child(odd) { padding-left: 0; }
+    .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  }
+</style>

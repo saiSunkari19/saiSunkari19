@@ -1,0 +1,76 @@
+# Sveltia CMS configuration.
+#
+# Local editing (no login): run the site with `npm run dev`, then in a second
+# terminal run `npx @sveltia/cms-server` (or set up the proxy) and open
+# http://localhost:4321/admin — `local_backend: true` lets you edit files on
+# disk directly. For editing on the live site, you log in with GitHub.
+
+backend:
+  name: github
+  repo: saiSunkari19/saisunkari19
+  branch: dev
+
+# Enables the local proxy backend during development (no auth needed).
+local_backend: true
+
+# Uploaded images are written to /public/uploads and referenced as /uploads/…
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: blog
+    label: Blog posts
+    label_singular: Post
+    folder: src/content/blog
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    preview_path: writing/{{slug}}
+    summary: "{{title}} — {{date | date('YYYY-MM-DD')}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: date, label: Date, widget: datetime, picker_utc: false }
+      - {
+          name: excerpt,
+          label: Excerpt,
+          widget: text,
+          required: false,
+          hint: "1–2 sentence summary shown on the Writing list.",
+        }
+      - {
+          name: cover,
+          label: Cover image,
+          widget: image,
+          required: false,
+          hint: "Optional. Shown on the post and (if newest) the featured card.",
+        }
+      - {
+          name: originalSource,
+          label: Originally posted on,
+          widget: select,
+          options:
+            [
+              { label: "X / Twitter", value: "x" },
+              { label: "Medium", value: "medium" },
+              { label: "Nowhere else (original here)", value: "none" },
+            ],
+          default: "x",
+        }
+      - {
+          name: originalUrl,
+          label: Original post URL,
+          widget: string,
+          required: false,
+          hint: "Link to the tweet/article. Shows an 'Originally posted on …' banner.",
+        }
+      - { name: tags, label: Tags, widget: list, required: false }
+      - { name: draft, label: Draft (hidden from site), widget: boolean, default: false }
+      - {
+          name: body,
+          label: Body,
+          widget: markdown,
+          hint: "Paste your article here. Drag images in to upload them.",
+        }

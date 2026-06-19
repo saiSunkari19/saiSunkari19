@@ -1,0 +1,105 @@
+---
+import { Image } from 'astro:assets';
+import type { Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+  delay?: number;
+}
+const { project: p, delay = 0 } = Astro.props;
+
+// Initials for the refined solid treatment (cards with no logo/cover).
+const initials = p.name
+  .replace(/[·.]/g, ' ')
+  .split(/\s+/)
+  .filter(Boolean)
+  .slice(0, 2)
+  .map((w) => w[0])
+  .join('')
+  .toUpperCase();
+---
+<article data-reveal data-cat={p.cat} data-delay={delay} class="card">
+  <div class="media">
+    {p.cover ? (
+      <Image src={p.cover} alt={`${p.name} screenshot`} width={420} height={150}
+             class="media-cover" style={`object-position:${p.coverPos ?? 'center'}`} />
+    ) : p.logo ? (
+      <div class="media-logo"><img src={p.logo} alt={`${p.name} logo`} width="80" height="80" loading="lazy" /></div>
+    ) : (
+      <div class="media-solid" aria-hidden="true">
+        <span class="solid-mark">{initials}</span>
+        <span class="solid-meta">{p.meta}</span>
+      </div>
+    )}
+  </div>
+
+  <div class="body">
+    <div class="row">
+      <span class={`pill pill-${p.cat}`}>{p.cat.toUpperCase()}</span>
+      <span class="row-meta">{p.meta}</span>
+    </div>
+    <div class="name">{p.name}{p.award && <span class="award"> 🏆</span>}</div>
+    <p class="blurb lead">{p.blurb}</p>
+    <div class="foot">
+      {p.link ? (
+        <a href={p.link.href} target="_blank" rel="noopener" class="card-link">{p.link.label}</a>
+      ) : p.caption ? (
+        <span class="caption">{p.caption}</span>
+      ) : null}
+    </div>
+  </div>
+</article>
+
+<style>
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: background .3s, transform .3s, border-color .3s;
+  }
+  .card:hover { background: var(--card-hover); transform: translateY(-3px); border-color: var(--line-2); }
+
+  .media { height: 150px; border-bottom: 1px solid var(--line); }
+  .media-cover { width: 100%; height: 150px; object-fit: cover; display: block; }
+  .media-logo {
+    height: 150px; background: var(--bg-3);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .media-logo img { width: 80px; height: 80px; object-fit: contain; border-radius: 16px; }
+
+  /* refined solid treatment (no gradient) */
+  .media-solid {
+    height: 150px; background: var(--bg-3);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+    position: relative;
+  }
+  .media-solid::after {
+    content: ''; position: absolute; left: 22px; right: 22px; bottom: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line-2), transparent);
+  }
+  .solid-mark {
+    font-family: var(--f-serif); font-weight: 300; font-size: 40px; letter-spacing: 1px;
+    color: var(--gold); opacity: .9;
+  }
+  .solid-meta { font-family: var(--f-mono); font-size: 9px; letter-spacing: 1.5px; color: var(--dim); }
+
+  .body { padding: 22px 22px 20px; display: flex; flex-direction: column; flex: 1; }
+  .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px; }
+  .pill { font-family: var(--f-mono); font-size: 9px; letter-spacing: 1.5px; border-radius: 20px; padding: 3px 9px; }
+  .pill-web3 { color: var(--web3-text); border: 1px solid var(--web3-line); }
+  .pill-web2 { color: var(--web2-text); border: 1px solid var(--web2-line); }
+  .row-meta { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 1px; color: var(--gold); text-align: right; }
+  .name { font-size: 18px; font-weight: 600; color: var(--head-2); margin-bottom: 9px; }
+  .award { color: var(--gold); }
+  .blurb { font-size: 14.5px; line-height: 1.55; color: var(--body-2); margin: 0 0 16px; flex: 1; }
+  .foot { display: flex; gap: 16px; flex-wrap: wrap; }
+  .card-link {
+    font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .5px; color: var(--gold);
+    text-decoration: none; border-bottom: 1px solid #c9a86a44; padding-bottom: 1px; transition: border-color .25s;
+  }
+  .card-link:hover { border-color: var(--gold); }
+  .caption { font-family: var(--f-mono); font-size: 10px; letter-spacing: .5px; color: var(--dim); }
+</style>

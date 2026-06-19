@@ -1,0 +1,133 @@
+---
+import { Image } from 'astro:assets';
+import profile from '../assets/sai-profile.png';
+---
+<section id="top" class="section hero">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div data-reveal class="badge">
+        <span class="dot"><span></span><span class="ping"></span></span>
+        Available for architecture &amp; advisory
+      </div>
+      <div data-reveal data-delay="80" class="kicker">Blockchain Architect · Builder &amp; Advisor</div>
+      <h1 data-reveal data-delay="140" class="hero-h1">
+        I architect decentralized systems — and lead the teams that ship them.
+      </h1>
+      <p data-reveal data-delay="220" class="hero-lead lead">
+        Seven years turning early-stage ideas into production-grade protocols across EVM, Cosmos,
+        Sui, Aptos &amp; Movement. Now an <em>independent blockchain architect</em> — building
+        autonomous AI agents and the protocols they transact on.
+      </p>
+      <div data-reveal data-delay="300" class="hero-cta">
+        <a href="#contact" class="btn btn-gold">Book a call</a>
+        <a href="#approach" class="btn btn-ghost">My approach</a>
+      </div>
+    </div>
+
+    <div data-reveal data-delay="200" class="hero-photo">
+      <div class="photo-frame" aria-hidden="true"></div>
+      <Image src={profile} alt="Sai Krishna Sunkari" width={280} height={340} class="photo" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { z-index: 2; }
+  .glow {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 680px;
+    height: 520px;
+    max-width: 100%;
+    background: radial-gradient(closest-side, #c9a86a33, transparent 70%);
+    filter: blur(20px);
+    animation: glowPulse 9s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: relative;
+    padding-top: 90px;
+    padding-bottom: 70px;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 54px;
+    align-items: center;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 12px;
+    color: var(--green-text);
+    background: var(--green-bg);
+    border: 1px solid var(--green-line);
+    border-radius: 30px;
+    padding: 6px 14px;
+    margin-bottom: 26px;
+  }
+  .dot { position: relative; width: 8px; height: 8px; }
+  .dot span { position: absolute; inset: 0; border-radius: 50%; background: var(--green); }
+  .dot .ping { animation: ping 2.4s ease-out infinite; }
+
+  .kicker {
+    font-family: var(--f-mono);
+    font-size: 11.5px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 22px;
+  }
+  .hero-h1 {
+    font-family: var(--f-serif);
+    font-weight: 300;
+    font-size: clamp(38px, 6.2vw, 60px);
+    line-height: 1.03;
+    letter-spacing: -1.5px;
+    color: var(--head);
+    margin: 0 0 26px;
+  }
+  .hero-lead {
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--lead);
+    margin: 0;
+    max-width: 560px;
+  }
+  .hero-lead em { font-style: italic; color: var(--gold); }
+  .hero-cta { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+
+  .hero-photo { position: relative; }
+  .photo-frame {
+    position: absolute;
+    inset: -1px;
+    border: 1px solid #c9a86a55;
+    border-radius: 4px;
+    transform: translate(12px, 12px);
+  }
+  .photo {
+    position: relative;
+    display: block;
+    width: 280px;
+    height: 340px;
+    object-fit: cover;
+    object-position: 50% 28%;
+    border-radius: 4px;
+    filter: grayscale(.22) contrast(1.02);
+    border: 1px solid var(--line-2);
+  }
+
+  @media (max-width: 860px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding-top: 56px;
+    }
+    .hero-photo { order: -1; }
+    .photo, .photo-frame { width: 240px; }
+    .photo { height: 300px; }
+  }
+</style>

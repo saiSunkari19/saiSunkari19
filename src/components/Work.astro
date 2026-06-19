@@ -1,0 +1,60 @@
+---
+import WorkCard from './WorkCard.astro';
+import { projects, projectStats } from '../data/projects';
+
+const filters = [
+  { key: 'all', label: `All · ${projectStats.total}` },
+  { key: 'web3', label: `Web3 · ${projectStats.web3}` },
+  { key: 'web2', label: `Web2 · ${projectStats.web2}` },
+];
+---
+<section id="work" class="section">
+  <div class="wrap work">
+    <div data-reveal class="eyebrow">Selected work</div>
+    <h2 data-reveal data-delay="80" class="h-section work-h">Systems I've architected, shipped &amp; built.</h2>
+
+    <div data-reveal data-delay="120" class="filters">
+      {filters.map((f) => (
+        <button data-filter={f.key} class="filter">{f.label}</button>
+      ))}
+    </div>
+
+    <div class="grid">
+      {projects.map((p, i) => <WorkCard project={p} delay={(i % 3) * 80} />)}
+    </div>
+
+    <div data-reveal class="contrib">
+      <span class="contrib-label">CODE &amp; CONTRIBUTIONS →</span>
+      <a href="https://github.com/saiSunkari19" target="_blank" rel="noopener" class="contrib-link">@saiSunkari19</a>
+      <a href="https://github.com/AutonomyNetwork" target="_blank" rel="noopener" class="contrib-link">AutonomyNetwork</a>
+      <a href="https://github.com/PrithviDevs" target="_blank" rel="noopener" class="contrib-link">PrithviDevs</a>
+      <a href="/writing" class="contrib-link">Writing →</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .work { padding-top: 80px; padding-bottom: 40px; }
+  .work-h { margin-bottom: 28px; }
+
+  .filters { display: flex; gap: 9px; margin-bottom: 34px; flex-wrap: wrap; align-items: center; }
+  .filter {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    background: transparent; color: var(--nav); border: 1px solid var(--line-2); border-radius: 30px;
+    padding: 8px 18px; cursor: pointer; transition: background .25s, color .25s, border-color .25s;
+  }
+  .filter[aria-pressed='true'] { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+  .contrib {
+    margin-top: 18px; padding: 18px 22px; border: 1px dashed var(--line-2); border-radius: 4px;
+    display: flex; gap: 10px 22px; flex-wrap: wrap; align-items: center;
+  }
+  .contrib-label { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 1.5px; color: var(--dim); }
+  .contrib-link { font-family: var(--f-mono); font-size: 11.5px; color: var(--gold); text-decoration: none; transition: color .3s; }
+  .contrib-link:hover { color: var(--gold-hi); }
+
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+</style>

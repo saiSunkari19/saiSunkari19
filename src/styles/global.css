@@ -1,0 +1,178 @@
+/* ============================================================
+   Design tokens — lifted from the Claude Design handoff
+   (Sai Krishna Sunkari.dc.html). Two text tokens bumped to
+   pass WCAG AA on the #0e0f12 background (see --dim / --muted2).
+   ============================================================ */
+:root {
+  /* backgrounds */
+  --bg: #0e0f12;
+  --bg-2: #0a0b0e;
+  --bg-3: #0c0d10;
+  --card: #121317;
+  --card-hover: #16171c;
+
+  /* lines / borders */
+  --line: #1f2126;
+  --line-2: #2a2c31;
+  --line-faint: #26282d;
+
+  /* text */
+  --head: #f7f4ec;
+  --head-2: #f4f1e8;
+  --text: #e9e6dd;
+  --lead: #b7b1a4;
+  --body: #a8a294;
+  --body-2: #9c968a;
+  --nav: #928c7e;
+  --dim: #8a8475;      /* was #7d786c (~4.4:1, failed) -> AA pass */
+  --faint: #6f6a5e;    /* was #5b574e (~2.6:1, failed) -> AA pass */
+
+  /* accent */
+  --gold: #c9a86a;
+  --gold-hi: #d9bd84;
+  --gold-lo: #8a6f3c;
+
+  /* status / tags */
+  --green: #3fd680;
+  --green-bg: #101e16;
+  --green-line: #1f3a2c;
+  --green-text: #c5d8c9;
+  --web3-text: #7fae8e;
+  --web3-line: #21372a;
+  --web2-text: #8ea4c9;
+  --web2-line: #283246;
+
+  /* typography */
+  --f-sans: 'Inter Tight', system-ui, -apple-system, sans-serif;
+  --f-serif: 'Fraunces', Georgia, serif;
+  --f-read: 'Newsreader', Georgia, serif;
+  --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* layout */
+  --maxw: 1080px;
+  --pad: 40px;
+  --nav-h: 84px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-h);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--f-sans);
+  overflow-x: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--gold); color: var(--bg); }
+
+a { color: inherit; }
+img { max-width: 100%; }
+
+/* ---------- shared layout ---------- */
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+
+.section { position: relative; z-index: 2; }
+
+/* ---------- shared type helpers ---------- */
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 18px;
+}
+
+.h-section {
+  font-family: var(--f-serif);
+  font-weight: 300;
+  font-size: clamp(28px, 5vw, 38px);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  color: var(--head);
+  margin: 0 0 50px;
+}
+
+.lead {
+  font-family: var(--f-read);
+  font-weight: 300;
+}
+
+.tag {
+  font-size: 12.5px;
+  color: #cfc7ba;
+  border: 1px solid var(--line-2);
+  border-radius: 20px;
+  padding: 6px 13px;
+  white-space: nowrap;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 3px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .25s ease, background .25s ease, border-color .25s ease;
+}
+.btn-gold {
+  color: var(--bg);
+  background: var(--gold);
+  padding: 13px 26px;
+  font-weight: 600;
+}
+.btn-gold:hover { background: var(--gold-hi); transform: translateY(-2px); }
+.btn-ghost {
+  color: var(--text);
+  border: 1px solid var(--line-2);
+  padding: 13px 24px;
+}
+.btn-ghost:hover { border-color: var(--gold); }
+
+/* ---------- reveal (JS toggles .is-in) ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1);
+  will-change: opacity, transform;
+}
+[data-reveal].is-in { opacity: 1; transform: none; }
+
+/* ---------- keyframes ---------- */
+@keyframes glowPulse { 0%,100% { opacity:.45; transform:scale(1);} 50% { opacity:.75; transform:scale(1.1);} }
+@keyframes ping { 0% { transform:scale(1); opacity:.6;} 80%,100% { transform:scale(2.6); opacity:0;} }
+
+/* ---------- accessibility: reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; transition: none; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+/* ---------- responsive scale ---------- */
+@media (max-width: 1023px) {
+  :root { --pad: 32px; }
+}
+@media (max-width: 639px) {
+  :root { --pad: 20px; --nav-h: 70px; }
+}

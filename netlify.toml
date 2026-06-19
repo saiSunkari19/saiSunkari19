@@ -1,0 +1,16 @@
+# Netlify build config. In the Netlify UI, set "Branch to deploy" = dev
+# (Site configuration → Build & deploy → Branches), since this project
+# lives on the `dev` branch of the repo.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Friendly path for the CMS admin (optional; /admin/ already works).
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200

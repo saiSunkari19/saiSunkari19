@@ -1,0 +1,66 @@
+---
+import { capabilities, recognition, education } from '../data/capabilities';
+---
+<section id="about" class="section">
+  <div class="wrap about-grid">
+    <!-- capabilities -->
+    <div class="col">
+      <div data-reveal class="eyebrow" style="margin-bottom:24px">Capabilities</div>
+      {capabilities.map((group, i) => (
+        <div data-reveal data-delay={60 + i * 60} class="cap-group">
+          <div class="cap-label">{group.label}</div>
+          <div class="tags">
+            {group.items.map((t) => <span class="tag">{t}</span>)}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <!-- recognition + education -->
+    <div class="col">
+      <div data-reveal class="eyebrow" style="margin-bottom:24px">Recognition</div>
+      {recognition.map((r, i) => (
+        <div data-reveal data-delay={60 + i * 60} class={`award${i === recognition.length - 1 ? ' award-last' : ''}`}>
+          <div class="award-icon">{r.icon}</div>
+          <div>
+            <div class="award-title">{r.title}</div>
+            <div class="award-sub">{r.sub}</div>
+          </div>
+        </div>
+      ))}
+
+      <div data-reveal data-delay="160" class="eyebrow" style="margin-bottom:18px">Education</div>
+      <div data-reveal data-delay="200">
+        <div class="edu-degree">{education.degree}</div>
+        <div class="edu-detail">{education.detail}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    padding-top: 80px; padding-bottom: 40px;
+    display: grid; grid-template-columns: 1fr 1px 1fr; gap: 48px;
+  }
+  .cap-group { margin-bottom: 24px; }
+  .cap-label { font-size: 13px; color: var(--dim); margin-bottom: 10px; letter-spacing: .5px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .divider { background: var(--line); }
+
+  .award { display: flex; gap: 14px; padding-bottom: 20px; border-bottom: 1px solid var(--line); margin-bottom: 20px; }
+  .award-last { padding-bottom: 28px; margin-bottom: 28px; }
+  .award-icon { font-size: 22px; }
+  .award-title { font-size: 16px; font-weight: 600; color: var(--head-2); }
+  .award-sub { font-family: var(--f-read); font-size: 14px; color: var(--body); font-style: italic; }
+
+  .edu-degree { font-size: 16px; font-weight: 600; color: var(--head-2); }
+  .edu-detail { font-family: var(--f-read); font-size: 14px; color: var(--body); font-style: italic; margin-top: 3px; }
+
+  @media (max-width: 860px) {
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .divider { display: none; }
+  }
+</style>
