@@ -7,7 +7,7 @@
 
 backend:
   name: github
-  repo: saiSunkari19/saisunkari19
+  repo: saiSunkari19/saiSunkari19
   branch: dev
 
 # Enables the local proxy backend during development (no auth needed).
