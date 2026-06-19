@@ -68,7 +68,9 @@ const multi = activities.length > 1;
   }
 
   .card {
-    max-width: 560px;
+    /* Square stage, so width drives height — keep it compact. Tweak this
+       one value to taste (e.g. 360 shorter / 460 taller). */
+    max-width: 400px;
     background: var(--card); border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
   }
 
