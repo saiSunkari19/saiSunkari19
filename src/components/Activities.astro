@@ -1,8 +1,17 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { activities, activitiesIntro } from '../data/activities';
 
 const multi = activities.length > 1;
+
+// Pre-generate a tiny blurred backdrop for each photo so the portrait
+// images sit on a soft, on-brand fill instead of flat letterbox bars.
+const slides = await Promise.all(
+  activities.map(async (a) => ({
+    ...a,
+    bg: a.image ? (await getImage({ src: a.image, width: 48 })).src : null,
+  })),
+);
 ---
 <section id="beyond" class="section">
   <div class="wrap beyond">
@@ -16,21 +25,21 @@ const multi = activities.length > 1;
 
     <div data-reveal data-delay="140" class="card" data-carousel>
       <div class="stage">
-        {multi && (
-          <button class="arrow prev" data-prev aria-label="Previous">‹</button>
-        )}
-        {activities.map((a, i) => (
+        {multi && <button class="arrow prev" data-prev aria-label="Previous">‹</button>}
+        {slides.map((a, i) => (
           <div class="slide" data-slide data-active={i === 0 ? '' : null}>
             {a.image ? (
-              <Image src={a.image} alt={a.alt ?? a.title} width={680} height={453} loading={i === 0 ? 'eager' : 'lazy'} />
+              <>
+                <div class="slide-bg" style={`background-image:url(${a.bg})`}></div>
+                <Image class="slide-img" src={a.image} alt={a.alt ?? a.title}
+                       width={820} height={1457} loading={i === 0 ? 'eager' : 'lazy'} />
+              </>
             ) : (
               <div class="ph" aria-hidden="true"><span>{a.title}</span></div>
             )}
           </div>
         ))}
-        {multi && (
-          <button class="arrow next" data-next aria-label="Next">›</button>
-        )}
+        {multi && <button class="arrow next" data-next aria-label="Next">›</button>}
       </div>
 
       <div class="body">
@@ -71,18 +80,32 @@ const multi = activities.length > 1;
   }
 
   .card {
-    max-width: 620px;
+    max-width: 560px;
     background: var(--card); border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
   }
 
-  .stage { position: relative; aspect-ratio: 3 / 2; background: var(--bg-3); }
+  /* Portrait stage so 9:16 phone photos show in full (nothing cropped). */
+  .stage { position: relative; aspect-ratio: 4 / 5; background: var(--bg-3); overflow: hidden; }
   .slide { position: absolute; inset: 0; opacity: 0; transition: opacity .4s ease; pointer-events: none; }
   .slide[data-active] { opacity: 1; pointer-events: auto; }
-  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* Blurred fill behind the contained photo. */
+  .slide-bg {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    filter: blur(28px) brightness(.45) saturate(1.1);
+    transform: scale(1.25);
+  }
+  .slide-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;          /* whole image visible — faces + all rows */
+    object-position: center;
+  }
+
   .ph {
     width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-    background:
-      radial-gradient(120% 120% at 50% 0%, #15161b, var(--bg-3));
+    background: radial-gradient(120% 120% at 50% 0%, #15161b, var(--bg-3));
   }
   .ph span {
     font-family: var(--f-mono); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
@@ -148,8 +171,6 @@ const multi = activities.length > 1;
     root.querySelector('[data-prev]')?.addEventListener('click', () => show(i - 1));
     root.querySelector('[data-next]')?.addEventListener('click', () => show(i + 1));
     dots.forEach((d, k) => d.addEventListener('click', () => show(k)));
-
-    // Keyboard arrows when the carousel has focus within.
     root.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') show(i - 1);
       if (e.key === 'ArrowRight') show(i + 1);
