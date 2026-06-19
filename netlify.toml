@@ -14,3 +14,36 @@
   from = "/admin"
   to = "/admin/index.html"
   status = 200
+
+# Short share slugs -> homepage with UTM tags. Share the clean
+# short link (e.g. saisunkari.netlify.app/gh); the visitor lands on
+# the tagged URL so Umami still attributes the source.
+[[redirects]]
+  from = "/gh"
+  to = "/?utm_source=github&utm_medium=profile&utm_campaign=portfolio"
+  status = 302
+
+[[redirects]]
+  from = "/x"
+  to = "/?utm_source=twitter&utm_medium=social&utm_campaign=portfolio"
+  status = 302
+
+[[redirects]]
+  from = "/li"
+  to = "/?utm_source=linkedin&utm_medium=social&utm_campaign=portfolio"
+  status = 302
+
+[[redirects]]
+  from = "/rd"
+  to = "/?utm_source=reddit&utm_medium=social&utm_campaign=portfolio"
+  status = 302
+
+[[redirects]]
+  from = "/tl"
+  to = "/?utm_source=tarulease&utm_medium=referral&utm_campaign=portfolio"
+  status = 302
+
+[[redirects]]
+  from = "/mk"
+  to = "/?utm_source=myselfkart&utm_medium=referral&utm_campaign=portfolio"
+  status = 302
