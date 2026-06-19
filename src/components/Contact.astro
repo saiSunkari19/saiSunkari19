@@ -1,6 +1,7 @@
 ---
+import { CALENDLY_URL } from '../data/site';
+
 const email = 'saisunkari19@protonmail.com';
-const calendly = 'https://calendly.com/saisunkari';
 const socials = [
   { href: 'https://github.com/saiSunkari19', label: 'GitHub' },
   { href: 'https://linkedin.com/in/saisunkari19', label: 'LinkedIn' },
@@ -18,7 +19,7 @@ const socials = [
       love to hear what you're building.
     </p>
     <div data-reveal data-delay="200" class="contact-cta">
-      <a href={calendly} target="_blank" rel="noopener" class="btn btn-gold">Book a call</a>
+      <a href={CALENDLY_URL} target="_blank" rel="noopener" class="btn btn-gold">Book a call</a>
       <a href={`mailto:${email}`} class="btn btn-ghost">{email}</a>
     </div>
     <div data-reveal data-delay="260" class="contact-socials">

@@ -2,6 +2,8 @@
 // Site navigation. Links use `/#id` so they resolve from any page
 // (home anchors + the Writing page). `data-nav` drives active-state
 // highlighting on the home page (see scripts/portfolio.ts).
+import { CALENDLY_URL } from '../data/site';
+
 const links = [
   { href: '/#work', label: 'Work', id: 'work' },
   { href: '/writing', label: 'Writing', id: 'writing' },
@@ -15,7 +17,7 @@ const links = [
       {links.map((l) => (
         <a href={l.href} data-nav={l.id} class="nav-link">{l.label}</a>
       ))}
-      <a href="/#contact" class="btn btn-gold nav-cta">Book a call</a>
+      <a href={CALENDLY_URL} target="_blank" rel="noopener" class="btn btn-gold nav-cta">Book a call</a>
     </nav>
 
     <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -27,7 +29,7 @@ const links = [
     {links.map((l) => (
       <a href={l.href} class="mobile-link">{l.label}</a>
     ))}
-    <a href="/#contact" class="btn btn-gold mobile-cta">Book a call</a>
+    <a href={CALENDLY_URL} target="_blank" rel="noopener" class="btn btn-gold mobile-cta">Book a call</a>
   </div>
 </header>
 

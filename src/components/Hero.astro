@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import profile from '../assets/sai-profile.png';
+import { CALENDLY_URL } from '../data/site';
 ---
 <section id="top" class="section hero">
   <div class="glow" aria-hidden="true"></div>
@@ -21,7 +22,7 @@ import profile from '../assets/sai-profile.png';
         they transact on, that come next.
       </p>
       <div data-reveal data-delay="300" class="hero-cta">
-        <a href="#contact" class="btn btn-gold">Book a call</a>
+        <a href={CALENDLY_URL} target="_blank" rel="noopener" class="btn btn-gold">Book a call</a>
         <a href="#approach" class="btn btn-ghost">My approach</a>
       </div>
     </div>
