@@ -98,7 +98,7 @@ So I turned a weekend into a side project. The side project became a tool. The t
 
 I needed three things: reliable data, computing power, and a deployment platform that wouldn't bankrupt me.
 
-Here's what I used — all open-source, all free to start.
+Here's what I used, all open-source, all free to start.
 
 ```plain
 
@@ -115,7 +115,7 @@ Here's what I used — all open-source, all free to start.
 
 ```
 
-[MFAPI.in](https://mfapi.in/) — The Unsung Hero
+[MFAPI.in](https://mfapi.in/): The Unsung Hero
 
 [MFAPI.in](https://mfapi.in/) is the backbone of this project. It's an open-source initiative by Anand Chawla that provides:
 
@@ -136,7 +136,7 @@ Before MFAPI, getting mutual fund data meant scraping websites or paying for exp
 It's maintained, reliable, and free. 
 The kind of infrastructure the developer community needs more of. Start the repo. This project deserves more recognition.
 
-**FastAPI + Python — The Engine**
+**FastAPI + Python: The Engine**
 
 The analysis engine crunches 12+ years of NAV data for every fund. Rolling returns. Sharpe ratios. Alpha calculations. COB scores.
 
@@ -151,7 +151,7 @@ Every fund. Every benchmark. Every trading day.
 
 Then we rank them.
 
-**###  Akash Network — Decentralised by Design**
+**###  Akash Network: Decentralised by Design**
 
 ![The logs of deployed Golden Triangle Backend server on Akash](https://pbs.twimg.com/media/HBRTnY5aQAAfsRu?format=jpg&name=medium)
 
@@ -181,7 +181,7 @@ On Akash, my deployment lives as long as I want it to. No one can pull the plug.
 
 **4. Walking the Talk**
 
-I believe in a decentralised future. Using Akash isn't just a technical choice — it's a vote for the world I want to see.
+I believe in a decentralised future. Using Akash isn't just a technical choice. It's a vote for the world I want to see.
 
 Financial tools should be uncensorable. Data should be owned by users, not platforms.
 
@@ -199,7 +199,7 @@ I built this for:
 
 - Builders:  who want to validate their portfolio without paying an advisor
 
-If you've ever looked at your mutual fund statement and thought, "Is this actually good?" — this is for you.
+If you've ever looked at your mutual fund statement and thought, "Is this actually good?", this one is for you.
 
 ## Try It Now
 

@@ -28,7 +28,7 @@ collections:
     extension: md
     format: frontmatter
     preview_path: writing/{{slug}}
-    summary: "{{title}} — {{date | date('YYYY-MM-DD')}}"
+    summary: "{{title}} · {{date | date('YYYY-MM-DD')}}"
     sortable_fields: [date, title]
     fields:
       - { name: title, label: Title, widget: string }

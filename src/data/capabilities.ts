@@ -28,5 +28,5 @@ export const recognition: { icon: string; title: string; sub: string }[] = [
 
 export const education = {
   degree: 'B.Tech, Computer Science & Engineering',
-  detail: 'RGUKT Basar · 2014 — 2018 · CGPA 8.1 / 10',
+  detail: 'RGUKT Basar · 2014 → 2018 · CGPA 8.1 / 10',
 };

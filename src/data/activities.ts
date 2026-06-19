@@ -16,14 +16,14 @@ export interface Activity {
 }
 
 export const activitiesIntro =
-  'The same endurance and consistency, away from the screen — most recently the Cult Distance Challenge 2026.';
+  'The same endurance and consistency I bring to code, just away from the screen. Most recently, the Cult Distance Challenge 2026.';
 
 export const activities: Activity[] = [
   {
     title: 'Finisher Medal',
     badge: 'MEDAL',
     meta: '4K FINISHER',
-    desc: 'Earned the finisher medal & certificate of achievement for completing the Cult Distance Challenge 2026 — Cult Pearl, Hyderabad.',
+    desc: 'I earned the finisher medal and certificate for completing the Cult Distance Challenge 2026 at Cult Pearl, Hyderabad. Few things feel better than that last lap.',
     image: medal,
     alt: 'Receiving the finisher medal and certificate at the Cult Distance Challenge 2026',
   },
@@ -31,7 +31,7 @@ export const activities: Activity[] = [
     title: 'Five mornings, ~10 km',
     badge: 'SCORECARD',
     meta: 'CULT DISTANCE · 2026',
-    desc: 'Five 7–8 AM sessions at Cult Pearl — 96, 94, 95, 95 & 85 laps of the 22 m pool, ~10.1 km logged across the challenge.',
+    desc: 'Five early sessions, 7 to 8 AM at Cult Pearl: 96, 94, 95, 95 and 85 laps of the 22 m pool, about 10.1 km logged across the challenge.',
     image: scorecard,
     alt: 'Cult Distance Challenge 2026 scorecard listing the five swim sessions',
   },

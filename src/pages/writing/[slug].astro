@@ -15,7 +15,7 @@ const fmtDate = (d: Date) =>
   new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 const sourceName = originalSource === 'medium' ? 'Medium' : originalSource === 'x' ? 'X' : '';
 ---
-<Base title={`${title} — Sai Krishna Sunkari`} description={excerpt ?? title} type="article">
+<Base title={`${title} · Sai Krishna Sunkari`} description={excerpt ?? title} type="article">
   <article class="section">
     <div class="wrap post">
       <a href="/writing" class="back">← All writing</a>

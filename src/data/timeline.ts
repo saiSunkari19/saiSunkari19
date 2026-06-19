@@ -8,30 +8,30 @@ export interface Role {
 
 export const roles: Role[] = [
   {
-    period: '2026 — Present · Hyderabad',
+    period: '2026 → now · Hyderabad',
     title: 'Independent Blockchain Architect',
     current: true,
-    body: 'Architecture, advisory and fractional engineering leadership for Web3 and enterprise teams. Currently engaged with Blunova Systems (Apr 2026 —), standing up a Hyperledger Fabric network and its transaction flows. Alongside, autonomous AI-agent systems (LangGraph, CrewAI, Eliza) and A2A / MCP / Agent Commerce Protocol integrations that let agents transact on-chain — across EVM, Cosmos, Sui, Aptos and Movement.',
+    body: "These days I partner with Web3 and enterprise teams as their architect, advisor and fractional engineering lead. Right now I'm with Blunova Systems (since April 2026), standing up a Hyperledger Fabric network and the transaction flows that run on it. Alongside that, I'm building autonomous AI-agent systems (LangGraph, CrewAI, Eliza) and the A2A, MCP and Agent Commerce Protocol integrations that let those agents transact on-chain across EVM, Cosmos, Sui, Aptos and Movement.",
   },
   {
-    period: '2024 — 2026',
+    period: '2024 → 2026',
     title: 'Blockchain Architect · Pexu.ai',
     sub: '(formerly Autonomy)',
-    body: 'Owned end-to-end engineering strategy for an AI-native Web3 platform — technical roadmap, hiring and delivery across smart contracts, backend and AI-agent layers, including autonomous agent systems with on-chain execution.',
+    body: 'I owned the engineering strategy end to end for an AI-native Web3 platform: the technical roadmap, the hiring, and delivery across smart contracts, backend and AI-agent layers, including autonomous agents that execute on-chain.',
   },
   {
-    period: '2020 — 2024',
+    period: '2020 → 2024',
     title: 'Blockchain Engineer · Autonomy',
-    body: 'Built Autonomy Network — a decentralized network for creators and platforms to issue tokens and grow community ownership — shipping core Cosmos SDK modules and CosmWasm contracts. Developed Interchange, a compliance-aware decentralized exchange using Cosmos SDK and IBC.',
+    body: 'I built Autonomy Network, a decentralized network that let creators and platforms issue their own tokens and hand real ownership back to their communities, shipping the core Cosmos SDK modules and CosmWasm contracts myself. I also developed Interchange, a compliance-aware decentralized exchange on Cosmos SDK and IBC.',
   },
   {
-    period: '2019 — 2020 · Hyderabad',
+    period: '2019 → 2020 · Hyderabad',
     title: 'Senior Software Engineer · Cosmic Tech Labs',
-    body: 'Led development of Cosmic Compass (CoCo), a blockchain navigator for the Cosmos ecosystem, and architected Commit Blockchain, an enterprise hub powered by Tendermint Core — including validator tooling and node-operations playbooks. Mentored engineers on Go, Tendermint internals and consensus-layer debugging.',
+    body: 'I led development of Cosmic Compass (CoCo), a blockchain navigator for the Cosmos ecosystem, and architected Commit Blockchain, an enterprise hub on Tendermint Core, with the validator tooling and node-operations playbooks teams needed to run it. Some of my favourite work here was mentoring engineers through Go, Tendermint internals and the hard art of consensus-layer debugging.',
   },
   {
-    period: '2018 — 2019 · Hyderabad',
+    period: '2018 → 2019 · Hyderabad',
     title: 'Software Engineer · Cosmic Tech Labs',
-    body: 'Built Ethereum dApps and smart contracts in Solidity — delivering FreeFlix Media Suite (formerly OmniFlix), a decentralized content-distribution platform. Identified scalability limits in early Ethereum and led the transition to Cosmos SDK and Tendermint. Started here as an engineering intern in mid-2018.',
+    body: 'This is where it all started. I wrote Ethereum dApps and Solidity smart contracts and shipped FreeFlix Media Suite (now OmniFlix), a decentralized content-distribution platform. When I ran into the scalability walls of early Ethereum, I made the case for Cosmos SDK and Tendermint and led the move. I joined here as an engineering intern in mid-2018.',
   },
 ];

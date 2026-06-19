@@ -3,11 +3,8 @@
 // (home anchors + the Writing page). `data-nav` drives active-state
 // highlighting on the home page (see scripts/portfolio.ts).
 const links = [
-  { href: '/#approach', label: 'Approach', id: 'approach' },
-  { href: '/#trajectory', label: 'Trajectory', id: 'trajectory' },
   { href: '/#work', label: 'Work', id: 'work' },
   { href: '/writing', label: 'Writing', id: 'writing' },
-  { href: '/#about', label: 'About', id: 'about' },
 ];
 ---
 <header class="nav">
@@ -33,6 +30,14 @@ const links = [
     <a href="/#contact" class="btn btn-gold mobile-cta">Book a call</a>
   </div>
 </header>
+
+<!-- Mobile-only: fades in once scrolled, jumps back to top. -->
+<button class="to-top" data-to-top aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V5" /><path d="M6 11l6-6 6 6" />
+  </svg>
+</button>
 
 <style>
   .nav {
@@ -107,9 +112,44 @@ const links = [
   }
   .mobile-cta { margin-top: 16px; text-align: center; }
 
+  /* back-to-top FAB — matches the carousel arrows' treatment */
+  .to-top {
+    position: fixed;
+    right: 16px;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    z-index: 39;
+    width: 44px;
+    height: 44px;
+    display: none;                 /* desktop: never shown */
+    align-items: center;
+    justify-content: center;
+    color: var(--head);
+    background: rgba(10, 11, 14, .6);
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 50%;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity .25s, transform .25s, background .25s, border-color .25s;
+  }
+  .to-top svg { width: 20px; height: 20px; }
+  .to-top.is-visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .to-top:active { transform: translateY(0) scale(.94); }
+  @media (hover: hover) {
+    .to-top:hover { background: rgba(10, 11, 14, .85); border-color: var(--gold); color: var(--gold); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .to-top { transition: opacity .2s; transform: none; }
+    .to-top.is-visible { transform: none; }
+  }
+
   @media (max-width: 767px) {
     .nav-links { display: none; }
     .nav-toggle { display: flex; }
     .nav[data-open] .mobile-menu { display: flex; }
+    .to-top { display: flex; }     /* mobile only */
   }
 </style>

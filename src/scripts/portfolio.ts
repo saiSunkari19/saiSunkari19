@@ -6,9 +6,20 @@ const prefersReduced =
 
 function init() {
   setupMobileNav();
+  setupBackToTop();
   setupReveal();
   setupFilter();
   setupScrollDriven();
+}
+
+// ── Back-to-top (mobile) ────────────────────────────────────────
+let toTopBtn: HTMLButtonElement | null = null;
+
+function setupBackToTop() {
+  toTopBtn = document.querySelector<HTMLButtonElement>('[data-to-top]');
+  toTopBtn?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+  });
 }
 
 // ── Mobile nav drawer ───────────────────────────────────────────
@@ -102,6 +113,9 @@ function setupFilter() {
 function setupScrollDriven() {
   onScroll = () => {
     revealPass();
+
+    // back-to-top: reveal once the user is a screen or so down
+    toTopBtn?.classList.toggle('is-visible', window.scrollY > 600);
 
     // timeline progress fill
     const fill = document.getElementById('tl-fill');

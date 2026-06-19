@@ -25,7 +25,7 @@
   --body-2: #9c968a;
   --nav: #928c7e;
   --dim: #8a8475;      /* was #7d786c (~4.4:1, failed) -> AA pass */
-  --faint: #6f6a5e;    /* was #5b574e (~2.6:1, failed) -> AA pass */
+  --faint: #837d6f;    /* #5b574e (2.6:1) & #6f6a5e (3.6:1) failed on small text -> #837d6f ~4.7:1 AA pass */
 
   /* accent */
   --gold: #c9a86a;

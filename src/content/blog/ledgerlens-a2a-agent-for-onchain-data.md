@@ -1,7 +1,7 @@
 ---
 title: "LedgerLens: an A2A-first agent for on-chain data"
 date: 2026-01-22T17:31
-excerpt: "Wrapping Alchemy's MCP server in an Agent-to-Agent interface so other agents and developers get predictable, composable on-chain facts — without stitching APIs together."
+excerpt: "Wrapping Alchemy's MCP server in an Agent-to-Agent interface so other agents and developers get predictable, composable on-chain facts, without stitching APIs together."
 cover: https://pbs.twimg.com/media/G_GraSIW0AAMOEf?format=jpg&name=medium
 originalSource: x
 originalUrl: https://x.com/Saisunkari19/status/2014338731659215058

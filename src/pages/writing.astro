@@ -51,19 +51,19 @@ const readLabel = (it: Item) =>
 const linkAttrs = (it: Item) => (it.internal ? {} : { target: '_blank', rel: 'noopener' });
 ---
 <Base
-  title="Writing — Sai Krishna Sunkari"
-  description="Essays and notes on blockchain architecture, Cosmos SDK, AI agents and the protocols they transact on — by Sai Krishna Sunkari."
+  title="Writing · Sai Krishna Sunkari"
+  description="Essays and notes on blockchain architecture, Cosmos SDK, AI agents and the protocols they transact on, written by Sai Krishna Sunkari."
 >
   <section class="section">
     <div class="wrap writing">
       <div data-reveal class="eyebrow">Writing</div>
       <h1 data-reveal data-delay="80" class="writing-h">Notes on protocols, agents &amp; the systems between them.</h1>
       <p data-reveal data-delay="140" class="writing-lead lead">
-        Long-form pieces — published here, with the originals on X and Medium where they first appeared.
+        Long-form pieces I've published here, with the originals on X and Medium where they first appeared.
       </p>
 
       {all.length === 0 ? (
-        <p class="empty lead">No posts yet — check back soon.</p>
+        <p class="empty lead">No posts yet. Check back soon.</p>
       ) : (
         <>
           {featured && (
