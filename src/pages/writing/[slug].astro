@@ -14,8 +14,24 @@ const { title, date, cover, excerpt, originalSource, originalUrl, tags } = post.
 const fmtDate = (d: Date) =>
   new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 const sourceName = originalSource === 'medium' ? 'Medium' : originalSource === 'x' ? 'X' : '';
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const blogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  datePublished: new Date(date).toISOString(),
+  description: excerpt ?? title,
+  ...(cover ? { image: cover } : {}),
+  author: { '@type': 'Person', name: 'Sai Krishna Sunkari', url: Astro.site?.href },
+  publisher: { '@type': 'Person', name: 'Sai Krishna Sunkari' },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+  url: canonical,
+  ...(tags.length ? { keywords: tags.join(', ') } : {}),
+};
 ---
-<Base title={`${title} · Sai Krishna Sunkari`} description={excerpt ?? title} type="article">
+<Base title={`${title} · Sai Krishna Sunkari`} description={excerpt ?? title} image={cover} type="article">
+  <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} slot="head" />
   <article class="section">
     <div class="wrap post">
       <a href="/writing" class="back">← All writing</a>

@@ -11,7 +11,7 @@ export interface Props {
 
 const {
   title = 'Sai Krishna Sunkari · Blockchain Architect',
-  description = "I'm Sai, a blockchain architect. For seven years I've taken founders' fragile early ideas and turned them into protocols people trust in production, across EVM, Cosmos, Sui, Aptos and Movement. Now I'm building autonomous AI agents and the rails they transact on.",
+  description = 'Sai Krishna Sunkari — independent blockchain architect. Seven years shipping production protocols across EVM, Cosmos, Sui, Aptos & Movement; now building autonomous AI agents.',
   image = '/og-image.png',
   type = 'website',
 } = Astro.props;
@@ -53,6 +53,9 @@ const personSchema = {
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={title} />
   <meta property="og:site_name" content="Sai Krishna Sunkari" />
 
   <!-- Twitter -->
@@ -60,6 +63,7 @@ const personSchema = {
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
+  <meta name="twitter:image:alt" content={title} />
   <meta name="twitter:creator" content="@saisunkari19" />
 
   <!-- Fonts -->
@@ -71,6 +75,9 @@ const personSchema = {
   />
 
   <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+  <!-- Per-page head extras (e.g. BlogPosting schema) -->
+  <slot name="head" />
 </head>
 <body>
   <!-- grain overlay -->

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Sveltia CMS — no reason to index the editor
+Disallow: /admin/
+
+Sitemap: https://saisunkari.netlify.app/sitemap-index.xml

@@ -15,6 +15,13 @@
   to = "/admin/index.html"
   status = 200
 
+# Astro's sitemap integration emits /sitemap-index.xml. Make the
+# conventional /sitemap.xml resolve to it too.
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap-index.xml"
+  status = 301
+
 # Short share slugs -> homepage with UTM tags. Share the clean
 # short link (e.g. saisunkari.netlify.app/gh); the visitor lands on
 # the tagged URL so Umami still attributes the source.
