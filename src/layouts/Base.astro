@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import Nav from '../components/Nav.astro';
 
 export interface Props {
   title?: string;
@@ -39,6 +38,7 @@ const personSchema = {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f6f5f1" />
   <meta name="google-site-verification" content="EA_e3KdZSFCNw_ZaT64WQxWA592sZxSin-EyRAgqftk" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="sitemap" href="/sitemap-index.xml" />
@@ -70,7 +70,7 @@ const personSchema = {
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter+Tight:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap"
     rel="stylesheet"
   />
 
@@ -80,28 +80,7 @@ const personSchema = {
   <slot name="head" />
 </head>
 <body>
-  <!-- grain overlay -->
-  <div class="grain" aria-hidden="true"></div>
-
-  <Nav />
-
-  <main>
-    <slot />
-  </main>
-
-  <script>
-    import '../scripts/portfolio.ts';
-  </script>
-
-  <style>
-    .grain {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      opacity: .035;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    }
-  </style>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <slot />
 </body>
 </html>

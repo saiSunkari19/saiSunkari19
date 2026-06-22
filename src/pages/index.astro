@@ -1,21 +1,421 @@
 ---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import Hero from '../components/Hero.astro';
-import Stats from '../components/Stats.astro';
-import Approach from '../components/Approach.astro';
-import Trajectory from '../components/Trajectory.astro';
-import Work from '../components/Work.astro';
-import About from '../components/About.astro';
-import Activities from '../components/Activities.astro';
-import Contact from '../components/Contact.astro';
+import profile from '../assets/sai-profile.png';
+import { CALENDLY_URL } from '../data/site';
+import { projects, projectStats } from '../data/projects';
+import { roles } from '../data/timeline';
+import { ventures } from '../data/ventures';
+import { capabilities, recognition, education } from '../data/capabilities';
+
+const email = 'saisunkari19@protonmail.com';
+const ext = { target: '_blank', rel: 'noopener' };
+
+// Two proof pillars lead. Featured systems = the strongest three; the rest
+// follow as a compact "more systems" list. (Strategy: proof leads.)
+const featuredNames = ['DegentsAI', 'Autonomy Network', 'FreeFlix · OmniFlix'];
+const featured = featuredNames
+  .map((n) => projects.find((p) => p.name === n))
+  .filter((p): p is (typeof projects)[number] => Boolean(p));
+const more = projects.filter((p) => !featuredNames.includes(p.name));
+
+function splitMeta(meta: string): { tech: string; year: string } {
+  const parts = meta.split('·').map((s) => s.trim());
+  const last = parts[parts.length - 1];
+  if (/^\d{4}$/.test(last)) return { tech: parts.slice(0, -1).join(' · '), year: last };
+  return { tech: meta, year: '' };
+}
+
+// Latest writing for the rail (self-hosted posts, newest first).
+const latest = (await getCollection('blog', ({ data }) => !data.draft))
+  .map((p) => ({ title: p.data.title, href: `/writing/${p.id}`, year: new Date(p.data.date).getFullYear() }))
+  .sort((a, b) => b.year - a.year)
+  .slice(0, 3);
+
+const year = new Date().getFullYear();
 ---
-<Base>
-  <Hero />
-  <Stats />
-  <Approach />
-  <Trajectory />
-  <Work />
-  <About />
-  <Activities />
-  <Contact />
+<Base
+  title="Sai Krishna Sunkari · Blockchain Architect"
+  description="Sai Krishna Sunkari is an independent blockchain architect. Seven years shipping production protocols across EVM, Cosmos, Sui, Aptos & Movement, now building autonomous AI agents."
+>
+  <div class="hwrap">
+    <div class="shell">
+
+      <!-- ============================ CONTENT (LEFT) ============================ -->
+      <main id="main" class="content">
+
+        <!-- 0 · ORIENT -->
+        <header class="orient">
+          <p class="topline"><b>Sai Krishna Sunkari</b> · Blockchain Architect · Builder &amp; Advisor</p>
+          <h1>I architect decentralized systems, and <span class="em">lead the teams that ship them.</span></h1>
+          <p class="valueprop">I take the early, fragile idea you believe in and turn it into a protocol people trust in production, then lead the team that ships it. I've spent seven years doing exactly this across EVM, Cosmos, Sui, Aptos and Movement, and today I'm building the autonomous AI agents, and the rails they run on, that come next.</p>
+          <div class="cred">
+            <span class="cred-stats"><b>{projectStats.total >= 13 ? '7' : '7'}&nbsp;yrs</b><span class="d" aria-hidden="true">·</span><b>10+&nbsp;chains</b><span class="d" aria-hidden="true">·</span><b>{projectStats.total}+&nbsp;systems</b><span class="d" aria-hidden="true">·</span><b>2&nbsp;awards</b></span>
+            <span class="cred-eco">EVM · Cosmos · Sui · Aptos · Movement</span>
+          </div>
+        </header>
+
+        <!-- What I do: the offer, above the proof pillars -->
+        <section id="do" class="offer" aria-labelledby="do-h">
+          <h2 id="do-h" class="offer-h">What I do</h2>
+          <div class="offer-grid">
+            <div class="offer-col">
+              <span class="offer-rule" aria-hidden="true"></span>
+              <h3 class="offer-t">Architecture</h3>
+              <p class="offer-d">I design the cross-chain protocols, DeFi primitives and token economics your product runs on, across EVM, Cosmos SDK app-chains, Sui, Aptos and Movement.</p>
+            </div>
+            <div class="offer-col">
+              <span class="offer-rule" aria-hidden="true"></span>
+              <h3 class="offer-t">Strategy</h3>
+              <p class="offer-d">I help you weigh L1/L2 trade-offs, threat-model early and hold audit-ready standards, so security and decentralization never cost you your speed to market.</p>
+            </div>
+            <div class="offer-col">
+              <span class="offer-rule" aria-hidden="true"></span>
+              <h3 class="offer-t">Leadership</h3>
+              <p class="offer-d">I own roadmap, hiring and delivery from 0→1 through scale, and keep the team steady across smart contracts, backend and AI-agent layers.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- PILLAR ONE · TRAJECTORY -->
+        <section id="trajectory" class="pillar" aria-labelledby="traj-h">
+          <div class="sec-head">
+            <h2 id="traj-h">Trajectory</h2>
+            <span class="count">7 years, one arc</span>
+          </div>
+          <p class="traj-frame">Seven years, one arc, from intern to architect to founder.</p>
+          <div class="traj-list">
+            {roles.map((r) => (
+              <article class="traj-row">
+                <div class="traj-top">
+                  <span class="traj-role">{r.title}{r.sub && <span class="traj-co"> {r.sub}</span>}</span>
+                  <span class="traj-years">{r.period}</span>
+                </div>
+                <p class="traj-desc">{r.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <!-- PILLAR TWO · SELECTED WORK -->
+        <section id="work" class="pillar" aria-labelledby="work-h">
+          <div class="sec-head">
+            <h2 id="work-h">Selected work</h2>
+            <span class="count">{projectStats.total} shipped · {projectStats.web3} web3 · {projectStats.web2} web2</span>
+          </div>
+
+          <div class="feat-list">
+            {featured.map((p) => {
+              const { tech, year: yr } = splitMeta(p.meta);
+              return (
+                <a class="feat" href={p.link?.href ?? '#'} {...(p.link ? ext : {})}>
+                  <div class="feat-top">
+                    <span class="feat-name">{p.name}</span>
+                    <span class="feat-tag">{tech}{yr && ` · ${yr}`}</span>
+                    <span class="feat-arrow" aria-hidden="true">↗</span>
+                  </div>
+                  <p class="feat-blurb">{p.blurb}</p>
+                  {p.award && <span class="feat-outcome"><span class="star" aria-hidden="true">★</span> Award-winning · Game of Zones</span>}
+                </a>
+              );
+            })}
+          </div>
+
+          <div class="more">
+            <p class="more-label">More systems</p>
+            <div class="more-list">
+              {more.map((p) => {
+                const { tech, year: yr } = splitMeta(p.meta);
+                const Tag = p.link ? 'a' : 'div';
+                const linkAttrs = p.link ? { href: p.link.href, ...ext } : {};
+                return (
+                  <Tag class="more-row" {...linkAttrs}>
+                    <span class="more-name">{p.name}<span class="more-tag">{tech}{yr && ` · ${yr}`}</span></span>
+                    <span class="more-desc">{p.blurb}</span>
+                  </Tag>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <!-- LIGHTER · Ventures -->
+        <section id="ventures" class="light" aria-labelledby="vent-h">
+          <div class="sec-head"><h2 id="vent-h">Ventures founded</h2></div>
+          <div class="vent-list">
+            {ventures.map((v) => (
+              <a class="vent-row" href={v.link.href} {...ext}>
+                <span class="vent-name">{v.name}<span class="vent-role">{v.role.toLowerCase()}</span></span>
+                <span class="vent-year">{v.year}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <!-- LIGHTER · Capabilities -->
+        <section id="stack" class="light" aria-labelledby="stack-h">
+          <div class="sec-head"><h2 id="stack-h">Capabilities</h2></div>
+          <dl class="caps">
+            {capabilities.map((g) => (
+              <div class="cap-row">
+                <dt>{g.label}</dt>
+                <dd>{g.items.join('  ·  ')}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        <!-- LIGHTER · Recognition + Education -->
+        <section id="recognition" class="light" aria-labelledby="rec-h">
+          <div class="sec-head"><h2 id="rec-h">Recognition &amp; education</h2></div>
+          <ul class="rec-list">
+            {recognition.map((r) => (
+              <li class="rec-row"><span class="rec-t">{r.title}</span><span class="rec-s">{r.sub}</span></li>
+            ))}
+            <li class="rec-row"><span class="rec-t">{education.degree}</span><span class="rec-s">{education.detail}</span></li>
+          </ul>
+        </section>
+
+        <footer class="colophon">
+          <span>© {year} Sai Krishna Sunkari · Blockchain Architect</span>
+          <span>Hyderabad, India · UTC+5:30</span>
+        </footer>
+
+      </main>
+
+      <!-- ============================ RAIL (RIGHT) ============================ -->
+      <aside class="rail" aria-label="Actions and contact">
+        <div class="rail-grid">
+
+          <div class="rail-id">
+            <Image src={profile} alt="Sai Krishna Sunkari" width={280} height={340} class="rail-photo" loading="eager" />
+            <div class="rail-id-text">
+              <span class="rail-name">Sai Krishna Sunkari</span>
+              <span class="rail-role">Blockchain Architect · Builder &amp; Advisor</span>
+            </div>
+          </div>
+
+          <div class="book-block">
+            <a class="book" href={CALENDLY_URL} {...ext}>Book a call <span class="arr" aria-hidden="true">→</span></a>
+          </div>
+
+          <div class="rail-block">
+            <p class="rail-label">Latest writing</p>
+            <div class="rail-posts">
+              {latest.map((p) => (
+                <a class="rail-post" href={p.href}>
+                  <span class="t">{p.title}</span>
+                  <span class="d">{p.year}</span>
+                </a>
+              ))}
+            </div>
+            <a class="all-writing" href="/writing">All writing →</a>
+          </div>
+
+          <div class="rail-block">
+            <p class="rail-label">Contact</p>
+            <div class="contact-list">
+              <a href={`mailto:${email}`}>{email}</a>
+              <a href="https://github.com/saiSunkari19" {...ext}>GitHub @saiSunkari19</a>
+              <a href="https://twitter.com/saisunkari19" {...ext}>X @saisunkari19</a>
+              <span class="loc">Hyderabad · UTC+5:30</span>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- slim sticky book bar (mobile only) -->
+  <div class="mobile-bar">
+    <a class="book" href={CALENDLY_URL} {...ext}>Book a call <span class="arr" aria-hidden="true">→</span></a>
+  </div>
 </Base>
+
+<style>
+  .hwrap {
+    --rail: 290px;
+    --gut: clamp(1.25rem, 4vw, 3.25rem);
+    --hmaxw: 1180px;
+    --z-sticky: 100; --z-bar: 200;
+    max-width: var(--hmaxw);
+    margin: 0 auto;
+    padding: 0 var(--gut);
+  }
+  .shell { display: grid; grid-template-columns: minmax(0,1fr) var(--rail); align-items: start; }
+  .content {
+    min-width: 0;
+    padding: clamp(2.5rem,5vw,4.5rem) clamp(1.75rem,3.5vw,3.5rem) 1rem 0;
+    border-right: 1px solid var(--hair);
+  }
+  .rail {
+    position: sticky; top: 0; align-self: start; z-index: var(--z-sticky);
+    padding: clamp(2.5rem,5vw,4.5rem) 0 2.5rem clamp(1.75rem,3.5vw,3.25rem);
+  }
+
+  /* ---------- orient ---------- */
+  .topline { font-family: var(--mono); font-size: .8125rem; color: var(--muted); letter-spacing: .02em; margin: 0 0 1.4rem; overflow-wrap: anywhere; }
+  .topline b { color: var(--ink); font-weight: 500; }
+  .orient { margin: 0 0 clamp(2.5rem,4.5vw,3.5rem); }
+  h1 {
+    font-weight: 700; font-size: clamp(1.85rem,1.25rem + 2.7vw,3.05rem);
+    line-height: 1.05; letter-spacing: -.035em; color: var(--ink);
+    margin: 0 0 1rem; text-wrap: balance; max-width: 19ch;
+  }
+  h1 .em { color: var(--accent-ink); }
+  .valueprop { font-size: clamp(1.02rem,1rem + 0.4vw,1.18rem); line-height: 1.5; color: var(--ink-2); margin: 0 0 1.6rem; max-width: 58ch; text-wrap: pretty; }
+  .cred { margin: 0; padding-top: 1.4rem; border-top: 1px solid var(--hair); display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1.2rem; overflow-wrap: anywhere; }
+  .cred-stats { font-family: var(--mono); font-size: clamp(.95rem,.9rem + .25vw,1.08rem); color: var(--ink); }
+  .cred-stats b { font-weight: 600; }
+  .cred-stats .d { color: var(--hair-2); margin: 0 .5em; }
+  .cred-eco { font-family: var(--mono); font-size: .78rem; color: var(--faint); letter-spacing: .02em; }
+
+  /* ---------- What I do (distinct 3-up offer band) ---------- */
+  .offer { margin: clamp(2.5rem,4.5vw,3.5rem) 0 0; padding-bottom: clamp(2rem,4vw,3rem); border-bottom: 1px solid var(--hair); }
+  .offer-h { font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .14em; color: var(--faint); font-weight: 400; margin: 0 0 1.5rem; }
+  .offer-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.9rem; }
+  .offer-rule { display: block; width: 26px; height: 2px; background: var(--ink); margin: 0 0 .85rem; }
+  .offer-t { font-size: 1.05rem; font-weight: 700; letter-spacing: -.02em; color: var(--ink); margin: 0 0 .5rem; }
+  .offer-d { font-size: .95rem; line-height: 1.5; color: var(--ink-2); margin: 0; }
+
+  /* ---------- section heads ---------- */
+  section { scroll-margin-top: 1.5rem; }
+  .sec-head { display: flex; align-items: baseline; gap: .9rem; margin: 0 0 1.4rem; }
+  .sec-head h2 { margin: 0; font-weight: 600; letter-spacing: -.02em; color: var(--ink); line-height: 1; }
+  .sec-head .count { font-family: var(--mono); font-size: .75rem; color: var(--faint); letter-spacing: .02em; margin-left: auto; }
+
+  /* ---------- two pillars ---------- */
+  .pillar { margin-top: clamp(3rem,5vw,4.5rem); }
+  .pillar .sec-head { margin-bottom: .4rem; padding-bottom: 1.15rem; border-bottom: 2px solid var(--ink); }
+  .pillar .sec-head h2 { font-size: clamp(1.5rem,1.2rem + 1.4vw,1.95rem); font-weight: 700; letter-spacing: -.03em; }
+
+  /* trajectory */
+  .traj-frame { font-size: 1.05rem; line-height: 1.55; color: var(--ink-2); margin: 1.35rem 0 .4rem; max-width: 60ch; text-wrap: pretty; }
+  .traj-row { padding: clamp(1.5rem,3vw,2.1rem) 0; border-bottom: 1px solid var(--hair); }
+  .traj-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1rem; margin-bottom: .6rem; }
+  .traj-role { font-size: clamp(1.12rem,1rem + .5vw,1.28rem); font-weight: 700; letter-spacing: -.02em; color: var(--ink); line-height: 1.2; }
+  .traj-role .traj-co { font-size: .9rem; color: var(--muted); font-weight: 400; }
+  .traj-years { margin-left: auto; font-family: var(--mono); font-size: .8rem; color: var(--faint); letter-spacing: .02em; white-space: nowrap; }
+  .traj-desc { font-size: 1rem; line-height: 1.58; color: var(--ink-2); margin: 0; max-width: 66ch; text-wrap: pretty; }
+
+  /* selected work */
+  .feat { display: block; text-decoration: none; padding: clamp(1.6rem,3vw,2.3rem) 0; border-bottom: 1px solid var(--hair); transition: transform .4s cubic-bezier(.16,1,.3,1); }
+  .feat-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: .55rem 1rem; margin-bottom: .7rem; }
+  .feat-name { font-size: clamp(1.28rem,1.1rem + .85vw,1.4rem); font-weight: 700; letter-spacing: -.025em; color: var(--ink); line-height: 1.05; transition: color .2s; }
+  .feat-tag { font-family: var(--mono); font-size: .75rem; color: var(--muted); letter-spacing: .04em; }
+  .feat-arrow { margin-left: auto; font-family: var(--mono); font-size: .9rem; color: var(--hair-2); transition: transform .4s cubic-bezier(.16,1,.3,1), color .2s; }
+  .feat-blurb { font-size: 1.05rem; line-height: 1.55; color: var(--ink-2); margin: 0; max-width: 64ch; text-wrap: pretty; }
+  .feat-outcome { display: inline-flex; align-items: center; gap: .5em; margin-top: .9rem; font-family: var(--mono); font-size: .8125rem; color: var(--accent-ink); font-weight: 500; }
+  @media (hover:hover) {
+    .feat:hover { transform: translateX(8px); }
+    .feat:hover .feat-name { color: var(--accent-ink); }
+    .feat:hover .feat-arrow { color: var(--accent); transform: translate(3px,-3px); }
+  }
+
+  .more { margin-top: clamp(1.8rem,3.5vw,2.5rem); }
+  .more-label { font-family: var(--mono); font-size: .68rem; text-transform: uppercase; letter-spacing: .13em; color: var(--faint); margin: 0 0 .7rem; }
+  .more-list { border-top: 1px solid var(--hair); }
+  .more-row { display: grid; grid-template-columns: minmax(10rem,15rem) 1fr; gap: .4rem 1.4rem; align-items: baseline; padding: .85rem 0; border-bottom: 1px solid var(--hair); text-decoration: none; transition: background-color .2s; }
+  @media (hover:hover) { a.more-row:hover { background: var(--paper-2); } a.more-row:hover .more-name { color: var(--accent-ink); } }
+  .more-name { font-weight: 600; font-size: .975rem; color: var(--ink); letter-spacing: -.01em; transition: color .2s; }
+  .more-tag { display: block; font-family: var(--mono); font-size: .7rem; color: var(--faint); letter-spacing: .03em; margin-top: .15rem; }
+  .more-desc { font-size: .925rem; color: var(--muted); line-height: 1.45; }
+
+  /* ---------- lighter sections ---------- */
+  .light { margin-top: clamp(2.5rem,4.5vw,3.75rem); }
+  .light .sec-head { margin-bottom: 1.1rem; }
+  .light .sec-head h2 { font-size: .95rem; font-weight: 600; color: var(--ink-2); }
+
+  .vent-list { border-top: 1px solid var(--hair); }
+  .vent-row { display: grid; grid-template-columns: 1fr auto; gap: .4rem 1rem; align-items: baseline; padding: .7rem 0; border-bottom: 1px solid var(--hair); font-size: .95rem; text-decoration: none; transition: background-color .2s; }
+  @media (hover:hover) { .vent-row:hover { background: var(--paper-2); } .vent-row:hover .vent-name { color: var(--accent-ink); } }
+  .vent-name { color: var(--ink); font-weight: 600; letter-spacing: -.01em; transition: color .2s; }
+  .vent-role { color: var(--muted); font-weight: 400; margin-left: .5em; font-size: .85rem; }
+  .vent-year { font-family: var(--mono); font-size: .75rem; color: var(--faint); letter-spacing: .02em; }
+
+  .caps { margin: 0; border-top: 1px solid var(--hair); padding-top: 1rem; display: flex; flex-direction: column; gap: .65rem; }
+  .cap-row { display: grid; grid-template-columns: 9rem 1fr; gap: .3rem 1.2rem; align-items: baseline; }
+  .cap-row dt { font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--faint); }
+  .cap-row dd { margin: 0; font-family: var(--mono); font-size: .8125rem; color: var(--ink-2); line-height: 1.7; }
+
+  .rec-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hair); }
+  .rec-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem 1rem; padding: .7rem 0; border-bottom: 1px solid var(--hair); }
+  .rec-t { font-weight: 600; font-size: .95rem; color: var(--ink); }
+  .rec-s { font-family: var(--mono); font-size: .76rem; color: var(--faint); letter-spacing: .01em; }
+
+  .colophon {
+    margin-top: clamp(3rem,6vw,5rem); padding-top: 1.4rem; border-top: 1px solid var(--hair);
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--faint); letter-spacing: .01em;
+  }
+
+  /* ---------- rail ---------- */
+  .rail-id { margin-bottom: 1.6rem; }
+  .rail-photo { display: block; width: 116px; height: 116px; object-fit: cover; object-position: center 18%; border: 1px solid var(--hair-2); border-radius: 50%; margin-bottom: .95rem; }
+  .rail-name { display: block; font-weight: 700; font-size: 1rem; letter-spacing: -.01em; color: var(--ink); line-height: 1.2; }
+  .rail-role { display: block; font-family: var(--mono); font-size: .72rem; color: var(--muted); letter-spacing: .01em; margin-top: .3rem; }
+
+  .book { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; background: var(--accent); color: var(--on-accent); text-decoration: none; font-weight: 600; font-size: .975rem; padding: .85rem 1.1rem; border: none; transition: background-color .2s; }
+  .book:hover { background: var(--accent-ink); }
+  .book .arr { font-family: var(--mono); font-weight: 400; opacity: .85; }
+
+  .rail-block { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--hair); }
+  .rail-label { font-family: var(--mono); font-size: .68rem; text-transform: uppercase; letter-spacing: .13em; color: var(--faint); margin: 0 0 .85rem; }
+  .rail-posts { display: flex; flex-direction: column; gap: .7rem; }
+  .rail-post { text-decoration: none; display: block; }
+  .rail-post .t { display: block; font-size: .82rem; line-height: 1.35; color: var(--ink-2); transition: color .18s; }
+  .rail-post .d { font-family: var(--mono); font-size: .68rem; color: var(--faint); margin-top: .1rem; display: block; }
+  .rail-post:hover .t { color: var(--accent-ink); }
+  .all-writing { display: inline-block; margin-top: .9rem; font-family: var(--mono); font-size: .8rem; color: var(--accent-ink); text-decoration: none; }
+  .all-writing:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .contact-list { display: flex; flex-direction: column; gap: .5rem; font-size: .85rem; }
+  .contact-list a { color: var(--ink-2); text-decoration: none; transition: color .18s; }
+  .contact-list a:hover { color: var(--accent-ink); }
+  .contact-list .loc { font-family: var(--mono); font-size: .72rem; color: var(--faint); letter-spacing: .02em; }
+
+  .mobile-bar { display: none; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px) {
+    .shell { grid-template-columns: 1fr; }
+    .content { border-right: none; padding: 1.25rem 0 5.5rem; order: 2; }
+    .rail { position: static; padding: clamp(1.75rem,5vw,2.5rem) 0 1.75rem; border-bottom: 1px solid var(--hair); order: 1; }
+    .rail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; align-items: start; }
+    .rail .rail-id { grid-column: 1 / -1; display: flex; align-items: center; gap: 1rem; margin-bottom: 0; }
+    .rail .rail-photo { width: 60px; height: 60px; margin-bottom: 0; }
+    .rail .book-block { grid-column: 1 / -1; }
+    .rail-block { margin-top: 0; border-top: none; padding-top: 0; }
+    .offer-grid { gap: 1.5rem; }
+    .mobile-bar {
+      display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: var(--z-bar);
+      background: var(--paper); border-top: 1px solid var(--hair-2);
+      padding: .6rem var(--gut); align-items: center; gap: 1rem;
+    }
+    .mobile-bar .book { flex: 1; justify-content: center; padding: .65rem 1rem; font-size: .9rem; }
+  }
+  @media (max-width: 680px) {
+    .offer-grid { grid-template-columns: 1fr; gap: 1.4rem; }
+  }
+  @media (max-width: 560px) {
+    .rail-grid { grid-template-columns: 1fr; gap: 1.4rem; }
+    .rail-block { padding-top: 1.2rem; border-top: 1px solid var(--hair); }
+    .rail .book-block { padding: 0; }
+    .more-row { grid-template-columns: 1fr; gap: .2rem; }
+    .cap-row { grid-template-columns: 1fr; gap: .15rem; }
+    .feat-arrow { display: none; }
+    .traj-years { margin-left: 0; }
+  }
+  @media (max-width: 380px) {
+    h1 { font-size: 1.75rem; }
+    .cred-stats { font-size: .92rem; }
+    .pillar .sec-head h2 { font-size: 1.4rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .dot::after { display: none; }
+  }
+</style>

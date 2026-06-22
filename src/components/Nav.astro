@@ -1,157 +1,22 @@
 ---
-// Site navigation. Links use `/#id` so they resolve from any page
-// (home anchors + the Writing page). `data-nav` drives active-state
-// highlighting on the home page (see scripts/portfolio.ts).
+// Topline header for the Directory layout: identity on the left, a
+// Writing link + the always-present "Book a call" on the right, a hairline.
 import { CALENDLY_URL } from '../data/site';
 
-const links = [
-  { href: '/#work', label: 'Work', id: 'work' },
-  { href: '/writing', label: 'Writing', id: 'writing' },
-];
+const path = Astro.url.pathname;
+const onWriting = path.startsWith('/writing');
 ---
-<header class="nav">
-  <div class="wrap nav-inner">
-    <a href="/#top" class="brand">Sai Krishna Sunkari</a>
-
-    <nav class="nav-links" aria-label="Primary">
-      {links.map((l) => (
-        <a href={l.href} data-nav={l.id} class="nav-link">{l.label}</a>
-      ))}
-      <a href={CALENDLY_URL} target="_blank" rel="noopener" class="btn btn-gold nav-cta">Book a call</a>
+<header>
+  <div class="topline">
+    <a class="who" href="/" aria-label="Sai Krishna Sunkari — home">
+      <b>Sai Krishna Sunkari</b> — Blockchain Architect · Builder &amp; Advisor
+    </a>
+    <nav aria-label="Primary">
+      <a class="nav-lk" href="/writing" aria-current={onWriting ? 'page' : undefined}>Writing</a>
+      <a class="avail" href={CALENDLY_URL} target="_blank" rel="noopener">
+        <span class="dot" aria-hidden="true"></span>AVAILABLE — <span class="lk">BOOK&nbsp;A&nbsp;CALL</span>
+      </a>
     </nav>
-
-    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-      <span></span><span></span><span></span>
-    </button>
   </div>
-
-  <div class="mobile-menu" id="mobile-menu" hidden>
-    {links.map((l) => (
-      <a href={l.href} class="mobile-link">{l.label}</a>
-    ))}
-    <a href={CALENDLY_URL} target="_blank" rel="noopener" class="btn btn-gold mobile-cta">Book a call</a>
-  </div>
+  <hr class="rule" />
 </header>
-
-<!-- Mobile-only: fades in once scrolled, jumps back to top. -->
-<button class="to-top" data-to-top aria-label="Back to top">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M12 19V5" /><path d="M6 11l6-6 6 6" />
-  </svg>
-</button>
-
-<style>
-  .nav {
-    position: sticky;
-    top: 0;
-    z-index: 40;
-    background: rgba(14, 15, 18, .78);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--line);
-  }
-  .nav-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 16px;
-    padding-bottom: 16px;
-  }
-  .brand {
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: .2px;
-    color: var(--head-2);
-    text-decoration: none;
-  }
-  .nav-links { display: flex; gap: 30px; align-items: center; }
-  .nav-link {
-    font-size: 13px;
-    color: var(--nav);
-    text-decoration: none;
-    letter-spacing: .3px;
-    transition: color .3s;
-  }
-  .nav-link:hover { color: var(--gold); }
-  .nav-cta { padding: 8px 16px; font-size: 13px; }
-
-  /* hamburger */
-  .nav-toggle {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: 0;
-    padding: 8px;
-    cursor: pointer;
-  }
-  .nav-toggle span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: var(--head-2);
-    transition: transform .3s, opacity .3s;
-  }
-  .nav[data-open] .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .nav[data-open] .nav-toggle span:nth-child(2) { opacity: 0; }
-  .nav[data-open] .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  .mobile-menu {
-    display: none;
-    flex-direction: column;
-    gap: 4px;
-    padding: 12px var(--pad) 24px;
-    border-top: 1px solid var(--line);
-    background: rgba(14, 15, 18, .96);
-  }
-  .mobile-link {
-    font-size: 16px;
-    color: var(--text);
-    text-decoration: none;
-    padding: 14px 2px;
-    border-bottom: 1px solid var(--line);
-  }
-  .mobile-cta { margin-top: 16px; text-align: center; }
-
-  /* back-to-top FAB — matches the carousel arrows' treatment */
-  .to-top {
-    position: fixed;
-    right: 16px;
-    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-    z-index: 39;
-    width: 44px;
-    height: 44px;
-    display: none;                 /* desktop: never shown */
-    align-items: center;
-    justify-content: center;
-    color: var(--head);
-    background: rgba(10, 11, 14, .6);
-    border: 1px solid rgba(255, 255, 255, .12);
-    border-radius: 50%;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(8px);
-    pointer-events: none;
-    transition: opacity .25s, transform .25s, background .25s, border-color .25s;
-  }
-  .to-top svg { width: 20px; height: 20px; }
-  .to-top.is-visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
-  .to-top:active { transform: translateY(0) scale(.94); }
-  @media (hover: hover) {
-    .to-top:hover { background: rgba(10, 11, 14, .85); border-color: var(--gold); color: var(--gold); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .to-top { transition: opacity .2s; transform: none; }
-    .to-top.is-visible { transform: none; }
-  }
-
-  @media (max-width: 767px) {
-    .nav-links { display: none; }
-    .nav-toggle { display: flex; }
-    .nav[data-open] .mobile-menu { display: flex; }
-    .to-top { display: flex; }     /* mobile only */
-  }
-</style>
