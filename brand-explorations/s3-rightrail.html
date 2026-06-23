@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sai Krishna Sunkari — Blockchain Architect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #f6f5f1;
+    --paper-2: #efeee9;
+    --ink: #111110;
+    --ink-2: #2a2a26;
+    --muted: #565651;
+    --faint: #6f6f69;
+    --hair: #d6d5cf;
+    --hair-2: #c4c3bc;
+    --accent: #1f3aff;
+    --accent-ink: #1730d8;
+
+    --sans: "Hanken Grotesk", system-ui, sans-serif;
+    --mono: "Spline Sans Mono", ui-monospace, monospace;
+
+    --rail-w: 290px;
+    --maxw: 1140px;
+
+    --z-base: 1;
+    --z-rail: 10;
+    --z-topbar: 50;
+    --z-focus: 100;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink-2);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  a:hover { color: var(--accent-ink); }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection { background: rgba(31,58,255,0.14); }
+
+  /* ---------- Slim sticky top bar (mobile only) ---------- */
+  .topbar {
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: var(--z-topbar);
+    background: rgba(246,245,241,0.92);
+    -webkit-backdrop-filter: saturate(1.1);
+    border-bottom: 1px solid var(--hair);
+    padding: 10px 18px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .topbar .tb-name {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .topbar .btn-mini {
+    padding: 7px 14px;
+    font-size: 13px;
+  }
+
+  /* ---------- Shell / grid ---------- */
+  .shell {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 1px var(--rail-w);
+    column-gap: 48px;
+    align-items: start;
+  }
+
+  .divider {
+    align-self: stretch;
+    width: 1px;
+    background: var(--hair);
+  }
+
+  /* ---------- Content column ---------- */
+  .content {
+    max-width: 70ch;
+    padding: 76px 0 64px;
+  }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    font-weight: 500;
+    margin: 0 0 28px;
+  }
+  .kicker .nm { color: var(--ink); }
+  .kicker .sep { color: var(--hair-2); margin: 0 7px; }
+
+  h1 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: clamp(30px, 5.2vw, 46px);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0 0 22px;
+  }
+
+  .lead {
+    font-size: 17px;
+    line-height: 1.62;
+    color: var(--ink-2);
+    margin: 0 0 8px;
+    max-width: 64ch;
+  }
+
+  section { padding-top: 56px; }
+  section:first-of-type { padding-top: 0; }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin: 0 0 26px;
+  }
+  .sec-head h2 {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+    white-space: nowrap;
+  }
+  .sec-head .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--hair);
+  }
+
+  /* What I do */
+  .dolist { display: grid; gap: 0; }
+  .do-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 20px;
+    padding: 18px 0;
+    border-top: 1px solid var(--hair);
+  }
+  .do-item:first-child { border-top: 0; padding-top: 0; }
+  .do-item .lbl {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 15.5px;
+  }
+  .do-item p { margin: 0; color: var(--ink-2); font-size: 15.5px; line-height: 1.58; }
+
+  /* Selected systems */
+  .systems {
+    display: grid;
+    gap: 0;
+  }
+  .sys {
+    padding: 20px 0;
+    border-top: 1px solid var(--hair);
+  }
+  .sys:first-child { border-top: 0; padding-top: 0; }
+  .sys-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 7px;
+  }
+  .sys-name {
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .sys-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--faint);
+    white-space: nowrap;
+    text-align: right;
+  }
+  .sys p { margin: 0; color: var(--ink-2); font-size: 15.5px; line-height: 1.56; }
+
+  /* Writing (in content) */
+  .posts { display: grid; gap: 0; }
+  .post {
+    display: block;
+    padding: 18px 0;
+    border-top: 1px solid var(--hair);
+    color: inherit;
+  }
+  .post:first-child { border-top: 0; padding-top: 0; }
+  .post:hover { color: inherit; }
+  .post-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .post-title {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 16.5px;
+    letter-spacing: -0.01em;
+    transition: color 120ms ease;
+  }
+  .post:hover .post-title { color: var(--accent-ink); }
+  .post-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+  .post-desc { margin: 5px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+  .all-writing {
+    margin-top: 22px;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* Trajectory */
+  .traj { display: grid; gap: 0; }
+  .traj-item {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 20px;
+    padding: 16px 0;
+    border-top: 1px solid var(--hair);
+  }
+  .traj-item:first-child { border-top: 0; padding-top: 0; }
+  .traj-when {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .traj-what .role { font-weight: 600; color: var(--ink); font-size: 15.5px; display: block; margin-bottom: 2px; }
+  .traj-what p { margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.55; }
+
+  /* Contact anchor in content (light) */
+  #contact .contact-line {
+    font-size: 15.5px;
+    color: var(--ink-2);
+  }
+  #contact .contact-line a { font-weight: 500; }
+
+  /* ---------- Right rail ---------- */
+  .rail-wrap { position: relative; }
+  .rail {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-rail);
+    padding: 76px 0 40px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1;
+    padding: 14px 18px;
+    border-radius: 7px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+    transition: background 130ms ease, border-color 130ms ease;
+    width: 100%;
+    text-align: center;
+  }
+  .btn:hover { background: var(--accent-ink); border-color: var(--accent-ink); color: #fff; }
+  .btn .arr { font-family: var(--mono); font-weight: 500; }
+
+  .status {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin-top: 16px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--hair);
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 6px;
+    flex: none;
+    position: relative;
+  }
+  .dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    opacity: 0.35;
+    animation: ping 2.4s ease-out infinite;
+  }
+  @keyframes ping {
+    0% { transform: scale(0.6); opacity: 0.5; }
+    70%, 100% { transform: scale(1.6); opacity: 0; }
+  }
+  .status .st-txt {
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+  .status .st-txt strong { color: var(--ink); font-weight: 600; }
+
+  .rail-block { padding: 22px 0; border-bottom: 1px solid var(--hair); }
+  .rail-block:last-child { border-bottom: 0; }
+  .rail-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 14px;
+    font-weight: 500;
+  }
+
+  /* On this page nav */
+  .onpage { display: grid; gap: 2px; }
+  .onpage a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--muted);
+    padding: 4px 0;
+    transition: color 120ms ease;
+  }
+  .onpage a:hover { color: var(--ink); }
+  .onpage a .idx {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--hair-2);
+    width: 14px;
+  }
+  .onpage a.active { color: var(--ink); font-weight: 500; }
+  .onpage a.active .idx { color: var(--accent); }
+
+  /* Latest writing in rail */
+  .latest { display: grid; gap: 14px; }
+  .latest a { display: block; color: inherit; }
+  .latest a:hover { color: inherit; }
+  .latest .lt-title {
+    font-size: 13.8px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    font-weight: 500;
+    transition: color 120ms ease;
+  }
+  .latest a:hover .lt-title { color: var(--accent-ink); }
+  .latest .lt-date {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--faint);
+    margin-top: 3px;
+  }
+
+  /* Contact in rail */
+  .contact { display: grid; gap: 9px; }
+  .contact .row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 8px;
+    font-size: 13.5px;
+    align-items: baseline;
+  }
+  .contact .ck {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .contact .cv { color: var(--ink-2); word-break: break-word; }
+  .contact .cv a { font-weight: 500; }
+
+  /* ---------- Footer ---------- */
+  .foot {
+    border-top: 1px solid var(--hair);
+    margin-top: 24px;
+  }
+  .foot .shell {
+    padding-top: 22px;
+    padding-bottom: 36px;
+  }
+  .foot-note {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.03em;
+    color: var(--faint);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .topbar { display: flex; }
+
+    .shell { padding: 0 22px; }
+
+    .layout {
+      grid-template-columns: 1fr;
+      column-gap: 0;
+    }
+    .divider { display: none; }
+
+    /* rail moves to top as a compact block */
+    .rail-wrap { order: -1; }
+    .rail {
+      position: static;
+      padding: 26px 0 26px;
+      border-bottom: 1px solid var(--hair);
+    }
+    /* hide the on-this-page nav on mobile (top bar handles Book a call) */
+    .rail .onpage-block { display: none; }
+    /* keep contact only at bottom of content to avoid duplication? keep in rail too — but trim */
+    .rail .contact-block { display: none; }
+
+    .content { padding: 32px 0 56px; max-width: none; }
+
+    h1 { font-size: clamp(28px, 7.5vw, 40px); }
+  }
+
+  @media (max-width: 460px) {
+    .shell { padding: 0 18px; }
+    .do-item { grid-template-columns: 1fr; gap: 5px; }
+    .traj-item { grid-template-columns: 1fr; gap: 4px; }
+    .sys-top { flex-direction: column; gap: 3px; }
+    .sys-meta { text-align: left; }
+    .post-top { flex-direction: column; gap: 2px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    .dot::after { display: none; }
+  }
+
+  html { scroll-behavior: smooth; }
+  [id] { scroll-margin-top: 80px; }
+</style>
+</head>
+<body>
+
+  <!-- Mobile slim sticky top bar -->
+  <div class="topbar">
+    <span class="tb-name">Sai Krishna Sunkari</span>
+    <a class="btn btn-mini" href="#" style="width:auto;">Book a call</a>
+  </div>
+
+  <div class="shell">
+    <div class="layout">
+
+      <!-- ============ CONTENT (left, reads first) ============ -->
+      <main class="content">
+
+        <p class="kicker">
+          <span class="nm">Sai Krishna Sunkari</span>
+          <span class="sep">/</span>Blockchain Architect
+          <span class="sep">·</span>Builder &amp; Advisor
+        </p>
+
+        <h1>I architect decentralized systems, and lead the teams that ship them.</h1>
+
+        <p class="lead">For seven years I've taken founders' early, fragile ideas and turned them into protocols people trust in production — across EVM, Cosmos, Sui, Aptos &amp; Movement. Today I build the autonomous AI agents, and the rails they transact on, that come next.</p>
+
+        <!-- What I do -->
+        <section id="what" aria-labelledby="h-what">
+          <div class="sec-head">
+            <h2 id="h-what">What I do</h2>
+            <span class="rule"></span>
+          </div>
+          <div class="dolist">
+            <div class="do-item">
+              <span class="lbl">Architecture</span>
+              <p>I design the cross-chain protocols, DeFi primitives and token economics your product runs on, across EVM, Cosmos SDK app-chains, Sui, Aptos and Movement.</p>
+            </div>
+            <div class="do-item">
+              <span class="lbl">Strategy</span>
+              <p>I help you weigh L1/L2 trade-offs, threat-model early and hold audit-ready standards, so security and decentralization never cost you your speed to market.</p>
+            </div>
+            <div class="do-item">
+              <span class="lbl">Leadership</span>
+              <p>I own roadmap, hiring and delivery from 0→1 through scale, and keep the team steady across smart contracts, backend and AI-agent layers.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Selected systems -->
+        <section id="systems" aria-labelledby="h-systems">
+          <div class="sec-head">
+            <h2 id="h-systems">Selected systems</h2>
+            <span class="rule"></span>
+          </div>
+          <div class="systems">
+            <article class="sys">
+              <div class="sys-top">
+                <span class="sys-name">DegentsAI</span>
+                <span class="sys-meta">AI AGENTS · 2024</span>
+              </div>
+              <p>The multi-rail distribution engine and economic layer behind the agent economy on Linea.</p>
+            </article>
+            <article class="sys">
+              <div class="sys-top">
+                <span class="sys-name">Autonomy Network</span>
+                <span class="sys-meta">COSMOS SDK · 2020</span>
+              </div>
+              <p>Decentralized creator-economy network with token-issuance modules and community governance.</p>
+            </article>
+            <article class="sys">
+              <div class="sys-top">
+                <span class="sys-name">FreeFlix · OmniFlix</span>
+                <span class="sys-meta">SOLIDITY→COSMOS · 2018</span>
+              </div>
+              <p>Decentralized content-distribution platform — Best Custom Zone, Game of Zones 2021.</p>
+            </article>
+            <article class="sys">
+              <div class="sys-top">
+                <span class="sys-name">Interchange DEX</span>
+                <span class="sys-meta">COSMOS · IBC · 2021</span>
+              </div>
+              <p>A compliance-aware decentralized exchange for digital assets.</p>
+            </article>
+            <article class="sys">
+              <div class="sys-top">
+                <span class="sys-name">Golden Triangle MF</span>
+                <span class="sys-meta">FINTECH · 2025</span>
+              </div>
+              <p>Mutual-fund analytics that give everyday investors real screening and portfolio insight.</p>
+            </article>
+            <article class="sys">
+              <div class="sys-top">
+                <span class="sys-name">LedgerLens</span>
+                <span class="sys-meta">A2A AGENT · 2025</span>
+              </div>
+              <p>An agent-to-agent interface for on-chain data.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- Writing -->
+        <section id="writing" aria-labelledby="h-writing">
+          <div class="sec-head">
+            <h2 id="h-writing">Writing</h2>
+            <span class="rule"></span>
+          </div>
+          <div class="posts">
+            <a class="post" href="#">
+              <div class="post-top">
+                <span class="post-title">LedgerLens: an A2A agent for on-chain data</span>
+                <span class="post-date">2025</span>
+              </div>
+              <p class="post-desc">How agents query and trust on-chain data through an A2A interface.</p>
+            </a>
+            <a class="post" href="#">
+              <div class="post-top">
+                <span class="post-title">What I built in a weekend: a free mutual-fund analyser on Akash</span>
+                <span class="post-date">2025</span>
+              </div>
+              <p class="post-desc">Shipping a real fintech tool on decentralized compute in 48 hours.</p>
+            </a>
+            <a class="post" href="#">
+              <div class="post-top">
+                <span class="post-title">Notes on Cosmos app-chains &amp; the agent economy</span>
+                <span class="post-date">2024</span>
+              </div>
+            </a>
+          </div>
+          <p class="all-writing"><a href="#">All writing →</a></p>
+        </section>
+
+        <!-- Trajectory -->
+        <section id="trajectory" aria-labelledby="h-traj">
+          <div class="sec-head">
+            <h2 id="h-traj">Trajectory</h2>
+            <span class="rule"></span>
+          </div>
+          <div class="traj">
+            <div class="traj-item">
+              <span class="traj-when">2026 →</span>
+              <div class="traj-what">
+                <span class="role">Independent Blockchain Architect</span>
+                <p>Advising founders and teams on protocol design, agent rails and audit-ready delivery.</p>
+              </div>
+            </div>
+            <div class="traj-item">
+              <span class="traj-when">2024–26</span>
+              <div class="traj-what">
+                <span class="role">Pexu.ai (formerly Autonomy)</span>
+                <p>Built the economic layer and multi-rail distribution behind an on-chain agent economy.</p>
+              </div>
+            </div>
+            <div class="traj-item">
+              <span class="traj-when">2020–24</span>
+              <div class="traj-what">
+                <span class="role">Autonomy</span>
+                <p>Led a Cosmos SDK app-chain for the creator economy, from token modules to governance.</p>
+              </div>
+            </div>
+            <div class="traj-item">
+              <span class="traj-when">2018–20</span>
+              <div class="traj-what">
+                <span class="role">Cosmic Tech Labs</span>
+                <p>Shipped decentralized content distribution and early protocol work across EVM and Cosmos.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact anchor -->
+        <section id="contact" aria-labelledby="h-contact">
+          <div class="sec-head">
+            <h2 id="h-contact">Contact</h2>
+            <span class="rule"></span>
+          </div>
+          <p class="contact-line">Email <a href="mailto:saisunkari19@protonmail.com">saisunkari19@protonmail.com</a> · GitHub <a href="https://github.com/saiSunkari19">@saiSunkari19</a> · Hyderabad · UTC+5:30. Available for architecture &amp; advisory — <a href="#">book a call</a>.</p>
+        </section>
+
+      </main>
+
+      <!-- ============ full-height hairline ============ -->
+      <div class="divider" aria-hidden="true"></div>
+
+      <!-- ============ RIGHT RAIL (sticky actions + wayfinding + writing) ============ -->
+      <div class="rail-wrap">
+        <aside class="rail" aria-label="Actions and wayfinding">
+
+          <a class="btn" href="#">Book a call <span class="arr">→</span></a>
+
+          <div class="status">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="st-txt"><strong>Available</strong> for architecture &amp; advisory.</span>
+          </div>
+
+          <div class="rail-block onpage-block">
+            <p class="rail-label">On this page</p>
+            <nav class="onpage" aria-label="On this page">
+              <a href="#what"><span class="idx">01</span> What I do</a>
+              <a href="#systems"><span class="idx">02</span> Systems</a>
+              <a href="#writing"><span class="idx">03</span> Writing</a>
+              <a href="#trajectory"><span class="idx">04</span> Trajectory</a>
+              <a href="#contact"><span class="idx">05</span> Contact</a>
+            </nav>
+          </div>
+
+          <div class="rail-block">
+            <p class="rail-label">Latest writing</p>
+            <div class="latest">
+              <a href="#">
+                <div class="lt-title">LedgerLens: an A2A agent for on-chain data</div>
+                <div class="lt-date">2025</div>
+              </a>
+              <a href="#">
+                <div class="lt-title">A free mutual-fund analyser on Akash</div>
+                <div class="lt-date">2025</div>
+              </a>
+              <a href="#">
+                <div class="lt-title">Notes on Cosmos app-chains &amp; the agent economy</div>
+                <div class="lt-date">2024</div>
+              </a>
+            </div>
+          </div>
+
+          <div class="rail-block contact-block">
+            <p class="rail-label">Contact</p>
+            <div class="contact">
+              <div class="row">
+                <span class="ck">Email</span>
+                <span class="cv"><a href="mailto:saisunkari19@protonmail.com">saisunkari19@protonmail.com</a></span>
+              </div>
+              <div class="row">
+                <span class="ck">GitHub</span>
+                <span class="cv"><a href="https://github.com/saiSunkari19">@saiSunkari19</a></span>
+              </div>
+              <div class="row">
+                <span class="ck">Where</span>
+                <span class="cv">Hyderabad · UTC+5:30</span>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="foot">
+    <div class="shell">
+      <p class="foot-note">Layout exploration · S3 Right rail · not the live site</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-spy for "On this page" — purely additive, no layout dependency.
+    (function () {
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var links = Array.prototype.slice.call(document.querySelectorAll(".onpage a"));
+      var map = {};
+      links.forEach(function (a) {
+        var id = a.getAttribute("href").slice(1);
+        var el = document.getElementById(id);
+        if (el) map[id] = a;
+      });
+      if (!("IntersectionObserver" in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            links.forEach(function (l) { l.classList.remove("active"); });
+            var a = map[e.target.id];
+            if (a) a.classList.add("active");
+          }
+        });
+      }, { rootMargin: "-30% 0px -60% 0px", threshold: 0 });
+      Object.keys(map).forEach(function (id) {
+        io.observe(document.getElementById(id));
+      });
+    })();
+  </script>
+</body>
+</html>

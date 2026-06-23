@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sai Krishna Sunkari — Blockchain Architect (L3 Sectioned)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#f6f5f1; --paper-2:#efeee9;
+    --ink:#111110; --ink-2:#2a2a26; --muted:#565651; --faint:#6f6f69;
+    --hair:#d6d5cf; --hair-2:#c4c3bc;
+    --accent:#1f3aff; --accent-ink:#1730d8;
+    --maxw:900px;
+    --sans:"Hanken Grotesk", system-ui, sans-serif;
+    --mono:"Spline Sans Mono", ui-monospace, monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink-2);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.6;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  a{color:inherit;}
+
+  /* mono utility */
+  .mono{
+    font-family:var(--mono);
+    font-weight:400;
+    letter-spacing:.01em;
+  }
+
+  /* ---------- topline header ---------- */
+  .topline{
+    border-bottom:1px solid var(--hair);
+  }
+  .topline .wrap{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    padding-top:20px;
+    padding-bottom:20px;
+    flex-wrap:wrap;
+  }
+  .topline .name{
+    font-weight:700;
+    font-size:15px;
+    color:var(--ink);
+    letter-spacing:-.01em;
+  }
+  .topline .role{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--muted);
+  }
+
+  /* ---------- section scaffolding ---------- */
+  section{
+    border-bottom:1px solid var(--hair);
+  }
+  .sec-pad{
+    padding-top:74px;
+    padding-bottom:74px;
+  }
+  .sec-head{
+    font-weight:700;
+    color:var(--ink);
+    font-size:13px;
+    font-family:var(--mono);
+    font-weight:500;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    margin:0 0 26px;
+  }
+  .sec-intro{
+    color:var(--muted);
+    font-size:16px;
+    max-width:56ch;
+    margin:-12px 0 30px;
+  }
+
+  /* ---------- hero ---------- */
+  .hero .wrap{
+    padding-top:90px;
+    padding-bottom:88px;
+  }
+  h1{
+    font-weight:700;
+    color:var(--ink);
+    font-size:clamp(30px,6.2vw,47px);
+    line-height:1.1;
+    letter-spacing:-.022em;
+    margin:0 0 26px;
+    max-width:18ch;
+  }
+  .lead{
+    font-size:clamp(17px,2.3vw,19px);
+    line-height:1.62;
+    color:var(--ink-2);
+    max-width:60ch;
+    margin:0 0 36px;
+  }
+  .lead .stack{ color:var(--muted); }
+
+  .cta-row{
+    display:flex;
+    align-items:center;
+    gap:26px;
+    flex-wrap:wrap;
+  }
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--accent);
+    color:#fff;
+    text-decoration:none;
+    font-weight:600;
+    font-size:15.5px;
+    padding:13px 24px;
+    border-radius:7px;
+    border:1px solid var(--accent);
+    transition:background-color .18s ease, border-color .18s ease;
+  }
+  .btn:hover{ background:var(--accent-ink); border-color:var(--accent-ink); }
+  .btn .arr{ font-family:var(--mono); font-size:14px; }
+
+  .link-2{
+    color:var(--ink);
+    text-decoration:none;
+    font-weight:600;
+    font-size:15.5px;
+    border-bottom:1px solid var(--hair-2);
+    padding-bottom:2px;
+    transition:border-color .18s ease, color .18s ease;
+  }
+  .link-2:hover{ color:var(--accent-ink); border-color:var(--accent); }
+
+  :focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:3px;
+  }
+
+  /* ---------- what I do (3-up, no icons) ---------- */
+  .do-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:36px;
+  }
+  .do-item{
+    border-top:1px solid var(--hair-2);
+    padding-top:18px;
+  }
+  .do-item .ix{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--accent-ink);
+    font-weight:500;
+    display:block;
+    margin-bottom:14px;
+  }
+  .do-item h3{
+    font-weight:700;
+    color:var(--ink);
+    font-size:19px;
+    letter-spacing:-.01em;
+    margin:0 0 10px;
+  }
+  .do-item p{
+    margin:0;
+    color:var(--muted);
+    font-size:15.5px;
+    line-height:1.58;
+  }
+
+  /* ---------- numbers band ---------- */
+  .numbers{
+    background:var(--paper-2);
+  }
+  .numbers .wrap{
+    padding-top:34px;
+    padding-bottom:34px;
+  }
+  .num-row{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    gap:10px 0;
+    font-family:var(--mono);
+    font-size:15px;
+    color:var(--ink-2);
+  }
+  .num-row .n{ color:var(--ink); font-weight:500; }
+  .num-row .sep{
+    color:var(--hair-2);
+    padding:0 18px;
+  }
+  .num-row .unit{ color:var(--muted); }
+
+  /* ---------- selected systems ---------- */
+  .proj{
+    display:block;
+    text-decoration:none;
+    padding:24px 0;
+    border-top:1px solid var(--hair);
+  }
+  .proj:first-of-type{ border-top:none; padding-top:0; }
+  .proj-top{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:18px;
+  }
+  .proj-name{
+    font-weight:700;
+    font-size:18px;
+    color:var(--ink);
+    letter-spacing:-.01em;
+  }
+  .proj-tag{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+    white-space:nowrap;
+    letter-spacing:.02em;
+    flex-shrink:0;
+  }
+  .proj-blurb{
+    margin:8px 0 0;
+    color:var(--muted);
+    font-size:15.5px;
+    line-height:1.55;
+    max-width:66ch;
+  }
+
+  /* ---------- trajectory ---------- */
+  .traj-item{
+    display:grid;
+    grid-template-columns:128px 1fr;
+    gap:26px;
+    padding:22px 0;
+    border-top:1px solid var(--hair);
+  }
+  .traj-item:first-of-type{ border-top:none; padding-top:0; }
+  .traj-yr{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--muted);
+    padding-top:2px;
+  }
+  .traj-body h3{
+    margin:0 0 6px;
+    font-weight:700;
+    font-size:17px;
+    color:var(--ink);
+    letter-spacing:-.01em;
+  }
+  .traj-body p{
+    margin:0;
+    color:var(--muted);
+    font-size:15.5px;
+    line-height:1.55;
+    max-width:62ch;
+  }
+
+  /* ---------- closing CTA ---------- */
+  .closing{
+    background:var(--paper-2);
+    border-bottom:none;
+  }
+  .closing .wrap{
+    padding-top:78px;
+    padding-bottom:78px;
+  }
+  .closing-line{
+    font-weight:700;
+    color:var(--ink);
+    font-size:clamp(24px,4.2vw,33px);
+    line-height:1.18;
+    letter-spacing:-.018em;
+    margin:0 0 30px;
+    max-width:20ch;
+  }
+  .contact{
+    margin-top:42px;
+    padding-top:30px;
+    border-top:1px solid var(--hair-2);
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:22px 40px;
+    max-width:620px;
+  }
+  .contact dt{
+    font-family:var(--mono);
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    color:var(--faint);
+    margin-bottom:5px;
+  }
+  .contact dd{
+    margin:0;
+    font-size:15.5px;
+    color:var(--ink-2);
+  }
+  .contact dd a{ text-decoration:none; border-bottom:1px solid var(--hair-2); padding-bottom:1px; }
+  .contact dd a:hover{ color:var(--accent-ink); border-color:var(--accent); }
+  .status{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:15px;
+    color:var(--ink-2);
+  }
+  .dot{
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--accent);
+    flex-shrink:0;
+  }
+
+  /* ---------- footer ---------- */
+  footer .wrap{
+    padding-top:24px;
+    padding-bottom:40px;
+  }
+  .foot-note{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--faint);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:760px){
+    .do-grid{ grid-template-columns:1fr; gap:0; }
+    .do-item{ padding:20px 0; }
+    .do-item:first-child{ padding-top:0; }
+  }
+  @media (max-width:640px){
+    body{ font-size:16px; }
+    .sec-pad{ padding-top:54px; padding-bottom:54px; }
+    .hero .wrap{ padding-top:60px; padding-bottom:58px; }
+    .closing .wrap{ padding-top:56px; padding-bottom:56px; }
+    .traj-item{ grid-template-columns:1fr; gap:6px; }
+    .traj-yr{ padding-top:0; }
+    .contact{ grid-template-columns:1fr; }
+    .num-row .sep{ padding:0 12px; }
+    .proj-top{ flex-direction:column; gap:5px; }
+    .cta-row{ gap:18px; }
+    .btn{ width:100%; justify-content:center; }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{ transition:none !important; animation:none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- topline -->
+  <header class="topline">
+    <div class="wrap">
+      <span class="name">Sai Krishna Sunkari</span>
+      <span class="role mono">Blockchain Architect · Builder &amp; Advisor</span>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 1. HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <h1>I architect decentralized systems, and lead the teams that ship them.</h1>
+        <p class="lead">For seven years I've taken founders' early, fragile ideas and turned them into protocols people trust in production — <span class="stack">across EVM, Cosmos, Sui, Aptos &amp; Movement.</span> Today I build the autonomous AI agents, and the rails they transact on, that come next.</p>
+        <div class="cta-row">
+          <a class="btn" href="#">Book a call <span class="arr">→</span></a>
+          <a class="link-2" href="#systems">See systems</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. WHAT I DO -->
+    <section>
+      <div class="wrap sec-pad">
+        <h2 class="sec-head">What I do</h2>
+        <div class="do-grid">
+          <div class="do-item">
+            <span class="ix mono">01</span>
+            <h3>Architecture</h3>
+            <p>I design the cross-chain protocols, DeFi primitives and token economics your product runs on.</p>
+          </div>
+          <div class="do-item">
+            <span class="ix mono">02</span>
+            <h3>Strategy</h3>
+            <p>I weigh L1/L2 trade-offs, threat-model early and hold audit-ready standards, so security never costs you speed to market.</p>
+          </div>
+          <div class="do-item">
+            <span class="ix mono">03</span>
+            <h3>Leadership</h3>
+            <p>I own roadmap, hiring and delivery from 0→1 through scale, across contracts, backend and AI-agent layers.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. NUMBERS -->
+    <section class="numbers">
+      <div class="wrap">
+        <div class="num-row">
+          <span><span class="n">7+</span> <span class="unit">years</span></span>
+          <span class="sep">·</span>
+          <span><span class="n">10+</span> <span class="unit">chains</span></span>
+          <span class="sep">·</span>
+          <span><span class="n">13+</span> <span class="unit">systems</span></span>
+          <span class="sep">·</span>
+          <span><span class="n">2</span> <span class="unit">awards</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SELECTED SYSTEMS -->
+    <section id="systems">
+      <div class="wrap sec-pad">
+        <h2 class="sec-head">Selected systems</h2>
+        <p class="sec-intro">Protocols and platforms architected from first lines to production.</p>
+
+        <a class="proj" href="#">
+          <div class="proj-top">
+            <span class="proj-name">DegentsAI</span>
+            <span class="proj-tag">AI AGENTS · 2024</span>
+          </div>
+          <p class="proj-blurb">The multi-rail distribution engine and economic layer behind the agent economy on Linea.</p>
+        </a>
+
+        <a class="proj" href="#">
+          <div class="proj-top">
+            <span class="proj-name">Autonomy Network</span>
+            <span class="proj-tag">COSMOS SDK · 2020</span>
+          </div>
+          <p class="proj-blurb">Decentralized creator-economy network with token-issuance modules and community governance.</p>
+        </a>
+
+        <a class="proj" href="#">
+          <div class="proj-top">
+            <span class="proj-name">FreeFlix · OmniFlix</span>
+            <span class="proj-tag">SOLIDITY→COSMOS · 2018</span>
+          </div>
+          <p class="proj-blurb">Decentralized content-distribution platform — Best Custom Zone, Game of Zones 2021.</p>
+        </a>
+
+        <a class="proj" href="#">
+          <div class="proj-top">
+            <span class="proj-name">Interchange DEX</span>
+            <span class="proj-tag">COSMOS · IBC · 2021</span>
+          </div>
+          <p class="proj-blurb">A compliance-aware decentralized exchange for digital assets.</p>
+        </a>
+
+        <a class="proj" href="#">
+          <div class="proj-top">
+            <span class="proj-name">Golden Triangle MF</span>
+            <span class="proj-tag">FINTECH · 2025</span>
+          </div>
+          <p class="proj-blurb">Mutual-fund analytics that give everyday investors real screening and portfolio insight.</p>
+        </a>
+
+        <a class="proj" href="#">
+          <div class="proj-top">
+            <span class="proj-name">LedgerLens</span>
+            <span class="proj-tag">A2A AGENT · 2025</span>
+          </div>
+          <p class="proj-blurb">An agent-to-agent interface for on-chain data.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 5. TRAJECTORY -->
+    <section>
+      <div class="wrap sec-pad">
+        <h2 class="sec-head">Trajectory</h2>
+
+        <div class="traj-item">
+          <div class="traj-yr mono">2026 →</div>
+          <div class="traj-body">
+            <h3>Independent Blockchain Architect</h3>
+            <p>Architecting protocols and AI-agent rails, and advising founding teams from idea to production.</p>
+          </div>
+        </div>
+
+        <div class="traj-item">
+          <div class="traj-yr mono">2024–26</div>
+          <div class="traj-body">
+            <h3>Pexu.ai <span style="font-weight:400;color:var(--muted);">(formerly Autonomy)</span></h3>
+            <p>Led the pivot into autonomous AI agents and the economic rails they transact on.</p>
+          </div>
+        </div>
+
+        <div class="traj-item">
+          <div class="traj-yr mono">2020–24</div>
+          <div class="traj-body">
+            <h3>Autonomy</h3>
+            <p>Built the Cosmos-SDK creator-economy network — token modules, governance and IBC integrations — from zero.</p>
+          </div>
+        </div>
+
+        <div class="traj-item">
+          <div class="traj-yr mono">2018–20</div>
+          <div class="traj-body">
+            <h3>Cosmic Tech Labs</h3>
+            <p>Shipped early decentralized content platforms and cut my teeth across Solidity and the emerging Cosmos stack.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. CLOSING CTA -->
+    <section class="closing">
+      <div class="wrap">
+        <p class="closing-line">Have a protocol to architect or a team to lead?</p>
+        <a class="btn" href="#">Book a call <span class="arr">→</span></a>
+
+        <dl class="contact">
+          <div>
+            <dt>Email</dt>
+            <dd><a href="mailto:saisunkari19@protonmail.com">saisunkari19@protonmail.com</a></dd>
+          </div>
+          <div>
+            <dt>GitHub</dt>
+            <dd><a href="https://github.com/saiSunkari19">@saiSunkari19</a></dd>
+          </div>
+          <div>
+            <dt>Location</dt>
+            <dd>Hyderabad · UTC+5:30</dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd><span class="status"><span class="dot" aria-hidden="true"></span>Available for architecture &amp; advisory</span></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span class="foot-note mono">Layout exploration · L3 Sectioned · not the live site</span>
+    </div>
+  </footer>
+
+</body>
+</html>

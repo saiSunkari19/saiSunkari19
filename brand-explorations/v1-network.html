@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sai Krishna Sunkari — System Topology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --surface: #0b0d10;
+    --surface-2: #0c0e12;
+    --panel: #11151a;
+    --text: #e8ecf0;
+    --muted: #93a0ab;
+    --dim: #5f6b76;
+    --accent: #4fd6c9;
+    --accent-soft: rgba(79, 214, 201, 0.12);
+    --edge: #2a323c;
+    --hairline: #1b212a;
+
+    --z-base: 1;
+    --z-content: 2;
+    --z-overlay: 3;
+
+    --maxw: 1180px;
+    --space: clamp(1.25rem, 4vw, 2.5rem);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--surface);
+    color: var(--text);
+    font-family: "Sora", system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* subtle dot-grid background */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-base);
+    background-image: radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: var(--z-content);
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 var(--space);
+  }
+
+  .mono {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-weight: 400;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ───────────── header ───────────── */
+  header {
+    position: relative;
+    z-index: var(--z-overlay);
+    padding-top: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .brand .glyph {
+    width: 26px;
+    height: 26px;
+    flex: none;
+  }
+  .brand .glyph circle.live { fill: var(--accent); }
+  .loc {
+    color: var(--muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.01em;
+  }
+  @media (max-width: 620px) { .loc { display: none; } }
+
+  /* ───────────── hero ───────────── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    align-items: center;
+    padding-top: clamp(2.5rem, 7vw, 5.5rem);
+    padding-bottom: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .syslabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--accent);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    margin-bottom: 1.4rem;
+  }
+  .syslabel .blink {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 var(--accent-soft);
+    animation: blink 2.4s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(79,214,201,0.35); }
+    50% { opacity: 0.45; box-shadow: 0 0 0 6px rgba(79,214,201,0); }
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: clamp(2rem, 6vw, 3.85rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    margin-bottom: 1.4rem;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .lead {
+    color: var(--muted);
+    font-size: clamp(0.98rem, 1.6vw, 1.12rem);
+    max-width: 38ch;
+    margin-bottom: 2rem;
+    text-wrap: pretty;
+  }
+  .lead strong { color: var(--text); font-weight: 600; }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 0.85rem; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: "Sora", sans-serif;
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 0.78rem 1.3rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #052622;
+  }
+  .btn-primary:hover { transform: translateY(-2px); background: #6fe0d4; }
+  .btn-ghost {
+    background: transparent;
+    border-color: var(--edge);
+    color: var(--text);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .btn .arrow { transition: transform 0.2s ease; }
+  .btn-ghost:hover .arrow { transform: translateX(3px); }
+
+  /* ───────────── topology svg ───────────── */
+  .topo {
+    position: relative;
+    aspect-ratio: 1 / 0.92;
+    width: 100%;
+  }
+  .topo svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+  .edge {
+    fill: none;
+    stroke: var(--edge);
+    stroke-width: 1.2;
+  }
+  .edge.active {
+    stroke: var(--accent);
+    stroke-opacity: 0.55;
+  }
+  .flow {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 1.4;
+    stroke-dasharray: 4 18;
+    stroke-linecap: round;
+    animation: dash 3.2s linear infinite;
+    opacity: 0.9;
+  }
+  @keyframes dash { to { stroke-dashoffset: -88; } }
+
+  .node circle.dot {
+    fill: var(--panel);
+    stroke: var(--edge);
+    stroke-width: 1.4;
+  }
+  .node.primary circle.dot { stroke: var(--accent); fill: #0e1c1b; }
+  .node.pulse circle.ring {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 1.2;
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: pulse 3s ease-out infinite;
+  }
+  .node.pulse.delay circle.ring { animation-delay: 1.5s; }
+  @keyframes pulse {
+    0% { transform: scale(0.7); opacity: 0.8; }
+    100% { transform: scale(2.6); opacity: 0; }
+  }
+  .node text {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9.5px;
+    fill: var(--muted);
+    font-weight: 500;
+  }
+  .node.primary text { fill: var(--text); }
+  .node text.kind { fill: var(--dim); font-size: 7.5px; }
+
+  /* ───────────── telemetry strip ───────────── */
+  .telemetry {
+    margin: 0 auto;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .telemetry .inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 1.6rem;
+    padding: 1.1rem var(--space);
+    max-width: var(--maxw);
+    margin: 0 auto;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .telemetry .tag { color: var(--accent); margin-right: 1.4rem; letter-spacing: 0.08em; }
+  .telemetry .read { display: inline-flex; align-items: baseline; gap: 0.45rem; }
+  .telemetry .read b { color: var(--text); font-weight: 500; }
+  .telemetry .sep { color: var(--edge); }
+
+  /* ───────────── selected systems ───────────── */
+  .systems { padding: clamp(3.5rem, 8vw, 6rem) 0 clamp(2.5rem, 6vw, 4rem); }
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .sec-head h2 {
+    font-weight: 600;
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    letter-spacing: -0.02em;
+  }
+  .sec-head .count { color: var(--dim); font-size: 0.78rem; }
+
+  .index { border-top: 1px solid var(--hairline); }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 0.5rem;
+    border-bottom: 1px solid var(--hairline);
+    transition: background 0.2s ease, padding 0.2s ease;
+    position: relative;
+  }
+  .row::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 0;
+    background: var(--accent);
+    transition: width 0.2s ease;
+  }
+  .row:hover { background: var(--accent-soft); padding-left: 1.1rem; }
+  .row:hover::before { width: 2px; }
+  .row .name {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    transition: color 0.2s ease;
+  }
+  .row:hover .name { color: var(--accent); }
+  .row .desc { color: var(--muted); font-size: 0.92rem; }
+  .row .year { color: var(--dim); font-size: 0.82rem; text-align: right; }
+  .row:hover .year { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr auto; row-gap: 0.35rem; padding: 1.1rem 0.4rem; }
+    .row .desc { grid-column: 1 / -1; }
+    .row .year { grid-row: 1; grid-column: 2; }
+  }
+
+  /* ───────────── footer ───────────── */
+  footer {
+    padding: 2.5rem 0 3rem;
+    border-top: 1px solid var(--hairline);
+  }
+  footer .line {
+    color: var(--dim);
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+  }
+  footer .line .mark { color: var(--accent); }
+
+  /* ───────────── responsive ───────────── */
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; }
+    .topo { order: -1; max-width: 460px; margin: 0 auto 0.5rem; }
+    .lead { max-width: 52ch; }
+  }
+
+  /* ───────────── reduced motion ───────────── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+    .flow { display: none; }
+    .node.pulse circle.ring { display: none; }
+    .syslabel .blink { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <svg class="glyph" viewBox="0 0 26 26" aria-hidden="true">
+        <line x1="6" y1="6" x2="20" y2="13" stroke="#2a323c" stroke-width="1.3"/>
+        <line x1="20" y1="13" x2="7" y2="20" stroke="#2a323c" stroke-width="1.3"/>
+        <line x1="6" y1="6" x2="7" y2="20" stroke="#2a323c" stroke-width="1.3"/>
+        <circle cx="6" cy="6" r="3" fill="#11151a" stroke="#2a323c" stroke-width="1.3"/>
+        <circle cx="7" cy="20" r="3" fill="#11151a" stroke="#2a323c" stroke-width="1.3"/>
+        <circle class="live" cx="20" cy="13" r="3.4"/>
+      </svg>
+      <span>Sai&nbsp;Krishna&nbsp;Sunkari</span>
+    </div>
+    <div class="loc mono">Hyderabad · UTC+5:30 · Available for advisory</div>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <div class="copy">
+      <div class="syslabel mono"><span class="blink"></span>// LIVE TOPOLOGY</div>
+      <h1>I architect decentralized systems, and <em>lead the teams</em> that ship them.</h1>
+      <p class="lead">
+        For seven years I've taken founders' early, fragile ideas and turned them into protocols people trust in production — across EVM, Cosmos, Sui, Aptos &amp; Movement. Today I build the <strong>autonomous AI agents</strong>, and the rails they transact on, that come next.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#">Book a call</a>
+        <a class="btn btn-ghost" href="#systems">Explore the network <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <div class="topo">
+      <svg viewBox="0 0 440 405" role="img" aria-label="Live system topology graph of Sai's chains and projects">
+        <!-- edges -->
+        <g>
+          <path class="edge active" d="M150,110 L310,80"/>
+          <path class="edge active" d="M150,110 L120,250"/>
+          <path class="edge" d="M310,80 L370,200"/>
+          <path class="edge active" d="M120,250 L290,300"/>
+          <path class="edge" d="M310,80 L290,300"/>
+          <path class="edge" d="M150,110 L290,300"/>
+          <!-- chain leaf edges -->
+          <path class="edge" d="M150,110 L60,55"/>
+          <path class="edge" d="M310,80 L390,45"/>
+          <path class="edge" d="M120,250 L40,310"/>
+          <path class="edge" d="M290,300 L370,355"/>
+          <path class="edge" d="M290,300 L200,375"/>
+        </g>
+
+        <!-- animated flow along key edges -->
+        <g>
+          <path class="flow" d="M150,110 L310,80"/>
+          <path class="flow" d="M150,110 L120,250"/>
+          <path class="flow" d="M120,250 L290,300"/>
+        </g>
+
+        <!-- chain (smaller) nodes -->
+        <g class="node">
+          <circle class="dot" cx="60" cy="55" r="4"/>
+          <text x="60" y="42" text-anchor="middle">EVM</text>
+        </g>
+        <g class="node">
+          <circle class="dot" cx="390" cy="45" r="4"/>
+          <text x="390" y="32" text-anchor="middle">Cosmos</text>
+        </g>
+        <g class="node">
+          <circle class="dot" cx="40" cy="310" r="4"/>
+          <text x="40" y="328" text-anchor="middle">Sui</text>
+        </g>
+        <g class="node">
+          <circle class="dot" cx="370" cy="355" r="4"/>
+          <text x="370" y="373" text-anchor="middle">Aptos</text>
+        </g>
+        <g class="node">
+          <circle class="dot" cx="200" cy="375" r="4"/>
+          <text x="200" y="393" text-anchor="middle">Movement</text>
+        </g>
+
+        <!-- project (primary) nodes -->
+        <g class="node primary pulse">
+          <circle class="ring" cx="150" cy="110" r="9"/>
+          <circle class="dot" cx="150" cy="110" r="6.5"/>
+          <text x="150" y="92" text-anchor="middle">Autonomy Network</text>
+          <text class="kind" x="150" y="103" text-anchor="middle">cross-chain automation</text>
+        </g>
+
+        <g class="node primary">
+          <circle class="dot" cx="310" cy="80" r="6.5"/>
+          <text x="310" y="62" text-anchor="middle">FreeFlix Media</text>
+          <text class="kind" x="310" y="73" text-anchor="middle">cosmos app-chain</text>
+        </g>
+
+        <g class="node primary pulse delay">
+          <circle class="ring" cx="290" cy="300" r="9"/>
+          <circle class="dot" cx="290" cy="300" r="6.5"/>
+          <text x="290" y="324" text-anchor="middle">DegentsAI</text>
+          <text class="kind" x="290" y="335" text-anchor="middle">autonomous agents</text>
+        </g>
+
+        <g class="node primary">
+          <circle class="dot" cx="120" cy="250" r="6.5"/>
+          <text x="120" y="232" text-anchor="middle">LedgerLens</text>
+          <text class="kind" x="120" y="243" text-anchor="middle">A2A data agent</text>
+        </g>
+
+        <g class="node">
+          <circle class="dot" cx="370" cy="200" r="5"/>
+          <text x="392" y="203" text-anchor="start">advisory</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <div class="telemetry">
+    <div class="inner mono">
+      <span class="tag">// network telemetry</span>
+      <span class="read">uptime: <b>7yrs</b></span><span class="sep">·</span>
+      <span class="read">nodes: <b>10+</b></span><span class="sep">·</span>
+      <span class="read">deploys: <b>13+</b></span><span class="sep">·</span>
+      <span class="read">chains: <b>5</b></span><span class="sep">·</span>
+      <span class="read">awards: <b>2</b></span>
+    </div>
+  </div>
+
+  <section class="wrap systems" id="systems">
+    <div class="sec-head">
+      <h2>Selected systems</h2>
+      <span class="count mono">04 nodes · in production</span>
+    </div>
+    <div class="index">
+      <a class="row" href="#">
+        <span class="name">Autonomy Network</span>
+        <span class="desc">Cross-chain automation protocol — scheduled &amp; conditional execution</span>
+        <span class="year mono">2022→</span>
+      </a>
+      <a class="row" href="#">
+        <span class="name">FreeFlix Media</span>
+        <span class="desc">Cosmos app-chain — Best Custom Zone</span>
+        <span class="year mono">2021</span>
+      </a>
+      <a class="row" href="#">
+        <span class="name">DegentsAI</span>
+        <span class="desc">Autonomous on-chain agents that act without a human in the loop</span>
+        <span class="year mono">2024→</span>
+      </a>
+      <a class="row" href="#">
+        <span class="name">LedgerLens</span>
+        <span class="desc">A2A agent for on-chain data — queryable, composable intelligence</span>
+        <span class="year mono">2025</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap line mono">
+    <span class="mark">◇</span>
+    Brand exploration · Sai Krishna Sunkari · System Topology · not the live site
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sai Krishna Sunkari — Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0b0d10;
+    --panel: #0f1216;
+    --hair: #232a31;
+    --ink: #e6eaee;
+    --muted: #8b97a1;
+    --accent: #3fe08a;
+    --accent-dim: rgba(63, 224, 138, 0.14);
+
+    --rail-w: 320px;
+
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: "Sora", system-ui, -apple-system, sans-serif;
+
+    --z-base: 1;
+    --z-rail: 10;
+    --z-topbar: 20;
+
+    --pad: 28px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .mono {
+    font-family: var(--mono);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- shell ---------- */
+  .shell {
+    display: grid;
+    grid-template-columns: var(--rail-w) 1fr;
+    min-height: 100vh;
+  }
+
+  /* ---------- left rail ---------- */
+  .rail {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    border-right: 1px solid var(--hair);
+    background: var(--panel);
+    padding: var(--pad);
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    z-index: var(--z-rail);
+  }
+
+  .rail__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .rail__sig {
+    color: var(--ink);
+  }
+
+  .id__name {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+  }
+
+  .id__role {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .id__role .dot-sep { color: var(--hair); padding: 0 4px; }
+
+  /* status row */
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 13px;
+    border: 1px solid var(--hair);
+    border-radius: 7px;
+    background: var(--bg);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+  .status__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 var(--accent-dim);
+    flex: none;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(63, 224, 138, 0.45); }
+    50% { box-shadow: 0 0 0 6px rgba(63, 224, 138, 0); }
+  }
+  .status__label { color: var(--muted); text-transform: uppercase; }
+  .status__val { color: var(--accent); margin-left: auto; font-weight: 500; }
+
+  .tagline {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .tagline b { color: var(--ink); font-weight: 500; }
+
+  .cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 13px 16px;
+    background: var(--accent);
+    color: #06160d;
+    border-radius: 7px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 14.5px;
+    letter-spacing: 0.01em;
+    transition: transform 0.15s ease, filter 0.15s ease;
+  }
+  .cta:hover { filter: brightness(1.06); transform: translateY(-1px); }
+  .cta__arrow { font-family: var(--mono); font-size: 15px; }
+
+  .contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .contacts a {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-top: 1px solid var(--hair);
+    color: var(--muted);
+    transition: color 0.15s ease;
+  }
+  .contacts a:hover { color: var(--accent); }
+  .contacts a .k { color: var(--ink); }
+  .contacts a:hover .k { color: var(--accent); }
+
+  .rail__foot {
+    margin-top: auto;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    line-height: 1.8;
+    border-top: 1px solid var(--hair);
+    padding-top: 16px;
+  }
+  .rail__foot .loc { color: var(--ink); }
+
+  /* ---------- right pane ---------- */
+  .pane {
+    position: relative;
+    z-index: var(--z-base);
+    min-width: 0;
+  }
+
+  .panel {
+    padding: 38px var(--pad);
+    border-bottom: 1px solid var(--hair);
+  }
+  .panel:last-child { border-bottom: none; }
+
+  .panel__head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .panel__num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .panel__title {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0;
+  }
+  .panel__rule {
+    flex: 1;
+    height: 1px;
+    background: var(--hair);
+    align-self: center;
+  }
+  .panel__meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* brief */
+  .brief {
+    font-size: 19px;
+    line-height: 1.62;
+    color: var(--ink);
+    max-width: 60ch;
+    font-weight: 400;
+  }
+  .brief .accent { color: var(--accent); }
+  .brief .soft { color: var(--muted); }
+
+  /* telemetry */
+  .telemetry {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 40px;
+    max-width: 640px;
+  }
+  .readout {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 13px 0;
+    border-bottom: 1px dashed var(--hair);
+  }
+  .readout__label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .readout__line {
+    flex: 1;
+    border-bottom: 1px dotted var(--hair);
+    transform: translateY(-3px);
+    min-width: 18px;
+  }
+  .readout__val {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 22px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+  .readout__val .plus { color: var(--accent); font-size: 16px; }
+
+  /* deploy log */
+  .log {
+    font-family: var(--mono);
+    font-size: 13px;
+    width: 100%;
+  }
+  .log__scroll { overflow-x: auto; }
+  .log__row {
+    display: grid;
+    grid-template-columns: 56px 1fr 96px;
+    gap: 20px;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--hair);
+    min-width: 520px;
+  }
+  .log__row:last-child { border-bottom: none; }
+  .log__year { color: var(--accent); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .log__body { color: var(--ink); min-width: 0; }
+  .log__name { font-weight: 500; }
+  .log__desc { color: var(--muted); }
+  .log__status {
+    justify-self: end;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+  }
+  .log__chip {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); flex: none;
+  }
+  .log__status.is-award .log__chip { background: var(--muted); }
+  .log__status.is-award { color: var(--ink); }
+
+  /* stack */
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .stack__group {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 20px;
+    align-items: start;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--hair);
+  }
+  .stack__group:last-child { border-bottom: none; }
+  .stack__label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 5px;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 5px 11px;
+    border: 1px solid var(--hair);
+    border-radius: 5px;
+    color: var(--ink);
+    background: var(--bg);
+  }
+
+  /* ---------- mobile top bar (hidden on desktop) ---------- */
+  .topbar { display: none; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 880px) {
+    .shell { grid-template-columns: 1fr; }
+
+    .rail { display: none; }
+
+    .topbar {
+      display: flex;
+      position: sticky;
+      top: 0;
+      z-index: var(--z-topbar);
+      align-items: center;
+      gap: 12px;
+      padding: 12px 18px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--hair);
+    }
+    .topbar__name {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+    .topbar__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .topbar__status .status__dot { width: 7px; height: 7px; }
+    .topbar__cta {
+      margin-left: auto;
+      padding: 8px 14px;
+      background: var(--accent);
+      color: #06160d;
+      border-radius: 6px;
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    /* mobile identity block appears as first panel content */
+    .mobile-id {
+      display: block;
+    }
+    .panel { padding: 30px 18px; }
+    .telemetry { grid-template-columns: 1fr; gap: 0; }
+    .brief { font-size: 17px; }
+    .stack__group { grid-template-columns: 1fr; gap: 8px; }
+    .stack__label { padding-top: 0; }
+  }
+
+  .mobile-id { display: none; }
+  .mobile-id .id__name { font-size: 24px; }
+  .mobile-id .mtag {
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+  .mobile-id .contacts { margin-top: 18px; }
+
+  @media (max-width: 420px) {
+    .topbar__status { display: none; }
+    .log__row { grid-template-columns: 50px 1fr 88px; gap: 14px; }
+  }
+
+  /* ---------- reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .status__dot { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- mobile top bar -->
+  <header class="topbar">
+    <span class="topbar__name">Sai Krishna Sunkari</span>
+    <span class="topbar__status"><span class="status__dot"></span>Available</span>
+    <a class="topbar__cta" href="#">Book a call</a>
+  </header>
+
+  <div class="shell">
+
+    <!-- ===== LEFT RAIL (persistent identity) ===== -->
+    <aside class="rail">
+      <div class="rail__top">
+        <span class="rail__sig">SKS</span>
+        <span>CONSOLE / v6</span>
+      </div>
+
+      <div class="id">
+        <h1 class="id__name">Sai Krishna<br />Sunkari</h1>
+        <div class="id__role mono">
+          Blockchain Architect
+          <span class="dot-sep">·</span>Builder &amp; Advisor
+        </div>
+      </div>
+
+      <div class="status mono">
+        <span class="status__dot"></span>
+        <span class="status__label">Status</span>
+        <span class="status__val">Available</span>
+      </div>
+
+      <p class="tagline mono">
+        Turning fragile early ideas into protocols people trust in production —
+        and <b>the autonomous agents that come next.</b>
+      </p>
+
+      <a class="cta" href="#">
+        <span>Book a call</span>
+        <span class="cta__arrow">→</span>
+      </a>
+
+      <nav class="contacts mono">
+        <a href="https://github.com/saiSunkari19"><span class="k">GitHub</span><span>@saiSunkari19</span></a>
+        <a href="mailto:hello@example.com"><span class="k">Email</span><span>contact ↗</span></a>
+        <a href="#"><span class="k">X</span><span>@saiSunkari19</span></a>
+      </nav>
+
+      <div class="rail__foot mono">
+        <span class="loc">Hyderabad · UTC+5:30</span><br />
+        Brand exploration · Console · not the live site
+      </div>
+    </aside>
+
+    <!-- ===== RIGHT PANE (scrolling status readout) ===== -->
+    <main class="pane">
+
+      <!-- BRIEF -->
+      <section class="panel">
+        <!-- mobile-only identity restated -->
+        <div class="mobile-id">
+          <h1 class="id__name">Sai Krishna Sunkari</h1>
+          <div class="id__role mono">Blockchain Architect · Builder &amp; Advisor</div>
+          <p class="mtag mono">Hyderabad · UTC+5:30 — Status: <span style="color:var(--accent)">Available</span></p>
+        </div>
+
+        <div class="panel__head">
+          <span class="panel__num">::</span>
+          <h2 class="panel__title">Brief</h2>
+          <span class="panel__rule"></span>
+        </div>
+        <p class="brief">
+          For <span class="accent">seven years</span> I've taken founders' early, fragile ideas and
+          turned them into protocols people trust in production —
+          <span class="soft">across EVM, Cosmos, Sui, Aptos &amp; Movement.</span>
+          Today I build the autonomous AI agents, and the rails they transact on, that come next.
+        </p>
+      </section>
+
+      <!-- TELEMETRY -->
+      <section class="panel">
+        <div class="panel__head">
+          <span class="panel__num">::</span>
+          <h2 class="panel__title">Telemetry</h2>
+          <span class="panel__rule"></span>
+          <span class="panel__meta mono">live</span>
+        </div>
+        <div class="telemetry">
+          <div class="readout">
+            <span class="readout__label">Years shipping</span>
+            <span class="readout__line"></span>
+            <span class="readout__val">07</span>
+          </div>
+          <div class="readout">
+            <span class="readout__label">Chains</span>
+            <span class="readout__line"></span>
+            <span class="readout__val">10<span class="plus">+</span></span>
+          </div>
+          <div class="readout">
+            <span class="readout__label">Systems in prod</span>
+            <span class="readout__line"></span>
+            <span class="readout__val">13<span class="plus">+</span></span>
+          </div>
+          <div class="readout">
+            <span class="readout__label">Awards</span>
+            <span class="readout__line"></span>
+            <span class="readout__val">02</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- DEPLOY LOG -->
+      <section class="panel">
+        <div class="panel__head">
+          <span class="panel__num">::</span>
+          <h2 class="panel__title">Deploy Log</h2>
+          <span class="panel__rule"></span>
+          <span class="panel__meta mono">recent first</span>
+        </div>
+        <div class="log__scroll">
+          <div class="log mono">
+            <div class="log__row">
+              <span class="log__year">2025</span>
+              <span class="log__body"><span class="log__name">LedgerLens</span> — <span class="log__desc">A2A agent for on-chain data</span></span>
+              <span class="log__status"><span class="log__chip"></span>shipped</span>
+            </div>
+            <div class="log__row">
+              <span class="log__year">2024</span>
+              <span class="log__body"><span class="log__name">DegentsAI</span> — <span class="log__desc">autonomous on-chain agents</span></span>
+              <span class="log__status"><span class="log__chip"></span>live</span>
+            </div>
+            <div class="log__row">
+              <span class="log__year">2022</span>
+              <span class="log__body"><span class="log__name">Autonomy Network</span> — <span class="log__desc">cross-chain automation protocol</span></span>
+              <span class="log__status"><span class="log__chip"></span>live</span>
+            </div>
+            <div class="log__row">
+              <span class="log__year">2021</span>
+              <span class="log__body"><span class="log__name">FreeFlix Media</span> — <span class="log__desc">Cosmos app-chain</span></span>
+              <span class="log__status is-award"><span class="log__chip"></span>Best Custom Zone</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STACK -->
+      <section class="panel">
+        <div class="panel__head">
+          <span class="panel__num">::</span>
+          <h2 class="panel__title">Stack</h2>
+          <span class="panel__rule"></span>
+        </div>
+        <div class="stack">
+          <div class="stack__group">
+            <span class="stack__label">Chains</span>
+            <div class="tags">
+              <span class="tag">Ethereum</span>
+              <span class="tag">Base</span>
+              <span class="tag">Cosmos SDK</span>
+              <span class="tag">Sui</span>
+              <span class="tag">Aptos</span>
+              <span class="tag">Movement</span>
+            </div>
+          </div>
+          <div class="stack__group">
+            <span class="stack__label">Languages</span>
+            <div class="tags">
+              <span class="tag">Go</span>
+              <span class="tag">Solidity</span>
+              <span class="tag">Rust</span>
+              <span class="tag">Move</span>
+              <span class="tag">CosmWasm</span>
+            </div>
+          </div>
+          <div class="stack__group">
+            <span class="stack__label">Agents</span>
+            <div class="tags">
+              <span class="tag">LangGraph</span>
+              <span class="tag">Eliza</span>
+              <span class="tag">ACP/MCP/A2A</span>
+              <span class="tag">IBC</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+</body>
+</html>

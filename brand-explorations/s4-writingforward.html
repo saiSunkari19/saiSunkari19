@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sai Krishna Sunkari — Blockchain Architect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#f6f5f1; --paper-2:#efeee9;
+  --ink:#111110; --ink-2:#2a2a26; --muted:#565651; --faint:#6f6f69;
+  --hair:#d6d5cf; --hair-2:#c4c3bc;
+  --accent:#1f3aff; --accent-ink:#1730d8;
+  --rail:320px; --gap:clamp(28px,4vw,56px); --maxw:1180px;
+  --z-bar:30; --z-rail:10; --z-base:1;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink-2);
+  font-family:"Hanken Grotesk",system-ui,sans-serif;
+  font-size:16.5px; line-height:1.62; font-weight:400;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+.mono{font-family:"Spline Sans Mono",ui-monospace,monospace;font-feature-settings:"tnum" 1;}
+a{color:var(--ink);text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+h1,h2,h3,p{margin:0}
+
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);padding:10px 16px;z-index:99}
+.skip:focus{left:12px;top:12px}
+
+/* ---- shell ---- */
+.shell{max-width:var(--maxw);margin:0 auto;display:flex;align-items:flex-start;gap:var(--gap);padding:0 clamp(20px,4vw,48px)}
+
+/* ---- left rail ---- */
+.rail{
+  width:var(--rail);flex:0 0 var(--rail);position:sticky;top:0;z-index:var(--z-rail);
+  min-height:100vh;padding:44px 0 40px;
+  border-right:1px solid var(--hair);
+  display:flex;flex-direction:column;gap:30px;
+}
+.rail-pad{padding-right:var(--gap)}
+.brand .name{font-size:22px;font-weight:700;letter-spacing:-.015em;color:var(--ink);line-height:1.18}
+.brand .role{margin-top:6px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.position{font-size:15px;line-height:1.5;color:var(--ink-2)}
+
+.status{display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--ink-2);font-weight:500}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);position:relative;flex:0 0 auto}
+.dot::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--accent);opacity:.5;animation:pulse 2.6s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.6);opacity:.6}70%,100%{transform:scale(1.6);opacity:0}}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--accent);color:#fff;font-weight:600;font-size:15px;
+  padding:13px 20px;border-radius:7px;border:1px solid var(--accent);
+  transition:background .15s ease, transform .12s ease;width:100%;
+}
+.btn:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+.btn:active{transform:translateY(1px)}
+.btn .arr{font-family:"Spline Sans Mono",monospace;font-size:14px}
+
+.nav{display:flex;flex-direction:column;border-top:1px solid var(--hair)}
+.nav a{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:11px 0;border-bottom:1px solid var(--hair);
+  font-size:14.5px;color:var(--ink-2);font-weight:500;transition:color .15s ease
+}
+.nav a:hover{color:var(--accent-ink)}
+.nav a .num{font-family:"Spline Sans Mono",monospace;font-size:11.5px;color:var(--faint)}
+
+.contact{font-size:13.5px;line-height:1.85;margin-top:auto}
+.contact .lbl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:500;display:block;margin-bottom:5px}
+.contact a{color:var(--ink-2);border-bottom:1px solid var(--hair-2)}
+.contact a:hover{color:var(--accent-ink);border-color:var(--accent)}
+.contact .meta{color:var(--muted)}
+
+/* ---- main ---- */
+.main{flex:1 1 auto;min-width:0;padding:52px 0 0}
+section{padding-bottom:clamp(46px,6vw,72px)}
+.sec-head{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.sec-head::after{content:"";flex:1;height:1px;background:var(--hair)}
+
+/* intro */
+.intro h1{
+  font-size:clamp(30px,4.2vw,46px);line-height:1.1;letter-spacing:-.022em;
+  font-weight:700;color:var(--ink);max-width:18ch
+}
+.intro .lead{margin-top:22px;font-size:clamp(16.5px,1.4vw,18.5px);line-height:1.6;color:var(--ink-2);max-width:60ch}
+
+/* two-up band */
+.twoup{
+  background:var(--paper-2);border:1px solid var(--hair);border-radius:12px;
+  display:grid;grid-template-columns:1fr 1fr;
+}
+.twoup-col{padding:clamp(22px,2.4vw,30px)}
+.twoup-col + .twoup-col{border-left:1px solid var(--hair)}
+.tu-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
+.tu-head h2{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.tu-head .kicker{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+
+/* systems list inside twoup (card-free) */
+.sys{padding:15px 0;border-top:1px solid var(--hair)}
+.sys:first-of-type{border-top:0;padding-top:2px}
+.sys-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.sys-name{font-size:16.5px;font-weight:600;color:var(--ink)}
+.tag{font-size:10.5px;letter-spacing:.06em;color:var(--muted);font-weight:500;white-space:nowrap}
+.sys-blurb{margin-top:5px;font-size:14px;line-height:1.55;color:var(--muted)}
+
+/* writing list */
+.post{display:block;padding:15px 0;border-top:1px solid var(--hair)}
+.post:first-of-type{border-top:0;padding-top:2px}
+.post-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.post-title{font-size:16px;font-weight:600;color:var(--ink);line-height:1.32;transition:color .15s ease}
+.post:hover .post-title{color:var(--accent-ink)}
+.post:hover .post-title{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--accent)}
+.post-date{font-size:12px;color:var(--faint);white-space:nowrap}
+.post-ex{margin-top:5px;font-size:14px;line-height:1.55;color:var(--muted)}
+.all-writing{display:inline-flex;align-items:center;gap:7px;margin-top:18px;font-size:14px;font-weight:600;color:var(--accent-ink)}
+.all-writing:hover{text-decoration:underline;text-underline-offset:3px}
+.all-writing .arr{font-family:"Spline Sans Mono",monospace}
+
+/* what i do */
+.do-item{padding:22px 0;border-top:1px solid var(--hair);display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:baseline}
+.do-item:first-of-type{border-top:0}
+.do-item h3{font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.do-item p{font-size:16px;line-height:1.6;color:var(--ink-2);max-width:54ch}
+
+/* more systems */
+.more-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:12px;overflow:hidden}
+.more-item{background:var(--paper);padding:22px 24px}
+.more-item .sys-name{font-size:16.5px}
+.more-item .sys-blurb{color:var(--muted)}
+
+/* trajectory */
+.traj{display:flex;flex-direction:column}
+.traj-row{display:grid;grid-template-columns:128px 1fr;gap:24px;padding:16px 0;border-top:1px solid var(--hair);align-items:baseline}
+.traj-row:first-child{border-top:0}
+.traj-year{font-size:13px;color:var(--ink);font-weight:500}
+.traj-body strong{display:block;font-size:16px;color:var(--ink);font-weight:600;letter-spacing:-.005em}
+.traj-body span{font-size:14.5px;color:var(--muted);line-height:1.5}
+
+/* contact close */
+.close{border-top:1px solid var(--hair);padding-top:clamp(32px,4vw,46px)}
+.close .line{font-size:clamp(20px,2.4vw,27px);line-height:1.3;font-weight:600;color:var(--ink);letter-spacing:-.015em;max-width:24ch}
+.close-row{display:flex;flex-wrap:wrap;align-items:center;gap:26px;margin-top:26px}
+.close-row .btn{width:auto;padding:14px 26px}
+.close-links{display:flex;flex-direction:column;gap:3px;font-size:14px}
+.close-links a{color:var(--ink-2);border-bottom:1px solid var(--hair-2)}
+.close-links a:hover{color:var(--accent-ink);border-color:var(--accent)}
+.close-links .meta{color:var(--muted)}
+
+footer{border-top:1px solid var(--hair);margin-top:8px;padding:24px 0 48px}
+footer .note{font-size:12px;letter-spacing:.04em;color:var(--faint)}
+
+/* ---- mobile top bar (hidden desktop) ---- */
+.topbar{display:none}
+
+@media (max-width:860px){
+  .shell{flex-direction:column;gap:0;padding:0}
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    position:sticky;top:0;z-index:var(--z-bar);background:rgba(246,245,241,.94);
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--hair);padding:11px clamp(16px,5vw,24px)
+  }
+  .topbar .tb-name{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+  .topbar .btn{width:auto;padding:9px 16px;font-size:13.5px}
+
+  .rail{
+    position:static;width:100%;flex:none;min-height:0;border-right:0;
+    border-bottom:1px solid var(--hair);
+    padding:30px clamp(16px,5vw,24px) 32px;gap:24px
+  }
+  .rail-pad{padding-right:0}
+  .nav{flex-flow:row wrap;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);gap:0}
+  .nav a{flex:1 1 auto;justify-content:center;border-bottom:0;padding:12px 10px}
+  .nav a .num{display:none}
+  .contact{margin-top:0}
+
+  .main{padding:34px clamp(16px,5vw,24px) 0;width:100%}
+  .twoup{grid-template-columns:1fr}
+  .twoup-col + .twoup-col{border-left:0;border-top:1px solid var(--hair)}
+  .more-grid{grid-template-columns:1fr}
+  .do-item{grid-template-columns:1fr;gap:8px}
+  .traj-row{grid-template-columns:1fr;gap:4px}
+}
+
+@media (max-width:420px){
+  body{font-size:16px}
+  .sys-top,.post-top{flex-direction:column;gap:2px}
+  .tag,.post-date{white-space:normal}
+  .close-row{gap:18px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- mobile sticky bar -->
+<div class="topbar">
+  <span class="tb-name">Sai Krishna Sunkari</span>
+  <a class="btn" href="#">Book a call</a>
+</div>
+
+<div class="shell">
+  <!-- ===== LEFT RAIL ===== -->
+  <aside class="rail">
+    <div class="rail-pad" style="display:flex;flex-direction:column;gap:30px;flex:1">
+      <div class="brand">
+        <h1 class="name">Sai Krishna<br>Sunkari</h1>
+        <div class="role mono">Blockchain Architect · Builder &amp; Advisor</div>
+      </div>
+
+      <p class="position">I turn founders' fragile ideas into protocols people trust in production.</p>
+
+      <div class="status"><span class="dot" aria-hidden="true"></span>Available for architecture &amp; advisory</div>
+
+      <a class="btn" href="#">Book a call <span class="arr" aria-hidden="true">→</span></a>
+
+      <nav class="nav" aria-label="Sections">
+        <a href="#do"><span>What I do</span><span class="num">01</span></a>
+        <a href="#systems"><span>Systems</span><span class="num">02</span></a>
+        <a href="#writing"><span>Writing</span><span class="num">03</span></a>
+        <a href="#contact"><span>Contact</span><span class="num">04</span></a>
+      </nav>
+
+      <div class="contact">
+        <span class="lbl">Contact</span>
+        <a href="mailto:saisunkari19@protonmail.com">saisunkari19@protonmail.com</a><br>
+        <a href="https://github.com/saiSunkari19">GitHub @saiSunkari19</a><br>
+        <span class="meta">Hyderabad · UTC+5:30</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== RIGHT CONTENT ===== -->
+  <main class="main" id="main">
+
+    <!-- 1. INTRO -->
+    <section class="intro">
+      <h1>I architect decentralized systems, and lead the teams that ship them.</h1>
+      <p class="lead">For seven years I've taken founders' early, fragile ideas and turned them into protocols people trust in production — across EVM, Cosmos, Sui, Aptos &amp; Movement. Today I build the autonomous AI agents, and the rails they transact on, that come next.</p>
+    </section>
+
+    <!-- 2. TWO-UP: Selected systems + Recent writing -->
+    <section id="writing">
+      <div class="twoup">
+        <div class="twoup-col">
+          <div class="tu-head">
+            <h2>Selected systems</h2>
+            <span class="kicker mono">Work</span>
+          </div>
+
+          <div class="sys">
+            <div class="sys-top"><span class="sys-name">DegentsAI</span><span class="tag mono">AI AGENTS · 2024</span></div>
+            <p class="sys-blurb">The multi-rail distribution engine and economic layer behind the agent economy on Linea.</p>
+          </div>
+          <div class="sys">
+            <div class="sys-top"><span class="sys-name">Autonomy Network</span><span class="tag mono">COSMOS SDK · 2020</span></div>
+            <p class="sys-blurb">Decentralized creator-economy network with token-issuance modules and community governance.</p>
+          </div>
+          <div class="sys">
+            <div class="sys-top"><span class="sys-name">FreeFlix · OmniFlix</span><span class="tag mono">SOLIDITY→COSMOS · 2018</span></div>
+            <p class="sys-blurb">Decentralized content-distribution platform — Best Custom Zone, Game of Zones 2021.</p>
+          </div>
+          <div class="sys">
+            <div class="sys-top"><span class="sys-name">LedgerLens</span><span class="tag mono">A2A AGENT · 2025</span></div>
+            <p class="sys-blurb">An agent-to-agent interface for on-chain data.</p>
+          </div>
+        </div>
+
+        <div class="twoup-col">
+          <div class="tu-head">
+            <h2>Recent writing</h2>
+            <span class="kicker mono">Notes</span>
+          </div>
+
+          <a class="post" href="#">
+            <div class="post-top"><span class="post-title">LedgerLens: an A2A agent for on-chain data</span><span class="post-date mono">2025</span></div>
+            <p class="post-ex">How agents query and trust on-chain data through an A2A interface.</p>
+          </a>
+          <a class="post" href="#">
+            <div class="post-top"><span class="post-title">What I built in a weekend: a free mutual-fund analyser on Akash</span><span class="post-date mono">2025</span></div>
+            <p class="post-ex">Shipping a real fintech tool on decentralized compute in 48 hours.</p>
+          </a>
+          <a class="post" href="#">
+            <div class="post-top"><span class="post-title">Notes on Cosmos app-chains &amp; the agent economy</span><span class="post-date mono">2024</span></div>
+            <p class="post-ex">Where app-chains and autonomous agents meet.</p>
+          </a>
+
+          <a class="all-writing" href="#">All writing <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. WHAT I DO -->
+    <section id="do">
+      <div class="sec-head">What I do</div>
+      <div class="do-item">
+        <h3>Architecture</h3>
+        <p>I design the cross-chain protocols, DeFi primitives and token economics your product runs on.</p>
+      </div>
+      <div class="do-item">
+        <h3>Strategy</h3>
+        <p>I weigh L1/L2 trade-offs, threat-model early and hold audit-ready standards, so security never costs you speed to market.</p>
+      </div>
+      <div class="do-item">
+        <h3>Leadership</h3>
+        <p>I own roadmap, hiring and delivery from 0→1 through scale, across contracts, backend and AI-agent layers.</p>
+      </div>
+    </section>
+
+    <!-- 4. MORE SYSTEMS -->
+    <section id="systems">
+      <div class="sec-head">More systems</div>
+      <div class="more-grid">
+        <div class="more-item">
+          <div class="sys-top"><span class="sys-name">Interchange DEX</span><span class="tag mono">COSMOS · IBC · 2021</span></div>
+          <p class="sys-blurb">A compliance-aware decentralized exchange for digital assets.</p>
+        </div>
+        <div class="more-item">
+          <div class="sys-top"><span class="sys-name">Golden Triangle MF</span><span class="tag mono">FINTECH · 2025</span></div>
+          <p class="sys-blurb">Mutual-fund analytics that give everyday investors real screening and portfolio insight.</p>
+        </div>
+        <div class="more-item">
+          <div class="sys-top"><span class="sys-name">Cosmic Compass</span><span class="tag mono">EXPLORER · 2019</span></div>
+          <p class="sys-blurb">A Cosmos ecosystem navigator for chain activity, validators and token flows.</p>
+        </div>
+        <div class="more-item">
+          <div class="sys-top"><span class="sys-name">LedgerLens</span><span class="tag mono">A2A AGENT · 2025</span></div>
+          <p class="sys-blurb">An agent-to-agent interface for on-chain data — the connective tissue between autonomous services.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. TRAJECTORY -->
+    <section>
+      <div class="sec-head">Trajectory</div>
+      <div class="traj">
+        <div class="traj-row">
+          <span class="traj-year mono">2026 →</span>
+          <div class="traj-body"><strong>Independent Blockchain Architect</strong><span>Advising founders on protocol design, agent infrastructure and the rails the next wave transacts on.</span></div>
+        </div>
+        <div class="traj-row">
+          <span class="traj-year mono">2024 – 26</span>
+          <div class="traj-body"><strong>Pexu.ai <span style="font-weight:400;color:var(--muted)">(formerly Autonomy)</span></strong><span>Built the multi-rail distribution engine and economic layer powering the on-chain agent economy.</span></div>
+        </div>
+        <div class="traj-row">
+          <span class="traj-year mono">2020 – 24</span>
+          <div class="traj-body"><strong>Autonomy</strong><span>Led architecture for a Cosmos-SDK creator-economy network — token issuance, governance and delivery.</span></div>
+        </div>
+        <div class="traj-row">
+          <span class="traj-year mono">2018 – 20</span>
+          <div class="traj-body"><strong>Cosmic Tech Labs</strong><span>Shipped content-distribution and explorer products from Solidity into the Cosmos ecosystem.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. CONTACT CLOSE -->
+    <section id="contact" class="close">
+      <p class="line">Have a fragile idea that needs to ship as something people trust?</p>
+      <div class="close-row">
+        <a class="btn" href="#">Book a call <span class="arr" aria-hidden="true">→</span></a>
+        <div class="close-links">
+          <a href="mailto:saisunkari19@protonmail.com">saisunkari19@protonmail.com</a>
+          <a href="https://github.com/saiSunkari19">GitHub @saiSunkari19</a>
+          <span class="meta">Hyderabad · UTC+5:30 · Available for architecture &amp; advisory</span>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p class="note mono">Layout exploration · S4 Writing-forward · not the live site</p>
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sai Krishna Sunkari — Blockchain Architect · P1 Proof-led</title>
+<meta name="description" content="Sai Krishna Sunkari — Blockchain Architect. I architect decentralized systems and lead the teams that ship them." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#f6f5f1; --paper-2:#efeee9;
+    --ink:#111110; --ink-2:#2a2a26;
+    --muted:#565651; --faint:#6f6f69;
+    --hair:#d6d5cf; --hair-2:#c4c3bc;
+    --accent:#1f3aff; --accent-ink:#1730d8;
+
+    --sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --mono:"Spline Sans Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+    --rail:290px;
+    --gut:clamp(1.25rem,4vw,3.25rem);
+    --maxw:1180px;
+
+    /* z-index scale */
+    --z-base:0; --z-sticky:100; --z-bar:200; --z-focus:300;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink-2);
+    font-family:var(--sans);
+    font-weight:400;
+    font-size:clamp(1rem,0.97rem + 0.18vw,1.0625rem);
+    line-height:1.6;
+    letter-spacing:-0.005em;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  ::selection{background:rgba(31,58,255,0.14);}
+
+  a{color:inherit;}
+  a:focus-visible,button:focus-visible,.book:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+    border-radius:1px;
+  }
+
+  /* ---------- shell ---------- */
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 var(--gut);
+  }
+  .shell{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) var(--rail);
+    gap:0;
+    align-items:start;
+  }
+  .content{
+    min-width:0;
+    padding:clamp(2.5rem,5vw,4.5rem) clamp(1.75rem,3.5vw,3.5rem) 4rem 0;
+    border-right:1px solid var(--hair);
+  }
+  .rail{
+    position:sticky;
+    top:0;
+    align-self:start;
+    z-index:var(--z-sticky);
+    padding:clamp(2.5rem,5vw,4.5rem) 0 2.5rem clamp(1.75rem,3.5vw,3.25rem);
+    height:100vh;
+    overflow-y:auto;
+    overscroll-behavior:contain;
+  }
+
+  /* ---------- type helpers ---------- */
+  .mono{
+    font-family:var(--mono);
+    font-weight:400;
+    letter-spacing:0.01em;
+  }
+  .topline{
+    font-family:var(--mono);
+    font-size:0.8125rem;
+    color:var(--muted);
+    letter-spacing:0.02em;
+    margin:0 0 1.5rem;
+  }
+  .topline b{color:var(--ink-2);font-weight:500;}
+
+  /* ===================================================================
+     1 · HERO  — high weight
+     =================================================================== */
+  h1{
+    font-weight:700;
+    font-size:clamp(2.05rem,1.35rem + 3.1vw,3.6rem);
+    line-height:1.02;
+    letter-spacing:-0.035em;
+    color:var(--ink);
+    margin:0 0 1.1rem;
+    text-wrap:balance;
+    max-width:18ch;
+  }
+  h1 .em{color:var(--accent-ink);}
+  .valueprop{
+    font-size:clamp(1.1rem,1.02rem + 0.5vw,1.3rem);
+    line-height:1.5;
+    color:var(--ink-2);
+    font-weight:400;
+    margin:0 0 1.9rem;
+    max-width:54ch;
+    text-wrap:pretty;
+  }
+  .cred{
+    font-family:var(--mono);
+    font-size:0.8125rem;
+    line-height:1.9;
+    color:var(--muted);
+    letter-spacing:0.01em;
+    margin:0;
+    padding-top:1.4rem;
+    border-top:1px solid var(--hair);
+    max-width:60ch;
+  }
+  .cred b{color:var(--ink);font-weight:500;}
+  .cred .sep{color:var(--hair-2);}
+  .topline,.cred,.feat-tag,.more-tag{overflow-wrap:anywhere;}
+
+  /* section scaffolding */
+  section{scroll-margin-top:1.5rem;}
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:0.9rem;
+    margin:0 0 1.3rem;
+  }
+  .sec-head h2{
+    margin:0;
+    font-weight:600;
+    letter-spacing:-0.02em;
+    color:var(--ink);
+    line-height:1;
+  }
+  .sec-head .count{
+    font-family:var(--mono);
+    font-size:0.75rem;
+    color:var(--faint);
+    letter-spacing:0.02em;
+  }
+
+  /* ===================================================================
+     2 · FEATURED WORK  — heaviest block, the proof leads
+     =================================================================== */
+  .featured{
+    margin-top:clamp(3.5rem,6vw,5.5rem);
+  }
+  .featured .sec-head h2{
+    font-size:clamp(1rem,0.95rem + 0.3vw,1.15rem);
+  }
+  .feat-list{
+    display:flex;
+    flex-direction:column;
+    border-top:2px solid var(--ink);
+  }
+  .feat{
+    display:block;
+    text-decoration:none;
+    padding:clamp(1.9rem,3.5vw,2.7rem) 0;
+    border-bottom:1px solid var(--hair);
+    transition:padding-left .5s cubic-bezier(.16,1,.3,1);
+    position:relative;
+  }
+  .feat:last-child{border-bottom:2px solid var(--ink);}
+  .feat-top{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    gap:0.6rem 1rem;
+    margin-bottom:0.85rem;
+  }
+  .feat-name{
+    font-size:clamp(1.4rem,1.15rem + 1.05vw,1.55rem);
+    font-weight:700;
+    letter-spacing:-0.025em;
+    color:var(--ink);
+    line-height:1.05;
+    transition:color .25s ease;
+  }
+  .feat-tag{
+    font-family:var(--mono);
+    font-size:0.75rem;
+    color:var(--muted);
+    letter-spacing:0.04em;
+    white-space:nowrap;
+  }
+  .feat-arrow{
+    margin-left:auto;
+    font-family:var(--mono);
+    font-size:0.95rem;
+    color:var(--hair-2);
+    transition:transform .5s cubic-bezier(.16,1,.3,1),color .25s ease;
+  }
+  .feat-blurb{
+    font-size:1.0625rem;
+    line-height:1.55;
+    color:var(--ink-2);
+    margin:0;
+    max-width:64ch;
+    text-wrap:pretty;
+  }
+  .feat-outcome{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5em;
+    margin-top:1rem;
+    font-family:var(--mono);
+    font-size:0.8125rem;
+    color:var(--accent-ink);
+    letter-spacing:0.01em;
+    font-weight:500;
+  }
+  .feat-outcome .star{font-size:0.9em;}
+  /* hover: name + arrow get the accent; subtle indent */
+  @media (hover:hover){
+    .feat:hover{padding-left:1.1rem;}
+    .feat:hover .feat-name{color:var(--accent-ink);}
+    .feat:hover .feat-arrow{color:var(--accent);transform:translateX(4px);}
+  }
+  .feat:focus-visible{outline-offset:-2px;}
+
+  /* ===================================================================
+     3 · MORE SYSTEMS  — compact, visibly secondary
+     =================================================================== */
+  .more{margin-top:clamp(3rem,5vw,4.5rem);}
+  .more .sec-head h2{font-size:0.95rem;font-weight:600;color:var(--ink-2);}
+  .more-list{
+    display:flex;
+    flex-direction:column;
+    border-top:1px solid var(--hair);
+  }
+  .more-row{
+    display:grid;
+    grid-template-columns:minmax(9.5rem,auto) 1fr;
+    gap:0.4rem 1.4rem;
+    align-items:baseline;
+    padding:0.85rem 0;
+    border-bottom:1px solid var(--hair);
+    text-decoration:none;
+    transition:background-color .2s ease;
+  }
+  @media (hover:hover){
+    .more-row:hover{background:var(--paper-2);}
+    .more-row:hover .more-name{color:var(--accent-ink);}
+  }
+  .more-name{
+    font-weight:600;
+    font-size:0.975rem;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+    transition:color .2s ease;
+  }
+  .more-tag{
+    display:block;
+    font-family:var(--mono);
+    font-size:0.7rem;
+    color:var(--faint);
+    letter-spacing:0.03em;
+    margin-top:0.15rem;
+  }
+  .more-desc{
+    font-size:0.925rem;
+    color:var(--muted);
+    line-height:1.45;
+  }
+
+  /* ===================================================================
+     4 · WHAT I DO — concise, 3 tight rows
+     =================================================================== */
+  .offer{margin-top:clamp(3rem,5vw,4.5rem);}
+  .offer .sec-head h2{font-size:0.95rem;font-weight:600;color:var(--ink-2);}
+  .offer-list{display:flex;flex-direction:column;gap:0.95rem;}
+  .offer-row{
+    display:grid;
+    grid-template-columns:8.5rem 1fr;
+    gap:0.3rem 1.2rem;
+    align-items:baseline;
+  }
+  .offer-row dt{
+    font-weight:600;
+    color:var(--ink);
+    font-size:0.975rem;
+    letter-spacing:-0.01em;
+  }
+  .offer-row dd{
+    margin:0;
+    color:var(--ink-2);
+    font-size:0.975rem;
+    line-height:1.5;
+    max-width:56ch;
+  }
+
+  /* ===================================================================
+     5 · WRITING — supporting, light
+     =================================================================== */
+  .writing{margin-top:clamp(3rem,5vw,4.5rem);}
+  .writing .sec-head h2{font-size:0.95rem;font-weight:600;color:var(--ink-2);}
+  .post-list{display:flex;flex-direction:column;border-top:1px solid var(--hair);}
+  .post{
+    display:flex;
+    align-items:baseline;
+    gap:1rem;
+    padding:0.7rem 0;
+    border-bottom:1px solid var(--hair);
+    text-decoration:none;
+  }
+  .post-title{
+    color:var(--ink-2);
+    font-size:0.95rem;
+    font-weight:500;
+    line-height:1.4;
+    transition:color .2s ease;
+  }
+  @media (hover:hover){.post:hover .post-title{color:var(--accent-ink);}}
+  .post-date{
+    margin-left:auto;
+    font-family:var(--mono);
+    font-size:0.72rem;
+    color:var(--faint);
+    white-space:nowrap;
+  }
+  .all-writing{
+    display:inline-block;
+    margin-top:0.9rem;
+    font-family:var(--mono);
+    font-size:0.8rem;
+    color:var(--accent-ink);
+    text-decoration:none;
+    letter-spacing:0.01em;
+  }
+  .all-writing:hover{text-decoration:underline;text-underline-offset:3px;}
+
+  /* ===================================================================
+     6 · TRAJECTORY — lightest, bottom
+     =================================================================== */
+  .traj{margin-top:clamp(3rem,5vw,4.5rem);}
+  .traj .sec-head h2{font-size:0.9rem;font-weight:600;color:var(--muted);}
+  .traj-list{display:flex;flex-direction:column;gap:0.55rem;}
+  .traj-row{
+    display:grid;
+    grid-template-columns:7rem 1fr;
+    gap:1rem;
+    align-items:baseline;
+    font-size:0.9rem;
+  }
+  .traj-years{
+    font-family:var(--mono);
+    font-size:0.75rem;
+    color:var(--faint);
+    letter-spacing:0.02em;
+  }
+  .traj-role{color:var(--muted);}
+  .traj-role b{color:var(--ink-2);font-weight:600;}
+
+  /* contact anchor in flow (mostly for #contact target on mobile) */
+  #contact{margin-top:clamp(3rem,5vw,4.5rem);}
+
+  /* footer note */
+  .foot{
+    margin-top:clamp(3.5rem,6vw,5rem);
+    padding-top:1.4rem;
+    border-top:1px solid var(--hair);
+    font-family:var(--mono);
+    font-size:0.72rem;
+    color:var(--faint);
+    letter-spacing:0.02em;
+  }
+
+  /* ===================================================================
+     RIGHT RAIL
+     =================================================================== */
+  .book{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+    width:100%;
+    background:var(--accent);
+    color:#fff;
+    text-decoration:none;
+    font-weight:600;
+    font-size:0.975rem;
+    letter-spacing:-0.005em;
+    padding:0.85rem 1.1rem;
+    border:none;
+    transition:background-color .2s ease;
+  }
+  .book:hover{background:var(--accent-ink);}
+  .book .arr{font-family:var(--mono);font-weight:400;opacity:.85;}
+
+  .status{
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+    margin-top:0.9rem;
+    font-family:var(--mono);
+    font-size:0.75rem;
+    color:var(--muted);
+    letter-spacing:0.01em;
+  }
+  .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);
+    position:relative;
+    flex:none;
+  }
+  .dot::after{
+    content:"";
+    position:absolute;inset:-3px;
+    border-radius:50%;
+    border:1px solid var(--accent);
+    opacity:.5;
+    animation:pulse 2.4s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{transform:scale(.6);opacity:.6;}
+    70%{transform:scale(1.9);opacity:0;}
+    100%{opacity:0;}
+  }
+
+  .rail-block{
+    margin-top:2rem;
+    padding-top:1.5rem;
+    border-top:1px solid var(--hair);
+  }
+  .rail-label{
+    font-family:var(--mono);
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:0.13em;
+    color:var(--faint);
+    margin:0 0 0.85rem;
+  }
+
+  /* on this page nav */
+  .nav{display:flex;flex-direction:column;}
+  .nav a{
+    display:flex;
+    align-items:baseline;
+    gap:0.6rem;
+    text-decoration:none;
+    color:var(--muted);
+    font-size:0.875rem;
+    padding:0.32rem 0;
+    transition:color .18s ease;
+  }
+  .nav a .tick{
+    width:14px;height:1px;background:var(--hair-2);
+    transition:width .25s cubic-bezier(.16,1,.3,1),background-color .18s ease;
+    flex:none;align-self:center;
+  }
+  .nav a:hover{color:var(--ink-2);}
+  .nav a:hover .tick{background:var(--muted);}
+  .nav a.active{color:var(--ink);font-weight:500;}
+  .nav a.active .tick{width:26px;background:var(--accent);}
+
+  /* latest writing in rail */
+  .rail-posts{display:flex;flex-direction:column;gap:0.7rem;}
+  .rail-post{text-decoration:none;display:block;}
+  .rail-post .t{
+    display:block;
+    font-size:0.82rem;
+    line-height:1.35;
+    color:var(--ink-2);
+    transition:color .18s ease;
+  }
+  .rail-post .d{
+    font-family:var(--mono);
+    font-size:0.68rem;
+    color:var(--faint);
+    margin-top:0.1rem;
+    display:block;
+  }
+  .rail-post:hover .t{color:var(--accent-ink);}
+
+  /* contact in rail */
+  .contact-list{
+    display:flex;flex-direction:column;gap:0.5rem;
+    font-size:0.85rem;
+  }
+  .contact-list a{
+    color:var(--ink-2);
+    text-decoration:none;
+    transition:color .18s ease;
+  }
+  .contact-list a:hover{color:var(--accent-ink);}
+  .contact-list .loc{
+    font-family:var(--mono);
+    font-size:0.72rem;
+    color:var(--faint);
+    letter-spacing:0.02em;
+  }
+
+  /* mobile sticky book bar (hidden on desktop) */
+  .mobile-bar{display:none;}
+
+  /* ===================================================================
+     RESPONSIVE
+     =================================================================== */
+  @media (max-width:860px){
+    .shell{grid-template-columns:1fr;}
+    .content{
+      border-right:none;
+      padding:1.5rem 0 5.5rem;
+      order:2;
+    }
+    /* rail becomes a compact, non-sticky top block */
+    .rail{
+      position:static;
+      height:auto;
+      overflow:visible;
+      padding:clamp(1.75rem,5vw,2.5rem) 0 1.75rem;
+      border-bottom:1px solid var(--hair);
+      order:1;
+    }
+    /* hide the in-rail "on this page" + latest writing on mobile;
+       writing lives in the content flow, nav not needed on single col */
+    .rail .nav-block{display:none;}
+    .rail .rail-posts-block{display:none;}
+    .rail-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:1.5rem 2rem;
+      align-items:start;
+    }
+    .rail .book-block{grid-column:1 / -1;}
+
+    /* slim sticky book-a-call bar */
+    .mobile-bar{
+      display:flex;
+      position:fixed;
+      left:0;right:0;bottom:0;
+      z-index:var(--z-bar);
+      background:var(--paper);
+      border-top:1px solid var(--hair-2);
+      padding:0.6rem var(--gut);
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+    }
+    .mobile-bar .mb-status{
+      font-family:var(--mono);
+      font-size:0.72rem;
+      color:var(--muted);
+      display:flex;align-items:center;gap:0.45rem;
+    }
+    .mobile-bar .book{width:auto;flex:none;padding:0.6rem 1rem;font-size:0.9rem;}
+  }
+
+  @media (max-width:560px){
+    .rail-grid{grid-template-columns:1fr;gap:1.4rem;}
+    .offer-row{grid-template-columns:1fr;gap:0.15rem;}
+    .offer-row dt{font-size:0.9rem;}
+    .more-row{grid-template-columns:1fr;gap:0.2rem;}
+    .traj-row{grid-template-columns:1fr;gap:0.1rem;}
+    .feat-arrow{display:none;}
+    .feat-top{gap:0.4rem 0.8rem;}
+  }
+
+  @media (max-width:380px){
+    h1{font-size:1.85rem;}
+    .cred{font-size:0.78rem;}
+    .mobile-bar .mb-status{display:none;}
+    .mobile-bar{justify-content:stretch;}
+    .mobile-bar .book{width:100%;justify-content:center;}
+  }
+
+  /* ---------- reduced motion ---------- */
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important;}
+    .dot::after{display:none;}
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    html{scroll-behavior:smooth;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="shell">
+
+    <!-- ============================ CONTENT (LEFT) ============================ -->
+    <main class="content">
+
+      <!-- 1 · HERO -->
+      <header>
+        <p class="topline"><b>Sai Krishna Sunkari</b> — Blockchain Architect · Builder &amp; Advisor</p>
+        <h1>I architect decentralized systems, and <span class="em">lead the teams that ship them.</span></h1>
+        <p class="valueprop">I turn founders' fragile ideas into protocols people trust in production — and lead the teams that ship them.</p>
+        <p class="cred">
+          <b>7&nbsp;yrs</b> <span class="sep">·</span> <b>10+&nbsp;chains</b> <span class="sep">·</span> <b>13+&nbsp;systems</b> <span class="sep">·</span> <b>2&nbsp;industry&nbsp;awards</b> <span class="sep">·</span> EVM <span class="sep">·</span> Cosmos <span class="sep">·</span> Sui <span class="sep">·</span> Aptos <span class="sep">·</span> Movement
+        </p>
+      </header>
+
+      <!-- 2 · FEATURED WORK — heaviest block -->
+      <section id="work" class="featured" aria-labelledby="work-h">
+        <div class="sec-head">
+          <h2 id="work-h">Featured work</h2>
+          <span class="count mono">the proof, in production</span>
+        </div>
+        <div class="feat-list">
+
+          <a class="feat" href="#">
+            <div class="feat-top">
+              <span class="feat-name">DegentsAI</span>
+              <span class="feat-tag">AI AGENTS · LINEA · 2024</span>
+              <span class="feat-arrow" aria-hidden="true">→</span>
+            </div>
+            <p class="feat-blurb">Building the internet of agents: the multi-rail distribution engine and economic layer behind the agent economy.</p>
+          </a>
+
+          <a class="feat" href="#">
+            <div class="feat-top">
+              <span class="feat-name">Autonomy Network</span>
+              <span class="feat-tag">COSMOS SDK · 2020</span>
+              <span class="feat-arrow" aria-hidden="true">→</span>
+            </div>
+            <p class="feat-blurb">A decentralized creator-economy network with token-issuance modules and on-chain governance — shipped the core Cosmos SDK modules and CosmWasm contracts myself.</p>
+          </a>
+
+          <a class="feat" href="#">
+            <div class="feat-top">
+              <span class="feat-name">FreeFlix · OmniFlix</span>
+              <span class="feat-tag">SOLIDITY→COSMOS · 2018</span>
+              <span class="feat-arrow" aria-hidden="true">→</span>
+            </div>
+            <p class="feat-blurb">Decentralized content-distribution platform.</p>
+            <span class="feat-outcome"><span class="star" aria-hidden="true">★</span> Best Custom Zone, Game of Zones 2021</span>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 3 · MORE SYSTEMS — compact, secondary -->
+      <section id="more" class="more" aria-labelledby="more-h">
+        <div class="sec-head">
+          <h2 id="more-h">More systems</h2>
+          <span class="count mono">5</span>
+        </div>
+        <div class="more-list">
+          <a class="more-row" href="#">
+            <span class="more-name">Interchange DEX<span class="more-tag">COSMOS · IBC · 2021</span></span>
+            <span class="more-desc">Compliance-aware decentralized exchange.</span>
+          </a>
+          <a class="more-row" href="#">
+            <span class="more-name">Golden Triangle MF<span class="more-tag">FINTECH · 2025</span></span>
+            <span class="more-desc">Mutual-fund analytics with real screening + portfolio insight.</span>
+          </a>
+          <a class="more-row" href="#">
+            <span class="more-name">LedgerLens<span class="more-tag">A2A AGENT · 2025</span></span>
+            <span class="more-desc">Agent-to-agent interface for on-chain data.</span>
+          </a>
+          <a class="more-row" href="#">
+            <span class="more-name">Cosmic Compass<span class="more-tag">EXPLORER · 2019</span></span>
+            <span class="more-desc">Cosmos ecosystem navigator.</span>
+          </a>
+          <a class="more-row" href="#">
+            <span class="more-name">Injective Relayer API<span class="more-tag">INJECTIVE · 2021</span></span>
+            <span class="more-desc">Standard relayer with off-chain order books.</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- 4 · WHAT I DO — concise -->
+      <section id="do" class="offer" aria-labelledby="do-h">
+        <div class="sec-head">
+          <h2 id="do-h">What I do</h2>
+        </div>
+        <dl class="offer-list">
+          <div class="offer-row">
+            <dt>Architecture</dt>
+            <dd>I design the cross-chain protocols, DeFi primitives and token economics your product runs on.</dd>
+          </div>
+          <div class="offer-row">
+            <dt>Strategy</dt>
+            <dd>I weigh L1/L2 trade-offs, threat-model early and hold audit-ready standards.</dd>
+          </div>
+          <div class="offer-row">
+            <dt>Leadership</dt>
+            <dd>I own roadmap, hiring and delivery from 0→1 through scale.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- 5 · WRITING — supporting -->
+      <section id="writing" class="writing" aria-labelledby="writing-h">
+        <div class="sec-head">
+          <h2 id="writing-h">Writing</h2>
+        </div>
+        <div class="post-list">
+          <a class="post" href="#">
+            <span class="post-title">LedgerLens: an A2A agent for on-chain data</span>
+            <span class="post-date">2025</span>
+          </a>
+          <a class="post" href="#">
+            <span class="post-title">What I built in a weekend: a free mutual-fund analyser on Akash</span>
+            <span class="post-date">2025</span>
+          </a>
+          <a class="post" href="#">
+            <span class="post-title">Notes on Cosmos app-chains &amp; the agent economy</span>
+            <span class="post-date">2024</span>
+          </a>
+        </div>
+        <a class="all-writing" href="#">All writing →</a>
+      </section>
+
+      <!-- 6 · TRAJECTORY — lightest -->
+      <section id="trajectory" class="traj" aria-labelledby="traj-h">
+        <div class="sec-head">
+          <h2 id="traj-h">Trajectory</h2>
+        </div>
+        <div class="traj-list">
+          <div class="traj-row">
+            <span class="traj-years">2026 →</span>
+            <span class="traj-role"><b>Independent Blockchain Architect</b></span>
+          </div>
+          <div class="traj-row">
+            <span class="traj-years">2024–26</span>
+            <span class="traj-role"><b>Pexu.ai</b> <span aria-hidden="true">·</span> formerly Autonomy</span>
+          </div>
+          <div class="traj-row">
+            <span class="traj-years">2020–24</span>
+            <span class="traj-role"><b>Autonomy</b></span>
+          </div>
+          <div class="traj-row">
+            <span class="traj-years">2018–20</span>
+            <span class="traj-role"><b>Cosmic Tech Labs</b></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- contact anchor (rail holds the real contact info; this lets #contact resolve) -->
+      <section id="contact" aria-labelledby="contact-h">
+        <div class="sec-head">
+          <h2 id="contact-h" style="font-size:0.9rem;font-weight:600;color:var(--muted);">Contact</h2>
+        </div>
+        <div class="contact-list">
+          <a href="mailto:saisunkari19@protonmail.com">saisunkari19@protonmail.com</a>
+          <a href="https://github.com/saiSunkari19">GitHub @saiSunkari19</a>
+          <span class="loc">Hyderabad · UTC+5:30</span>
+        </div>
+      </section>
+
+      <p class="foot">Layout exploration · P1 Proof-led (S3 right rail) · not the live site</p>
+
+    </main>
+
+    <!-- ============================ RAIL (RIGHT) ============================ -->
+    <aside class="rail" aria-label="Actions and wayfinding">
+      <div class="rail-grid">
+
+        <div class="book-block">
+          <a class="book" href="#">Book a call <span class="arr" aria-hidden="true">→</span></a>
+          <div class="status">
+            <span class="dot" aria-hidden="true"></span>
+            Available for architecture &amp; advisory
+          </div>
+        </div>
+
+        <div class="rail-block nav-block">
+          <p class="rail-label">On this page</p>
+          <nav class="nav" id="spy">
+            <a href="#work"><span class="tick" aria-hidden="true"></span>Work</a>
+            <a href="#do"><span class="tick" aria-hidden="true"></span>What I do</a>
+            <a href="#writing"><span class="tick" aria-hidden="true"></span>Writing</a>
+            <a href="#trajectory"><span class="tick" aria-hidden="true"></span>Trajectory</a>
+            <a href="#contact"><span class="tick" aria-hidden="true"></span>Contact</a>
+          </nav>
+        </div>
+
+        <div class="rail-block rail-posts-block">
+          <p class="rail-label">Latest writing</p>
+          <div class="rail-posts">
+            <a class="rail-post" href="#">
+              <span class="t">LedgerLens: an A2A agent for on-chain data</span>
+              <span class="d">2025</span>
+            </a>
+            <a class="rail-post" href="#">
+              <span class="t">A free mutual-fund analyser on Akash</span>
+              <span class="d">2025</span>
+            </a>
+            <a class="rail-post" href="#">
+              <span class="t">Notes on Cosmos app-chains &amp; the agent economy</span>
+              <span class="d">2024</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="rail-block contact-block">
+          <p class="rail-label">Contact</p>
+          <div class="contact-list">
+            <a href="mailto:saisunkari19@protonmail.com">saisunkari19@protonmail.com</a>
+            <a href="https://github.com/saiSunkari19">GitHub @saiSunkari19</a>
+            <span class="loc">Hyderabad · UTC+5:30</span>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<!-- slim sticky book bar (mobile only) -->
+<div class="mobile-bar" aria-hidden="false">
+  <span class="mb-status"><span class="dot" aria-hidden="true"></span>Available</span>
+  <a class="book" href="#">Book a call <span class="arr" aria-hidden="true">→</span></a>
+</div>
+
+<script>
+/* Scroll-spy for the "On this page" rail nav. Progressive enhancement only. */
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('#spy a'));
+  if(!links.length || !('IntersectionObserver' in window)) return;
+  var map = {};
+  links.forEach(function(a){
+    var id = a.getAttribute('href').slice(1);
+    var el = document.getElementById(id);
+    if(el) map[id] = a;
+  });
+  var visible = {};
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      visible[e.target.id] = e.isIntersecting ? e.intersectionRatio : 0;
+    });
+    var bestId = null, best = 0;
+    Object.keys(visible).forEach(function(id){
+      if(visible[id] > best){ best = visible[id]; bestId = id; }
+    });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    if(bestId && map[bestId]) map[bestId].classList.add('active');
+  }, { rootMargin:'-15% 0px -55% 0px', threshold:[0,0.25,0.5,1] });
+  Object.keys(map).forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) io.observe(el);
+  });
+})();
+</script>
+</body>
+</html>

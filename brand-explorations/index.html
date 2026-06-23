@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Brand explorations — variations</title>
+<style>
+  :root{--g:#cbb482;}
+  body{margin:0;font-family:ui-sans-serif,system-ui,sans-serif;background:#14161a;color:#e7e7e7;}
+  header{padding:24px 26px 18px;border-bottom:1px solid #2a2d33;position:sticky;top:0;background:#14161a;z-index:5;}
+  header h1{margin:0 0 6px;font-size:17px;font-weight:600;}
+  header p{margin:0 0 14px;font-size:13px;color:#9aa0a8;max-width:80ch;}
+  .bar{display:flex;gap:8px;flex-wrap:wrap;}
+  .bar a{font-size:12.5px;color:var(--g);text-decoration:none;border:1px solid #3a3d44;padding:7px 12px;border-radius:5px;}
+  .bar a:hover{border-color:var(--g);}
+  .bar .sep{flex-basis:100%;height:0;}
+  .bar .old{color:#7f8790;border-color:#2a2d33;font-size:11.5px;}
+  section{border-bottom:1px solid #2a2d33;}
+  .cap{display:flex;justify-content:space-between;align-items:baseline;padding:12px 26px;gap:12px;flex-wrap:wrap;}
+  .cap h2{margin:0;font-size:14px;font-weight:600;}
+  .cap h2 b{color:var(--g);}
+  .cap .d{font-size:12.5px;color:#9aa0a8;}
+  .cap a{font-size:11.5px;color:var(--g);text-decoration:none;}
+  iframe{display:block;width:100%;height:86vh;border:0;border-top:1px solid #2a2d33;background:#fff;}
+</style>
+</head>
+<body>
+  <header>
+    <h1>Brand explorations — three different worlds</h1>
+    <p>Genuinely distinct directions, same real content, off-reflex fonts, no banned patterns. Scroll each frame, or open full-screen. Throwaway comps — they don't touch the live site.</p>
+    <div class="bar">
+      <a href="p3-two-pillars.html" target="_blank">★ P3 · Two-pillar (strategy-driven)</a>
+      <a href="p1-proof-led.html" target="_blank">↗ P1 · Proof-led</a>
+      <a href="p2-pitch-led.html" target="_blank">↗ P2 · Pitch-led</a>
+      <span class="sep"></span>
+      <a class="old" href="http://localhost:4321/" target="_blank">current · live index</a>
+    </div>
+  </header>
+
+  <section>
+    <div class="cap"><h2>P3 · <b>Two-pillar</b> — strategy-driven (S3 right rail)</h2><span class="d">orient → <b>Selected Work + Trajectory as co-equal heavy pillars</b> → lighter what-I-do / writing / ventures</span><a href="p3-two-pillars.html" target="_blank">full ↗</a></div>
+    <iframe src="p3-two-pillars.html" title="P3 Two-pillar"></iframe>
+  </section>
+
+  <section>
+    <div class="cap"><h2>P1 · <b>Proof-led</b> (S3 right rail)</h2><span class="d">hero + credibility → FEATURED WORK dominates → lighter what-I-do / writing / trajectory</span><a href="p1-proof-led.html" target="_blank">full ↗</a></div>
+    <iframe src="p1-proof-led.html" title="P1 Proof-led"></iframe>
+  </section>
+
+  <section>
+    <div class="cap"><h2>P2 · <b>Pitch-led</b> (S3 right rail)</h2><span class="d">hero value-prop → HOW I HELP leads → proof backs it → lighter writing / trajectory</span><a href="p2-pitch-led.html" target="_blank">full ↗</a></div>
+    <iframe src="p2-pitch-led.html" title="P2 Pitch-led"></iframe>
+  </section>
+</body>
+</html>

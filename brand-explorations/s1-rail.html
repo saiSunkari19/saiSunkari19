@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sai Krishna Sunkari — Blockchain Architect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #f6f5f1;
+    --paper-2: #efeee9;
+    --ink: #111110;
+    --ink-2: #2a2a26;
+    --muted: #565651;
+    --faint: #6f6f69;
+    --hair: #d6d5cf;
+    --hair-2: #c4c3bc;
+    --accent: #1f3aff;
+    --accent-ink: #1730d8;
+
+    --sans: "Hanken Grotesk", system-ui, sans-serif;
+    --mono: "Spline Sans Mono", ui-monospace, monospace;
+
+    --rail-w: 320px;
+    --content-max: 70ch;
+    --gutter: clamp(24px, 5vw, 72px);
+
+    /* z-scale */
+    --z-rail: 10;
+    --z-topbar: 20;
+    --z-focus: 30;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink-2);
+    font-family: var(--sans);
+    font-size: 16.5px;
+    line-height: 1.6;
+    font-weight: 400;
+    letter-spacing: 0.002em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: inherit; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ---------- shell ---------- */
+  .shell {
+    display: grid;
+    grid-template-columns: var(--rail-w) minmax(0, 1fr);
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* ---------- left rail ---------- */
+  .rail {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    height: 100dvh;
+    padding: clamp(28px, 3.4vw, 44px) clamp(24px, 2.4vw, 38px);
+    border-right: 1px solid var(--hair);
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    z-index: var(--z-rail);
+    background: var(--paper);
+    overflow-y: auto;
+  }
+
+  .rail__top { display: flex; flex-direction: column; gap: 18px; }
+
+  .identity .name {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.018em;
+    line-height: 1.18;
+    color: var(--ink);
+    margin: 0;
+  }
+  .identity .role {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    margin: 7px 0 0;
+  }
+
+  .positioning {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin: 0;
+    max-width: 30ch;
+    text-wrap: pretty;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+  }
+  .status .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    position: relative;
+    flex: none;
+  }
+  .status .dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    opacity: 0;
+    animation: pulse 2.6s ease-out infinite;
+  }
+  @keyframes pulse {
+    0%   { transform: scale(0.6); opacity: 0.7; }
+    70%  { transform: scale(1.5); opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  .btn-book {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px 18px;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.004em;
+    text-decoration: none;
+    border-radius: 7px;
+    transition: background 180ms cubic-bezier(0.22,1,0.36,1), transform 180ms cubic-bezier(0.22,1,0.36,1);
+  }
+  .btn-book:hover { background: var(--accent-ink); }
+  .btn-book:active { transform: translateY(1px); }
+  .btn-book .arrow { transition: transform 200ms cubic-bezier(0.22,1,0.36,1); }
+  .btn-book:hover .arrow { transform: translateX(3px); }
+
+  /* rail nav */
+  .rail__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    border-top: 1px solid var(--hair);
+    padding-top: 22px;
+    margin-top: 2px;
+  }
+  .navlink {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 7px 0;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 14.5px;
+    font-weight: 500;
+    letter-spacing: -0.004em;
+    transition: color 150ms ease;
+  }
+  .navlink .idx {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--hair-2);
+    width: 1.4em;
+    flex: none;
+    transition: color 150ms ease;
+  }
+  .navlink:hover { color: var(--ink); }
+  .navlink:hover .idx { color: var(--faint); }
+  .navlink[aria-current="true"] {
+    color: var(--accent-ink);
+    font-weight: 600;
+  }
+  .navlink[aria-current="true"] .idx { color: var(--accent); }
+  .navlink[aria-current="true"]::before {
+    content: "";
+    position: absolute;
+    left: calc(-1 * clamp(24px, 2.4vw, 38px));
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 16px;
+    background: var(--accent);
+    border-radius: 1px;
+  }
+  /* mono nav index column kept narrow; active rule sits in the gutter */
+
+  .rail__foot {
+    margin-top: auto;
+    padding-top: 22px;
+    border-top: 1px solid var(--hair);
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .rail__foot a, .rail__foot span {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.01em;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .rail__foot a { display: inline-flex; align-items: center; gap: 7px; }
+  .rail__foot a:hover { color: var(--accent-ink); }
+  .rail__foot .loc { color: var(--faint); }
+
+  /* ---------- content ---------- */
+  .content {
+    padding: clamp(40px, 6vw, 100px) var(--gutter) 80px;
+    min-width: 0;
+  }
+  .col { max-width: var(--content-max); }
+
+  section { scroll-margin-top: 28px; }
+
+  .sec + .sec { margin-top: clamp(54px, 7vw, 96px); }
+
+  .sec__head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin: 0 0 26px;
+  }
+  .sec__head h2 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0;
+    flex: none;
+  }
+  .sec__head .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--hair);
+    transform: translateY(-3px);
+  }
+
+  /* intro */
+  .intro h1 {
+    font-size: clamp(30px, 4.6vw, 50px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.026em;
+    color: var(--ink);
+    margin: 0 0 26px;
+    max-width: 17ch;
+    text-wrap: balance;
+  }
+  .intro .lead {
+    font-size: clamp(16.5px, 1.5vw, 18px);
+    line-height: 1.62;
+    color: var(--ink-2);
+    margin: 0;
+    max-width: 60ch;
+    text-wrap: pretty;
+  }
+  .intro .meta {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+  }
+  .chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    padding: 4px 0;
+    position: relative;
+  }
+  .chip:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -9px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--hair-2);
+  }
+
+  /* what i do */
+  .doitem + .doitem {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hair);
+  }
+  .doitem h3 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0 0 7px;
+  }
+  .doitem p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 16px;
+    line-height: 1.58;
+    max-width: 64ch;
+    text-wrap: pretty;
+  }
+
+  /* systems */
+  .sys { display: flex; flex-direction: column; }
+  .sysrow {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 24px;
+    align-items: baseline;
+    padding: 18px 0;
+    border-top: 1px solid var(--hair);
+    transition: background 150ms ease;
+  }
+  .sys .sysrow:last-child { border-bottom: 1px solid var(--hair); }
+  .sysrow .name {
+    font-size: 16.5px;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    grid-column: 1;
+  }
+  .sysrow .tag {
+    grid-column: 2;
+    grid-row: 1;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: var(--faint);
+    white-space: nowrap;
+    text-align: right;
+  }
+  .sysrow .blurb {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.5;
+    max-width: 62ch;
+  }
+
+  /* writing */
+  .writing {
+    background: var(--paper-2);
+    margin-left: calc(-1 * clamp(16px, 2vw, 28px));
+    margin-right: calc(-1 * clamp(16px, 2vw, 28px));
+    padding: clamp(26px, 3vw, 36px) clamp(16px, 2vw, 28px);
+    border-radius: 10px;
+    border: 1px solid var(--hair);
+  }
+  .writing .sec__head { margin-bottom: 8px; }
+  .post {
+    display: block;
+    text-decoration: none;
+    padding: 18px 0;
+    border-top: 1px solid var(--hair);
+  }
+  .post:first-of-type { border-top: 1px solid var(--hair-2); margin-top: 14px; }
+  .post .ptop {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 18px;
+  }
+  .post .ptitle {
+    font-size: 16.5px;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    line-height: 1.32;
+    transition: color 150ms ease;
+    text-wrap: pretty;
+  }
+  .post .pdate {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--faint);
+    white-space: nowrap;
+    flex: none;
+  }
+  .post .pexc {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.5;
+    max-width: 60ch;
+  }
+  .post:hover .ptitle { color: var(--accent-ink); }
+  .writing__all {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 22px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.01em;
+    color: var(--accent-ink);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .writing__all .arrow { transition: transform 200ms cubic-bezier(0.22,1,0.36,1); }
+  .writing__all:hover .arrow { transform: translateX(4px); }
+
+  /* trajectory */
+  .traj { display: flex; flex-direction: column; }
+  .trajrow {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 6px 22px;
+    padding: 18px 0;
+    border-top: 1px solid var(--hair);
+  }
+  .traj .trajrow:last-child { border-bottom: 1px solid var(--hair); }
+  .trajrow .yr {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent-ink);
+    letter-spacing: 0;
+    padding-top: 2px;
+  }
+  .trajrow .rname {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .trajrow .rdesc {
+    grid-column: 2;
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.5;
+    max-width: 56ch;
+  }
+
+  /* contact */
+  .contact .closing {
+    font-size: clamp(20px, 2.4vw, 26px);
+    font-weight: 600;
+    line-height: 1.28;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    margin: 0 0 26px;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  .contact__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 26px;
+  }
+  .contact .btn-book { width: auto; padding: 13px 26px; }
+  .contact__links { display: flex; flex-direction: column; gap: 5px; }
+  .contact__links a {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .contact__links a:hover { color: var(--accent-ink); }
+
+  footer.note {
+    margin-top: clamp(54px, 7vw, 84px);
+    padding-top: 22px;
+    border-top: 1px solid var(--hair);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: var(--faint);
+  }
+
+  /* ---------- top bar (mobile) ---------- */
+  .topbar { display: none; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px) {
+    .shell { grid-template-columns: 1fr; }
+
+    .topbar {
+      display: flex;
+      position: sticky;
+      top: 0;
+      z-index: var(--z-topbar);
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px clamp(18px, 5vw, 28px);
+      background: rgba(246, 245, 241, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--hair);
+    }
+    .topbar .tbname {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.016em;
+      color: var(--ink);
+    }
+    .topbar .btn-book {
+      width: auto;
+      padding: 8px 15px;
+      font-size: 13.5px;
+      border-radius: 6px;
+    }
+
+    .rail {
+      position: static;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--hair);
+      padding: clamp(26px, 6vw, 40px) clamp(18px, 5vw, 28px);
+      gap: 22px;
+      overflow: visible;
+    }
+    .positioning { max-width: 46ch; }
+    .navlink[aria-current="true"]::before { display: none; }
+    .rail__nav {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px 18px;
+    }
+    .rail__foot { margin-top: 4px; }
+
+    .content { padding: clamp(34px, 8vw, 56px) clamp(18px, 5vw, 28px) 64px; }
+    .col { max-width: none; }
+    .writing { margin-left: 0; margin-right: 0; }
+  }
+
+  @media (max-width: 460px) {
+    .sysrow { grid-template-columns: 1fr; }
+    .sysrow .tag { grid-column: 1; grid-row: auto; text-align: left; margin-top: 2px; }
+    .trajrow { grid-template-columns: 1fr; }
+    .trajrow .rdesc { grid-column: 1; }
+    .post .ptop { flex-direction: column; gap: 4px; }
+    .rail__nav { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+    .status .dot::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- mobile sticky top bar -->
+  <div class="topbar">
+    <span class="tbname">Sai Krishna Sunkari</span>
+    <a class="btn-book" href="#">Book a call</a>
+  </div>
+
+  <div class="shell">
+
+    <!-- ============ LEFT RAIL ============ -->
+    <aside class="rail">
+      <div class="rail__top">
+        <div class="identity">
+          <p class="name">Sai Krishna Sunkari</p>
+          <p class="role">Blockchain Architect · Builder &amp; Advisor</p>
+        </div>
+
+        <p class="positioning">I turn founders' fragile ideas into protocols people trust in production.</p>
+
+        <span class="status">
+          <span class="dot" aria-hidden="true"></span>
+          Available for architecture &amp; advisory
+        </span>
+
+        <a class="btn-book" href="#">
+          Book a call
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <nav class="rail__nav" aria-label="Sections">
+        <a class="navlink" href="#do"><span class="idx" aria-hidden="true">01</span>What I do</a>
+        <a class="navlink" href="#systems"><span class="idx" aria-hidden="true">02</span>Systems</a>
+        <a class="navlink" href="#writing"><span class="idx" aria-hidden="true">03</span>Writing</a>
+        <a class="navlink" href="#contact"><span class="idx" aria-hidden="true">04</span>Contact</a>
+      </nav>
+
+      <div class="rail__foot">
+        <a href="mailto:saisunkari19@protonmail.com">saisunkari19@protonmail.com</a>
+        <a href="https://github.com/saiSunkari19">GitHub · @saiSunkari19</a>
+        <span class="loc">Hyderabad · UTC+5:30</span>
+      </div>
+    </aside>
+
+    <!-- ============ CONTENT ============ -->
+    <main class="content">
+      <div class="col">
+
+        <!-- intro -->
+        <section class="sec intro" id="intro">
+          <h1>I architect decentralized systems, and lead the teams that ship them.</h1>
+          <p class="lead">For seven years I've taken founders' early, fragile ideas and turned them into protocols people trust in production — across EVM, Cosmos, Sui, Aptos &amp; Movement. Today I build the autonomous AI agents, and the rails they transact on, that come next.</p>
+          <div class="meta">
+            <span class="chip">EVM</span>
+            <span class="chip">Cosmos SDK</span>
+            <span class="chip">Sui</span>
+            <span class="chip">Aptos</span>
+            <span class="chip">Movement</span>
+            <span class="chip">AI agents</span>
+          </div>
+        </section>
+
+        <!-- what i do -->
+        <section class="sec" id="do">
+          <div class="sec__head"><h2>What I do</h2><span class="rule" aria-hidden="true"></span></div>
+
+          <div class="doitem">
+            <h3>Architecture</h3>
+            <p>I design the cross-chain protocols, DeFi primitives and token economics your product runs on, across EVM, Cosmos SDK app-chains, Sui, Aptos and Movement.</p>
+          </div>
+          <div class="doitem">
+            <h3>Strategy</h3>
+            <p>I help you weigh L1/L2 trade-offs, threat-model early and hold audit-ready standards, so security and decentralization never cost you your speed to market.</p>
+          </div>
+          <div class="doitem">
+            <h3>Leadership</h3>
+            <p>I own roadmap, hiring and delivery from 0→1 through scale, and keep the team steady across smart contracts, backend and AI-agent layers.</p>
+          </div>
+        </section>
+
+        <!-- systems -->
+        <section class="sec" id="systems">
+          <div class="sec__head"><h2>Selected systems</h2><span class="rule" aria-hidden="true"></span></div>
+
+          <div class="sys">
+            <div class="sysrow">
+              <span class="name">DegentsAI</span>
+              <span class="tag">AI AGENTS · 2024</span>
+              <p class="blurb">The multi-rail distribution engine and economic layer behind the agent economy on Linea.</p>
+            </div>
+            <div class="sysrow">
+              <span class="name">Autonomy Network</span>
+              <span class="tag">COSMOS SDK · 2020</span>
+              <p class="blurb">Decentralized creator-economy network with token-issuance modules and community governance.</p>
+            </div>
+            <div class="sysrow">
+              <span class="name">FreeFlix · OmniFlix</span>
+              <span class="tag">SOLIDITY→COSMOS · 2018</span>
+              <p class="blurb">Decentralized content-distribution platform — Best Custom Zone, Game of Zones 2021.</p>
+            </div>
+            <div class="sysrow">
+              <span class="name">Interchange DEX</span>
+              <span class="tag">COSMOS · IBC · 2021</span>
+              <p class="blurb">A compliance-aware decentralized exchange for digital assets.</p>
+            </div>
+            <div class="sysrow">
+              <span class="name">Golden Triangle MF</span>
+              <span class="tag">FINTECH · 2025</span>
+              <p class="blurb">Mutual-fund analytics that give everyday investors real screening and portfolio insight.</p>
+            </div>
+            <div class="sysrow">
+              <span class="name">LedgerLens</span>
+              <span class="tag">A2A AGENT · 2025</span>
+              <p class="blurb">An agent-to-agent interface for on-chain data.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- writing -->
+        <section class="sec" id="writing">
+          <div class="writing">
+            <div class="sec__head"><h2>Writing</h2><span class="rule" aria-hidden="true"></span></div>
+
+            <a class="post" href="#">
+              <span class="ptop">
+                <span class="ptitle">LedgerLens: an A2A agent for on-chain data</span>
+                <span class="pdate">2025</span>
+              </span>
+              <p class="pexc">How agents query and trust on-chain data through an A2A interface.</p>
+            </a>
+            <a class="post" href="#">
+              <span class="ptop">
+                <span class="ptitle">What I built in a weekend: a free mutual-fund analyser on Akash</span>
+                <span class="pdate">2025</span>
+              </span>
+              <p class="pexc">Shipping a real fintech tool on decentralized compute in 48 hours.</p>
+            </a>
+            <a class="post" href="#">
+              <span class="ptop">
+                <span class="ptitle">Notes on Cosmos app-chains &amp; the agent economy</span>
+                <span class="pdate">2024</span>
+              </span>
+              <p class="pexc">Where app-chains and autonomous agents meet.</p>
+            </a>
+
+            <a class="writing__all" href="#">All writing <span class="arrow" aria-hidden="true">→</span></a>
+          </div>
+        </section>
+
+        <!-- trajectory -->
+        <section class="sec" id="trajectory">
+          <div class="sec__head"><h2>Trajectory</h2><span class="rule" aria-hidden="true"></span></div>
+
+          <div class="traj">
+            <div class="trajrow">
+              <span class="yr">2026→</span>
+              <p class="rname">Independent Blockchain Architect</p>
+              <p class="rdesc">Advisory and fractional lead work for founders building protocols and agent systems.</p>
+            </div>
+            <div class="trajrow">
+              <span class="yr">2024–26</span>
+              <p class="rname">Blockchain Architect, Pexu.ai</p>
+              <p class="rdesc">Formerly Autonomy — leading architecture across the agent economy and its rails.</p>
+            </div>
+            <div class="trajrow">
+              <span class="yr">2020–24</span>
+              <p class="rname">Blockchain Engineer, Autonomy</p>
+              <p class="rdesc">Built Cosmos SDK app-chains, token-issuance modules and on-chain governance.</p>
+            </div>
+            <div class="trajrow">
+              <span class="yr">2018–20</span>
+              <p class="rname">Engineer, Cosmic Tech Labs</p>
+              <p class="rdesc">Shipped early decentralized content and exchange systems across Solidity and Cosmos.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- contact -->
+        <section class="sec contact" id="contact">
+          <div class="sec__head"><h2>Contact</h2><span class="rule" aria-hidden="true"></span></div>
+
+          <p class="closing">Have an idea that's still fragile? Let's make it something people trust.</p>
+
+          <div class="contact__cta">
+            <a class="btn-book" href="#">
+              Book a call
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <div class="contact__links">
+              <a href="mailto:saisunkari19@protonmail.com">saisunkari19@protonmail.com</a>
+              <a href="https://github.com/saiSunkari19">GitHub · @saiSunkari19</a>
+            </div>
+          </div>
+
+          <footer class="note">Layout exploration · S1 Refined rail · not the live site</footer>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    // Scroll-spy for rail nav active state.
+    (function () {
+      var links = Array.prototype.slice.call(document.querySelectorAll('.navlink'));
+      var map = {};
+      links.forEach(function (l) {
+        var id = l.getAttribute('href').slice(1);
+        map[id] = l;
+      });
+      // map intro -> first nav target visually grouped under "What I do"
+      var watch = ['do', 'systems', 'writing', 'contact'];
+      var sections = watch.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+
+      function setActive(id) {
+        links.forEach(function (l) { l.removeAttribute('aria-current'); });
+        if (map[id]) map[id].setAttribute('aria-current', 'true');
+      }
+
+      if ('IntersectionObserver' in window) {
+        var visible = {};
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            visible[e.target.id] = e.isIntersecting ? e.intersectionRatio : 0;
+          });
+          // pick the topmost intersecting section
+          var best = null, bestTop = Infinity;
+          sections.forEach(function (s) {
+            var r = s.getBoundingClientRect();
+            if (r.bottom > 90 && r.top < window.innerHeight * 0.5) {
+              if (r.top < bestTop) { bestTop = r.top; best = s.id; }
+            }
+          });
+          if (best) setActive(best);
+        }, { rootMargin: '-20% 0px -55% 0px', threshold: [0, 0.25, 0.6, 1] });
+        sections.forEach(function (s) { io.observe(s); });
+      }
+    })();
+  </script>
+
+</body>
+</html>

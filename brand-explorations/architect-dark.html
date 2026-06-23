@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Brand exploration — Architect's Drawing (Dark / Cyanotype)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Archivo+Expanded:wght@600;700;800&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0a131e;          /* deep blueprint navy */
+    --bg-2:#0c1722;
+    --panel:#0e1b29;
+    --line:#21384c;        /* construction hairline */
+    --line-2:#2d4a64;
+    --cyan:#5b93b8;        /* blueprint draughting line */
+    --ink:#e9f0f5;         /* blueprint white */
+    --ink-2:#c2d2de;
+    --muted:#8aa1b3;
+    --faint:#6f879a;
+    --gold:#cda566;        /* single signal accent (bridges current brand) */
+    --gold-hi:#e0bd85;
+    --f-disp:'Archivo Expanded',system-ui,sans-serif;
+    --f-sans:'Archivo',system-ui,sans-serif;
+    --f-mono:'Spline Sans Mono',ui-monospace,monospace;
+    --pad:clamp(20px,4vw,56px);
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;background:var(--bg);color:var(--ink-2);font-family:var(--f-sans);
+    -webkit-font-smoothing:antialiased;line-height:1.5;
+    /* construction grid — the draughtsman's paper */
+    background-image:
+      linear-gradient(var(--line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:46px 46px;background-position:-1px -1px;
+  }
+  body::before{
+    /* darken the grid toward the edges so content reads */
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(120% 90% at 50% 0%,rgba(10,19,30,.35),var(--bg) 75%);
+  }
+  .sheet{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:var(--pad);}
+
+  /* drawing border + registration ticks */
+  .frame{position:fixed;inset:14px;border:1px solid var(--line-2);pointer-events:none;z-index:2;}
+  .frame i{position:absolute;width:9px;height:9px;border:1px solid var(--cyan);}
+  .frame i:nth-child(1){top:-1px;left:-1px;border-right:0;border-bottom:0;}
+  .frame i:nth-child(2){top:-1px;right:-1px;border-left:0;border-bottom:0;}
+  .frame i:nth-child(3){bottom:-1px;left:-1px;border-right:0;border-top:0;}
+  .frame i:nth-child(4){bottom:-1px;right:-1px;border-left:0;border-top:0;}
+
+  /* top rule — sheet header */
+  .head{display:flex;justify-content:space-between;align-items:baseline;gap:18px;
+    font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--faint);
+    text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:14px;flex-wrap:wrap;}
+  .head b{color:var(--ink);font-weight:500;}
+  .head .cta{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;color:var(--bg);
+    background:var(--gold);text-decoration:none;padding:7px 14px;border-radius:2px;text-transform:uppercase;}
+
+  /* hero */
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,72px);
+    align-items:center;padding:clamp(40px,7vw,86px) 0 clamp(30px,5vw,60px);}
+  .dwg-label{font-family:var(--f-mono);font-size:12px;letter-spacing:.22em;color:var(--gold);
+    text-transform:uppercase;margin:0 0 22px;display:flex;align-items:center;gap:12px;}
+  .dwg-label::before{content:"";width:34px;height:1px;background:var(--gold);}
+  h1{font-family:var(--f-disp);font-weight:700;color:var(--ink);
+    font-size:clamp(33px,5.1vw,58px);line-height:1.02;letter-spacing:-.02em;margin:0 0 26px;text-wrap:balance;}
+  h1 em{font-style:normal;color:var(--gold);}
+  .lead{font-size:clamp(15px,1.5vw,17px);color:var(--muted);max-width:48ch;margin:0 0 32px;text-wrap:pretty;}
+  .lead em{color:var(--ink-2);font-style:normal;}
+  .actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+  .btn{font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;text-decoration:none;
+    padding:13px 22px;border-radius:2px;text-transform:uppercase;transition:transform .2s,background .2s,border-color .2s;}
+  .btn-gold{background:var(--gold);color:var(--bg);font-weight:500;}
+  .btn-gold:hover{background:var(--gold-hi);transform:translateY(-2px);}
+  .btn-ghost{border:1px solid var(--line-2);color:var(--ink-2);}
+  .btn-ghost:hover{border-color:var(--gold);}
+
+  /* schematic */
+  .schematic{position:relative;border:1px solid var(--line);background:rgba(8,16,25,.5);padding:18px;}
+  .schematic .tag{position:absolute;top:-1px;left:-1px;font-family:var(--f-mono);font-size:10px;
+    letter-spacing:.16em;color:var(--faint);background:var(--bg);padding:4px 9px;border:1px solid var(--line);text-transform:uppercase;}
+  .schematic svg{display:block;width:100%;height:auto;}
+
+  /* dimension-line stats (NOT a hero-metric band) */
+  .dims{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .dim{padding:26px 22px;position:relative;}
+  .dim+.dim{border-left:1px solid var(--line);}
+  .dim .val{font-family:var(--f-disp);font-weight:700;font-size:clamp(26px,3.4vw,38px);color:var(--ink);line-height:1;}
+  .dim .lbl{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase;margin-top:10px;}
+  /* tick marks like a measured dimension */
+  .dim::before{content:"";position:absolute;left:22px;right:22px;top:14px;height:1px;
+    background:repeating-linear-gradient(90deg,var(--line-2) 0 1px,transparent 1px 8px);}
+  .dim::after{content:"";position:absolute;left:22px;top:10px;width:1px;height:9px;background:var(--cyan);}
+
+  /* systems index */
+  .idx{padding:clamp(34px,5vw,60px) 0 0;}
+  .idx-h{font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;color:var(--gold);
+    text-transform:uppercase;margin:0 0 22px;display:flex;align-items:center;gap:12px;}
+  .idx-h::before{content:"";width:34px;height:1px;background:var(--gold);}
+  .rows{border-top:1px solid var(--line);}
+  .row{display:grid;grid-template-columns:64px 1fr auto auto;gap:20px;align-items:baseline;
+    padding:18px 4px;border-bottom:1px solid var(--line);font-size:14px;}
+  .row .no{font-family:var(--f-mono);font-size:12px;color:var(--faint);letter-spacing:.1em;}
+  .row .nm{color:var(--ink);font-weight:500;}
+  .row .ds{color:var(--muted);font-size:13.5px;}
+  .row .yr{font-family:var(--f-mono);font-size:12px;color:var(--gold);letter-spacing:.08em;justify-self:end;}
+  .row:hover{background:rgba(205,165,102,.04);}
+
+  /* title block — the signature motif */
+  .titleblock{margin-top:clamp(40px,6vw,70px);border:1px solid var(--line-2);
+    display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;font-family:var(--f-mono);}
+  .titleblock div{padding:12px 14px;border-right:1px solid var(--line);}
+  .titleblock div:last-child{border-right:0;}
+  .titleblock .k{font-size:9.5px;letter-spacing:.16em;color:var(--faint);text-transform:uppercase;}
+  .titleblock .v{font-size:13px;color:var(--ink);margin-top:5px;letter-spacing:.04em;}
+  .titleblock .v.gold{color:var(--gold);}
+
+  .note{font-family:var(--f-mono);font-size:11px;color:var(--faint);letter-spacing:.08em;
+    text-align:center;margin:30px 0 6px;text-transform:uppercase;}
+
+  @media (max-width:880px){
+    .hero{grid-template-columns:1fr;}
+    .schematic{order:-1;}
+    .dims{grid-template-columns:repeat(2,1fr);}
+    .dim:nth-child(3),.dim:nth-child(4){border-top:1px solid var(--line);}
+    .dim:nth-child(3){border-left:0;}
+    .row{grid-template-columns:42px 1fr;gap:10px;}
+    .row .ds,.row .yr{grid-column:2;justify-self:start;}
+    .titleblock{grid-template-columns:1fr 1fr;}
+    .titleblock div:nth-child(2){border-right:0;}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+</head>
+<body>
+  <div class="frame"><i></i><i></i><i></i><i></i></div>
+
+  <div class="sheet">
+    <div class="head">
+      <span>DWG. <b>A-01</b> · SUNKARI / ARCHITECT · SCALE 1:1</span>
+      <a class="cta" href="#">Book a call ↗</a>
+    </div>
+
+    <section class="hero">
+      <div>
+        <p class="dwg-label">Practice overview</p>
+        <h1>I architect decentralized systems, and lead the teams that <em>ship them.</em></h1>
+        <p class="lead">For seven years I've taken founders' early, fragile ideas and turned them into <em>protocols people trust in production</em> — across EVM, Cosmos, Sui, Aptos &amp; Movement. Today I build the autonomous AI agents, and the rails they transact on, that come next.</p>
+        <div class="actions">
+          <a class="btn btn-gold" href="#">Book a call</a>
+          <a class="btn btn-ghost" href="#">View the drawings →</a>
+        </div>
+      </div>
+
+      <div class="schematic" aria-hidden="true">
+        <span class="tag">FIG. 01 — SYSTEM STACK</span>
+        <svg viewBox="0 0 420 360" fill="none" font-family="'Spline Sans Mono',monospace">
+          <!-- dimension line left -->
+          <line x1="26" y1="48" x2="26" y2="312" stroke="#2d4a64" stroke-width="1"/>
+          <line x1="22" y1="48" x2="30" y2="48" stroke="#5b93b8" stroke-width="1"/>
+          <line x1="22" y1="312" x2="30" y2="312" stroke="#5b93b8" stroke-width="1"/>
+          <text x="14" y="186" fill="#6f879a" font-size="9" letter-spacing="1" transform="rotate(-90 14 186)" text-anchor="middle">4 LAYERS</text>
+
+          <!-- layer modules (orthographic) -->
+          <!-- AGENT LAYER -->
+          <rect x="70" y="42" width="300" height="56" stroke="#2d4a64" stroke-width="1" fill="#0e1b29"/>
+          <text x="84" y="66" fill="#e9f0f5" font-size="13">Agent layer</text>
+          <text x="84" y="83" fill="#8aa1b3" font-size="9.5" letter-spacing="1">AUTONOMOUS · ACP / MCP / A2A</text>
+          <circle cx="356" cy="70" r="3.5" fill="#cda566"/>
+
+          <!-- PROTOCOL -->
+          <rect x="70" y="120" width="300" height="56" stroke="#2d4a64" stroke-width="1" fill="#0e1b29"/>
+          <text x="84" y="144" fill="#e9f0f5" font-size="13">Protocol / app-chain</text>
+          <text x="84" y="161" fill="#8aa1b3" font-size="9.5" letter-spacing="1">COSMOS SDK · IBC · TENDERMINT</text>
+          <circle cx="356" cy="148" r="3.5" fill="#cda566"/>
+
+          <!-- CONTRACTS -->
+          <rect x="70" y="198" width="300" height="56" stroke="#2d4a64" stroke-width="1" fill="#0e1b29"/>
+          <text x="84" y="222" fill="#e9f0f5" font-size="13">Contracts</text>
+          <text x="84" y="239" fill="#8aa1b3" font-size="9.5" letter-spacing="1">SOLIDITY · COSMWASM · MOVE</text>
+          <circle cx="356" cy="226" r="3.5" fill="#cda566"/>
+
+          <!-- RAILS -->
+          <rect x="70" y="276" width="300" height="56" stroke="#2d4a64" stroke-width="1" fill="#0e1b29"/>
+          <text x="84" y="300" fill="#e9f0f5" font-size="13">Settlement rails</text>
+          <text x="84" y="317" fill="#8aa1b3" font-size="9.5" letter-spacing="1">EVM · SUI · APTOS · MOVEMENT</text>
+          <circle cx="356" cy="304" r="3.5" fill="#cda566"/>
+
+          <!-- vertical spine connecting nodes -->
+          <line x1="356" y1="70" x2="356" y2="304" stroke="#cda566" stroke-width="1" stroke-dasharray="2 5" opacity=".8"/>
+        </svg>
+      </div>
+    </section>
+
+    <section class="dims" aria-label="Practice at a glance">
+      <div class="dim"><div class="val">07</div><div class="lbl">Years shipping</div></div>
+      <div class="dim"><div class="val">10+</div><div class="lbl">Chains shipped on</div></div>
+      <div class="dim"><div class="val">13+</div><div class="lbl">Systems delivered</div></div>
+      <div class="dim"><div class="val">02</div><div class="lbl">Industry awards</div></div>
+    </section>
+
+    <section class="idx">
+      <p class="idx-h">Selected drawings</p>
+      <div class="rows">
+        <div class="row"><span class="no">A-02</span><span class="nm">Autonomy Network</span><span class="ds">Cross-chain automation protocol</span><span class="yr">2022→</span></div>
+        <div class="row"><span class="no">A-03</span><span class="nm">FreeFlix Media</span><span class="ds">Cosmos app-chain · Best Custom Zone</span><span class="yr">2021</span></div>
+        <div class="row"><span class="no">A-04</span><span class="nm">DegentsAI</span><span class="ds">Autonomous on-chain agents</span><span class="yr">2024→</span></div>
+        <div class="row"><span class="no">A-05</span><span class="nm">LedgerLens</span><span class="ds">A2A agent for on-chain data</span><span class="yr">2025</span></div>
+      </div>
+    </section>
+
+    <section class="titleblock">
+      <div><div class="k">Practice</div><div class="v">Sai Krishna Sunkari</div></div>
+      <div><div class="k">Discipline</div><div class="v gold">Blockchain architecture</div></div>
+      <div><div class="k">Status</div><div class="v">Available · advisory</div></div>
+      <div><div class="k">Location</div><div class="v">Hyderabad · UTC+5:30</div></div>
+    </section>
+
+    <p class="note">— Brand exploration · Architect's Drawing / Dark cyanotype · not the live site —</p>
+  </div>
+</body>
+</html>

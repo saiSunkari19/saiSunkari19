@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sai Krishna Sunkari — Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #f6f5f1;
+    --ink: #111110;
+    --muted: #5a5a54;
+    --hair: #d6d5cf;
+    --accent: #1f3aff;
+    --leader: #c9c8c1;
+    --mono: "Spline Sans Mono", ui-monospace, monospace;
+    --grot: "Hanken Grotesk", system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--grot);
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "tnum" 1;
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(28px, 6vw, 72px) clamp(20px, 5vw, 40px) clamp(40px, 8vw, 96px);
+  }
+
+  /* ---------- Header line ---------- */
+  .topline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px 24px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+  }
+  .topline .who { color: var(--ink); }
+  .topline .who b { font-weight: 500; }
+
+  .avail {
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .avail .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+  }
+  .avail .lk { border-bottom: 1px solid var(--hair); transition: color .2s, border-color .2s; }
+  .avail:hover .lk { color: var(--accent); border-color: var(--accent); }
+
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--hair);
+    margin: 16px 0 0;
+  }
+
+  /* ---------- Title statement ---------- */
+  .statement {
+    font-family: var(--grot);
+    font-weight: 700;
+    font-size: clamp(20px, 4vw, 30px);
+    line-height: 1.28;
+    letter-spacing: -0.012em;
+    margin: clamp(40px, 8vw, 72px) 0 clamp(44px, 9vw, 84px);
+    max-width: 22ch;
+  }
+  .statement .em { color: var(--accent); }
+
+  /* ---------- Index group ---------- */
+  .group {
+    margin: 0 0 clamp(34px, 6vw, 52px);
+  }
+  .group:last-of-type { margin-bottom: 0; }
+
+  .group-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .sec {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    flex: none;
+    width: 30px;
+  }
+  .group-title {
+    font-family: var(--grot);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .entries {
+    margin: 0;
+    padding: 0 0 0 44px;
+    list-style: none;
+  }
+
+  /* dot-leader row */
+  .row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--ink);
+    padding: 7px 0;
+    border-bottom: 1px solid transparent;
+  }
+  .row + .row { border-top: 1px solid var(--hair); }
+
+  .label {
+    flex: 0 1 auto;
+    min-width: 0;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .desc {
+    flex: 0 1 auto;
+    min-width: 0;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .lead {
+    flex: 1 1 18px;
+    min-width: 14px;
+    align-self: stretch;
+    border-bottom: 2px dotted var(--leader);
+    transform: translateY(-3px);
+  }
+  .val {
+    flex: none;
+    color: var(--ink);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+  }
+  a.val { text-decoration: none; transition: color .2s; }
+  a.val:hover, a.label-link:hover { color: var(--accent); }
+  a.label-link { color: inherit; text-decoration: none; transition: color .2s; }
+
+  /* capabilities — inline run */
+  .caps {
+    padding: 4px 0 0 44px;
+    font-family: var(--mono);
+    font-size: 13.5px;
+    line-height: 2.05;
+    color: var(--ink);
+  }
+  .caps .chip { white-space: nowrap; }
+  .caps .sep { color: var(--leader); margin: 0 6px; }
+
+  /* ---------- Footer ---------- */
+  .colophon {
+    margin-top: clamp(48px, 9vw, 88px);
+    padding-top: 16px;
+    border-top: 1px solid var(--hair);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 560px) {
+    .entries, .caps { padding-left: 0; }
+    .sec { width: auto; }
+    .row { flex-wrap: wrap; }
+    .desc {
+      flex-basis: 100%;
+      order: 3;
+      white-space: normal;
+      font-size: 12.5px;
+      margin-top: 1px;
+    }
+    .lead { display: none; }
+    .label { flex: 1 1 auto; }
+    .val { order: 2; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+  <main class="page">
+
+    <header>
+      <div class="topline">
+        <span class="who"><b>Sai Krishna Sunkari</b> — Blockchain Architect · Builder &amp; Advisor</span>
+        <a class="avail" href="#"><span class="dot" aria-hidden="true"></span>AVAILABLE — <span class="lk">BOOK A CALL</span></a>
+      </div>
+      <hr class="rule" />
+    </header>
+
+    <h1 class="statement">I architect decentralized systems, and lead the teams that ship them.</h1>
+
+    <!-- PRACTICE -->
+    <section class="group" aria-labelledby="g-practice">
+      <div class="group-head">
+        <span class="sec">§01</span>
+        <h2 class="group-title" id="g-practice">Practice</h2>
+      </div>
+      <ul class="entries">
+        <li class="row"><span class="label">Years in practice</span><span class="lead" aria-hidden="true"></span><span class="val">07</span></li>
+        <li class="row"><span class="label">Chains shipped on</span><span class="lead" aria-hidden="true"></span><span class="val">10+</span></li>
+        <li class="row"><span class="label">Systems delivered</span><span class="lead" aria-hidden="true"></span><span class="val">13+</span></li>
+        <li class="row"><span class="label">Industry awards</span><span class="lead" aria-hidden="true"></span><span class="val">02</span></li>
+      </ul>
+    </section>
+
+    <!-- SYSTEMS -->
+    <section class="group" aria-labelledby="g-systems">
+      <div class="group-head">
+        <span class="sec">§02</span>
+        <h2 class="group-title" id="g-systems">Systems</h2>
+      </div>
+      <ul class="entries">
+        <li class="row"><span class="label">Autonomy Network</span><span class="desc">cross-chain automation</span><span class="lead" aria-hidden="true"></span><span class="val">2022</span></li>
+        <li class="row"><span class="label">FreeFlix Media</span><span class="desc">Cosmos app-chain</span><span class="lead" aria-hidden="true"></span><span class="val">2021</span></li>
+        <li class="row"><span class="label">DegentsAI</span><span class="desc">autonomous agents</span><span class="lead" aria-hidden="true"></span><span class="val">2024</span></li>
+        <li class="row"><span class="label">LedgerLens</span><span class="desc">A2A data agent</span><span class="lead" aria-hidden="true"></span><span class="val">2025</span></li>
+      </ul>
+    </section>
+
+    <!-- CAPABILITIES -->
+    <section class="group" aria-labelledby="g-caps">
+      <div class="group-head">
+        <span class="sec">§03</span>
+        <h2 class="group-title" id="g-caps">Capabilities</h2>
+      </div>
+      <div class="caps">
+        <span class="chip">Cosmos SDK</span><span class="sep" aria-hidden="true">·</span><span class="chip">Solidity</span><span class="sep" aria-hidden="true">·</span><span class="chip">Rust</span><span class="sep" aria-hidden="true">·</span><span class="chip">Move</span><span class="sep" aria-hidden="true">·</span><span class="chip">CosmWasm</span><span class="sep" aria-hidden="true">·</span><span class="chip">IBC</span><span class="sep" aria-hidden="true">·</span><span class="chip">AI agents (ACP/MCP/A2A)</span>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="group" aria-labelledby="g-contact">
+      <div class="group-head">
+        <span class="sec">§04</span>
+        <h2 class="group-title" id="g-contact">Contact</h2>
+      </div>
+      <ul class="entries">
+        <li class="row"><a class="label label-link" href="#">Book a call</a><span class="lead" aria-hidden="true"></span><a class="val" href="#">calendly</a></li>
+        <li class="row"><span class="label">Email</span><span class="lead" aria-hidden="true"></span><a class="val" href="#">hello@sai.dev</a></li>
+        <li class="row"><span class="label">GitHub</span><span class="lead" aria-hidden="true"></span><a class="val" href="#">@saiSunkari19</a></li>
+        <li class="row"><span class="label">Based in</span><span class="lead" aria-hidden="true"></span><span class="val">Hyderabad · UTC+5:30</span></li>
+      </ul>
+    </section>
+
+    <footer class="colophon">
+      <span>Brand exploration · Sai Krishna Sunkari · Directory · not the live site</span>
+      <span>Hyderabad · UTC+5:30</span>
+    </footer>
+
+  </main>
+</body>
+</html>

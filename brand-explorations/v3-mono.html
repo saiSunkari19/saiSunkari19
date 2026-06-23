@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sai Krishna Sunkari — Blockchain Architect · Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&family=Martian+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f5f5f3;
+    --ink: #0c0c0c;
+    --muted: #5e5e5a;
+    --hair: #d7d7d2;
+    --accent: #1f3aff;
+    --mono: "Martian Mono", ui-monospace, monospace;
+    --body: "Hanken Grotesk", system-ui, sans-serif;
+    --gutter: clamp(1.25rem, 5vw, 4rem);
+    --maxw: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  ::selection { background: var(--accent); color: #fff; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* ---------- spec header bar ---------- */
+  .spec-bar {
+    border-bottom: 1px solid var(--hair);
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: clamp(0.56rem, 1.6vw, 0.68rem);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .spec-bar .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    padding-block: 0.85rem;
+  }
+  .spec-bar .seg {
+    padding-inline: clamp(0.55rem, 2vw, 1.1rem);
+    white-space: nowrap;
+  }
+  .spec-bar .seg:first-child { padding-left: 0; color: var(--ink); }
+  .spec-bar .seg + .seg { border-left: 1px solid var(--hair); }
+  .spec-bar .status { color: var(--ink); margin-left: auto; padding-right: 0; }
+  .spec-bar .status .dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-right: 0.5em;
+    vertical-align: 0.05em;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero { padding-block: clamp(3.5rem, 9vw, 7rem) clamp(2.5rem, 6vw, 4.5rem); }
+
+  .hero .idline {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: clamp(0.6rem, 1.8vw, 0.72rem);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 clamp(1.6rem, 4vw, 2.4rem);
+  }
+  .hero .idline b { color: var(--ink); font-weight: 600; }
+
+  h1.headline {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: clamp(1.55rem, 6.4vw, 3.25rem);
+    line-height: 1.07;
+    letter-spacing: -0.045em;
+    margin: 0;
+    max-width: 17ch;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: none;
+  }
+  h1.headline .accent { color: var(--accent); }
+
+  .lead {
+    font-size: clamp(1rem, 2.3vw, 1.18rem);
+    line-height: 1.62;
+    color: var(--ink);
+    max-width: 62ch;
+    margin: clamp(1.6rem, 4vw, 2.2rem) 0 0;
+  }
+  .lead .em { color: var(--muted); }
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: clamp(2rem, 5vw, 2.8rem);
+  }
+  .btn {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 0.74rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 0.95rem 1.5rem;
+    border: 1px solid var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    transition: background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
+  }
+  .btn .arr { transition: transform .18s ease; }
+  .btn:hover .arr { transform: translateX(3px); }
+  .btn-fill {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .btn-fill:hover { background: var(--ink); border-color: var(--ink); }
+  .btn-out { background: transparent; color: var(--ink); }
+  .btn-out:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ---------- section frame ---------- */
+  section { border-top: 1px solid var(--hair); }
+  .block { padding-block: clamp(3rem, 7vw, 5rem); }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: clamp(1.8rem, 4vw, 2.6rem);
+    flex-wrap: wrap;
+  }
+  .sec-head h2 {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: clamp(0.95rem, 2.6vw, 1.25rem);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .sec-head .ref {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- spec table (stats) ---------- */
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+  }
+  .spec-table th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 0 0.9rem;
+    border-bottom: 1px solid var(--hair);
+  }
+  .spec-table th.col-val,
+  .spec-table td.col-val { text-align: right; }
+  .spec-table td {
+    padding: 1.05rem 0;
+    border-bottom: 1px solid var(--hair);
+    font-weight: 500;
+    font-size: clamp(0.78rem, 2vw, 0.92rem);
+    letter-spacing: -0.01em;
+  }
+  .spec-table td.col-param { color: var(--ink); }
+  .spec-table td.col-val {
+    font-weight: 700;
+    font-size: clamp(1.05rem, 3.4vw, 1.7rem);
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .spec-table tr:last-child td { border-bottom: 1px solid var(--hair); }
+  .spec-table td.col-note {
+    color: var(--muted);
+    font-family: var(--body);
+    font-size: 0.82rem;
+    letter-spacing: 0;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* ---------- systems table ---------- */
+  .scroll-x { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .sys-table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    font-family: var(--mono);
+  }
+  .sys-table th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 1rem 0.9rem 0;
+    border-bottom: 1px solid var(--hair);
+  }
+  .sys-table th:last-child, .sys-table td:last-child { padding-right: 0; text-align: right; }
+  .sys-table td {
+    padding: 1.15rem 1rem 1.15rem 0;
+    border-bottom: 1px solid var(--hair);
+    font-size: 0.82rem;
+    vertical-align: baseline;
+  }
+  .sys-table .c-id { color: var(--muted); font-weight: 500; width: 1%; white-space: nowrap; }
+  .sys-table .c-sys { color: var(--ink); font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
+  .sys-table .c-detail { color: var(--muted); font-family: var(--body); font-size: 0.92rem; }
+  .sys-table .c-year { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .sys-table tbody tr { transition: background .15s ease; cursor: default; }
+  .sys-table tbody tr:hover { background: rgba(31,58,255,0.045); }
+  .sys-table tbody tr:hover .c-sys { color: var(--accent); }
+  .sys-table tbody tr:hover .c-id { color: var(--accent); }
+
+  /* ---------- closing / contact ---------- */
+  .close .wrap { display: grid; grid-template-columns: 1fr; gap: clamp(1.6rem, 4vw, 2.4rem); }
+  .close h2 {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: clamp(1.3rem, 4.6vw, 2.3rem);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    margin: 0;
+    max-width: 18ch;
+  }
+  .close h2 .accent { color: var(--accent); }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    border-top: 1px solid var(--hair);
+  }
+  .meta-cell {
+    padding: 1.2rem 1.2rem 1.2rem 0;
+    border-bottom: 1px solid var(--hair);
+  }
+  .meta-cell .k {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 0.4rem;
+  }
+  .meta-cell .v { font-size: 0.95rem; color: var(--ink); margin: 0; }
+  .meta-cell .v.link:hover { color: var(--accent); }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--hair); }
+  footer .wrap {
+    padding-block: clamp(1.8rem, 4vw, 2.4rem);
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: clamp(0.56rem, 1.6vw, 0.66rem);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    justify-content: space-between;
+  }
+  footer .wrap b { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 560px) {
+    .spec-bar .status { margin-left: 0; width: 100%; padding-left: 0; border-left: none; padding-top: 0.55rem; }
+    .spec-table td.col-note { display: none; }
+    .btn { flex: 1 1 auto; justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- SPEC HEADER BAR -->
+  <div class="spec-bar">
+    <div class="wrap">
+      <span class="seg">SAI KRISHNA SUNKARI</span>
+      <span class="seg">BLOCKCHAIN ARCHITECT</span>
+      <span class="seg">v2026</span>
+      <span class="seg status">STATUS: <span class="dot" aria-hidden="true"></span>AVAILABLE</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <p class="idline">SPEC&nbsp;//&nbsp;<b>Blockchain Architect</b>&nbsp;·&nbsp;Builder &amp; Advisor</p>
+      <h1 class="headline">I architect <span class="accent">decentralized systems</span>, and lead the teams that ship them.</h1>
+      <p class="lead">For seven years I've taken founders' early, fragile ideas and turned them into protocols people trust in production — across EVM, Cosmos, Sui, Aptos &amp; Movement. <span class="em">Today I build the autonomous AI agents, and the rails they transact on, that come next.</span></p>
+      <div class="cta-row">
+        <a class="btn btn-fill" href="#">Book a call <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn btn-out" href="#systems">Read the spec <span class="arr" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS / SPEC TABLE -->
+  <section>
+    <div class="wrap block">
+      <div class="sec-head">
+        <h2>Specification</h2>
+        <span class="ref">TABLE 01 · TRACK RECORD</span>
+      </div>
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th class="col-param" scope="col">Parameter</th>
+            <th class="col-note">Note</th>
+            <th class="col-val" scope="col">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-param">YEARS_SHIPPING</td>
+            <td class="col-note">in production</td>
+            <td class="col-val">07</td>
+          </tr>
+          <tr>
+            <td class="col-param">CHAINS</td>
+            <td class="col-note">EVM · Cosmos · Sui · Aptos · Movement</td>
+            <td class="col-val">10+</td>
+          </tr>
+          <tr>
+            <td class="col-param">SYSTEMS</td>
+            <td class="col-note">protocols &amp; products</td>
+            <td class="col-val">13+</td>
+          </tr>
+          <tr>
+            <td class="col-param">AWARDS</td>
+            <td class="col-note">incl. Best Custom Zone</td>
+            <td class="col-val">02</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SELECTED SYSTEMS -->
+  <section id="systems">
+    <div class="wrap block">
+      <div class="sec-head">
+        <h2>Selected systems</h2>
+        <span class="ref">TABLE 02 · DEPLOYMENTS</span>
+      </div>
+      <div class="scroll-x">
+        <table class="sys-table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">System</th>
+              <th scope="col">Detail</th>
+              <th scope="col">Year</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="c-id">SYS-01</td>
+              <td class="c-sys">Autonomy Network</td>
+              <td class="c-detail">Cross-chain automation protocol</td>
+              <td class="c-year">2022→</td>
+            </tr>
+            <tr>
+              <td class="c-id">SYS-02</td>
+              <td class="c-sys">FreeFlix Media</td>
+              <td class="c-detail">Cosmos app-chain · Best Custom Zone</td>
+              <td class="c-year">2021</td>
+            </tr>
+            <tr>
+              <td class="c-id">SYS-03</td>
+              <td class="c-sys">DegentsAI</td>
+              <td class="c-detail">Autonomous on-chain agents</td>
+              <td class="c-year">2024→</td>
+            </tr>
+            <tr>
+              <td class="c-id">SYS-04</td>
+              <td class="c-sys">LedgerLens</td>
+              <td class="c-detail">A2A agent for on-chain data</td>
+              <td class="c-year">2025</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSE / CONTACT -->
+  <section class="close">
+    <div class="wrap block">
+      <h2>Have an early, fragile idea? <span class="accent">Let's spec the system.</span></h2>
+      <div>
+        <div class="cta-row" style="margin-top:0;">
+          <a class="btn btn-fill" href="#">Book a call <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+        <div class="meta-grid" style="margin-top:clamp(1.8rem,4vw,2.4rem);">
+          <div class="meta-cell">
+            <p class="k">Location</p>
+            <p class="v">Hyderabad</p>
+          </div>
+          <div class="meta-cell">
+            <p class="k">Timezone</p>
+            <p class="v">UTC+5:30</p>
+          </div>
+          <div class="meta-cell">
+            <p class="k">Availability</p>
+            <p class="v">Open for advisory</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <span>Brand exploration · <b>Sai Krishna Sunkari</b> · Mono-Brutalist Spec · not the live site</span>
+      <span>v2026 · END OF SPEC</span>
+    </div>
+  </footer>
+
+</body>
+</html>

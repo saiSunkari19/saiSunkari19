@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sai Krishna Sunkari — Manifesto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&family=Martian+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0b0b0c;
+    --ink: #f0efe9;
+    --muted: #8a8a83;
+    --accent: #1f3aff;
+    --line: rgba(240, 239, 233, 0.14);
+    --pad: clamp(20px, 5vw, 80px);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Hanken Grotesk", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* scroll-snap container */
+  .deck {
+    height: 100svh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-snap-type: y proximity;
+    scrollbar-width: none;
+  }
+  .deck::-webkit-scrollbar { display: none; }
+
+  .panel {
+    min-height: 100svh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(96px, 14vh, 160px) var(--pad) clamp(72px, 10vh, 120px);
+    position: relative;
+  }
+
+  /* mono display */
+  .mono {
+    font-family: "Martian Mono", ui-monospace, monospace;
+    font-variation-settings: normal;
+  }
+
+  /* ---- corner identity mark (fixed) ---- */
+  .mark {
+    position: fixed;
+    top: clamp(16px, 3vw, 32px);
+    left: var(--pad);
+    z-index: 20;
+    font-family: "Martian Mono", monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .mark .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(31,58,255,0.6);
+    animation: pulse 2.6s ease-out infinite;
+  }
+  .mark .avail { color: var(--muted); }
+
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(31,58,255,0.5); }
+    70%  { box-shadow: 0 0 0 7px rgba(31,58,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(31,58,255,0); }
+  }
+
+  /* ---- scroll progress ---- */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--accent);
+    z-index: 30;
+    transition: width 0.08s linear;
+  }
+
+  /* ---- frame 1: statement ---- */
+  .f1 h1 {
+    font-weight: 700;
+    font-size: clamp(28px, 7vw, 64px);
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    max-width: 18ch;
+    text-wrap: balance;
+  }
+  .f1 h1 .em { color: var(--accent); }
+  .scroll-cue {
+    position: absolute;
+    bottom: clamp(28px, 6vh, 56px);
+    left: var(--pad);
+    font-family: "Martian Mono", monospace;
+    font-weight: 500;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .scroll-cue .bar {
+    display: inline-block;
+    width: 1px; height: 26px;
+    background: var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-cue .bar::after {
+    content: "";
+    position: absolute;
+    top: -100%; left: 0;
+    width: 1px; height: 100%;
+    background: var(--accent);
+    animation: drop 2.2s cubic-bezier(.7,0,.3,1) infinite;
+  }
+  @keyframes drop { to { top: 100%; } }
+
+  /* ---- frame 2: lead ---- */
+  .f2 .lead {
+    font-family: "Hanken Grotesk", sans-serif;
+    font-weight: 400;
+    font-size: clamp(20px, 3.4vw, 34px);
+    line-height: 1.4;
+    max-width: 22ch;
+    letter-spacing: -0.005em;
+  }
+  .f2 .lead b {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .f2 .lead .acc { color: var(--accent); font-weight: 500; }
+
+  /* ---- frame 3: proof ---- */
+  .f3 .proof {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 1.4vh, 14px);
+  }
+  .f3 .proof li {
+    font-family: "Martian Mono", monospace;
+    font-weight: 600;
+    font-size: clamp(26px, 6.4vw, 58px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+  }
+  .f3 .proof li span { color: var(--muted); font-weight: 500; }
+
+  /* ---- frame 4: work ---- */
+  .f4 .work-label {
+    font-family: "Martian Mono", monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: clamp(28px, 5vh, 52px);
+  }
+  .f4 .work {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .f4 .work li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: clamp(14px, 2.4vh, 22px) 0;
+    border-top: 1px solid var(--line);
+  }
+  .f4 .work li:last-child { border-bottom: 1px solid var(--line); }
+  .f4 .work .name {
+    font-family: "Martian Mono", monospace;
+    font-weight: 600;
+    font-size: clamp(18px, 3.6vw, 32px);
+    letter-spacing: -0.01em;
+  }
+  .f4 .work .year {
+    font-family: "Martian Mono", monospace;
+    font-weight: 500;
+    font-size: clamp(12px, 1.6vw, 15px);
+    color: var(--muted);
+    flex: none;
+  }
+
+  /* ---- frame 5: close ---- */
+  .f5 .close-line {
+    font-family: "Martian Mono", monospace;
+    font-weight: 700;
+    font-size: clamp(40px, 11vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .f5 .close-line .acc { color: var(--accent); }
+  .f5 .who {
+    font-family: "Martian Mono", monospace;
+    font-weight: 500;
+    font-size: clamp(13px, 1.8vw, 16px);
+    color: var(--ink);
+    margin-top: clamp(28px, 5vh, 48px);
+  }
+  .f5 .who .role { color: var(--muted); }
+  .f5 .meta {
+    font-family: "Hanken Grotesk", sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  .f5 .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: clamp(36px, 6vh, 60px);
+    align-self: flex-start;
+    font-family: "Martian Mono", monospace;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 16px 28px;
+    text-decoration: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .f5 .cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(31,58,255,0.35); }
+  .f5 .cta .arrow { transition: transform 0.18s ease; }
+  .f5 .cta:hover .arrow { transform: translateX(4px); }
+
+  .f5 .colophon {
+    position: absolute;
+    bottom: clamp(20px, 4vh, 36px);
+    left: var(--pad);
+    right: var(--pad);
+    font-family: "Martian Mono", monospace;
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  /* reveal */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* small screens: relax snap so tall content never traps */
+  @media (max-width: 600px) {
+    .deck { scroll-snap-type: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .deck { scroll-snap-type: none; }
+    .mark .dot, .scroll-cue .bar::after { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .progress { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="mark mono">
+    <span class="dot" aria-hidden="true"></span>
+    <span>SKS</span>
+    <span class="avail">— AVAILABLE</span>
+  </div>
+
+  <main class="deck" id="deck">
+
+    <!-- Frame 1 — statement -->
+    <section class="panel f1">
+      <h1 class="mono reveal">I architect decentralized systems, and lead the teams that <span class="em">ship them.</span></h1>
+      <div class="scroll-cue">
+        <span class="bar" aria-hidden="true"></span>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- Frame 2 — lead -->
+    <section class="panel f2">
+      <p class="lead reveal">For seven years I've taken founders' early, fragile ideas and turned them into protocols people <b>trust in production</b> — across EVM, Cosmos, Sui, Aptos &amp; Movement. Today I build the <span class="acc">autonomous AI agents</span>, and the rails they transact on, that come next.</p>
+    </section>
+
+    <!-- Frame 3 — proof -->
+    <section class="panel f3">
+      <ul class="proof">
+        <li class="reveal">Seven years <span>shipping.</span></li>
+        <li class="reveal">Ten+ chains.</li>
+        <li class="reveal">Thirteen+ systems.</li>
+        <li class="reveal">Two industry <span>awards.</span></li>
+      </ul>
+    </section>
+
+    <!-- Frame 4 — work -->
+    <section class="panel f4">
+      <p class="work-label reveal">Selected systems</p>
+      <ul class="work">
+        <li class="reveal"><span class="name">Autonomy Network</span><span class="year">2022</span></li>
+        <li class="reveal"><span class="name">FreeFlix Media</span><span class="year">2021</span></li>
+        <li class="reveal"><span class="name">DegentsAI</span><span class="year">2024</span></li>
+        <li class="reveal"><span class="name">LedgerLens</span><span class="year">2025</span></li>
+      </ul>
+    </section>
+
+    <!-- Frame 5 — close -->
+    <section class="panel f5">
+      <p class="close-line reveal">Let's <span class="acc">build.</span></p>
+      <p class="who reveal">Sai Krishna Sunkari <span class="role">— Blockchain Architect</span></p>
+      <p class="meta reveal">Hyderabad · UTC+5:30</p>
+      <a class="cta reveal" href="#">Book a call <span class="arrow" aria-hidden="true">→</span></a>
+      <p class="colophon">Brand exploration · Sai Krishna Sunkari · Manifesto · not the live site</p>
+    </section>
+
+  </main>
+
+  <script>
+    (function () {
+      var deck = document.getElementById('deck');
+      var progress = document.getElementById('progress');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // scroll progress
+      function onScroll() {
+        var max = deck.scrollHeight - deck.clientHeight;
+        var pct = max > 0 ? (deck.scrollTop / max) * 100 : 0;
+        progress.style.width = pct + '%';
+      }
+      deck.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // reveal on enter
+      if (!reduce && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              var items = e.target.querySelectorAll('.reveal');
+              items.forEach(function (el, i) {
+                setTimeout(function () { el.classList.add('in'); }, i * 90);
+              });
+              io.unobserve(e.target);
+            }
+          });
+        }, { root: deck, threshold: 0.25 });
+        document.querySelectorAll('.panel').forEach(function (p) { io.observe(p); });
+      } else {
+        document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
