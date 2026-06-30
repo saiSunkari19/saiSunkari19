@@ -43,17 +43,16 @@ Architect and engineering lead working where AI meets blockchain. I build autono
 - Led development of **Cosmic Compass**, a Cosmos ecosystem navigator, and architected **Commit Blockchain**, an enterprise app-chain on Tendermint Core with validator tooling and node-ops playbooks; mentored engineers on Go, Tendermint internals and consensus-layer debugging.
 - Built Ethereum dApps and Solidity smart contracts; shipped **FreeFlix / OmniFlix**, a decentralized content-distribution platform.
 
-## Selected Projects
+## Key Projects & Open-Source Contributions
 
-- **Epoch** (2025) — Autonomous DeFi agent for Etherex (Linea): a multi-agent system that rebalances a portfolio across concentrated-liquidity positions by risk level. Built end to end (FastAPI + Next.js) as a research prototype; kept in testing after the returns didn't clear costs.
-- **Blay** (2025) — AI trading agent on Bitlayer (Bitcoin L2): live price tracking, auto-swaps and AI insights from chat, with a delegated smart wallet, a $BLAY rewards economy and a strategy marketplace.
-- **DegentsAI** (2024) — Multi-rail agent distribution engine and economic layer for the agent economy on Linea.
-- **Pexu AI** (2024) — Decentralized AI hub for AI models, creators and IP owners.
-- **AI-Agent Systems** — Agent orchestration and on/off-chain automation using LangGraph, CrewAI, MCP / A2A; LLM-provider-agnostic integrations.
-- **Autonomy Network** (2020) — Decentralized creator-economy network with token-issuance modules and community governance.
-- **Autonomy SDK** — Open-source TypeScript SDK (`@autonomysdk/ts-client`, on npm) for the network's issuance, liquidity and NFT modules, built on CosmJS.
-- **Golden Triangle MF & Mean-Reversion Screener** — Production fintech analytics tools (Python) for Indian equities and mutual funds.
-- **FreeFlix / OmniFlix** (2018) — Decentralized content-distribution platform. *Best Custom Zone, Game of Zones 2021.*
+- **Epoch** (2025) — Autonomous DeFi agent for Etherex (Linea): a multi-agent system that rebalances a portfolio across concentrated-liquidity positions by risk level. Built end to end (FastAPI + Next.js) as a research prototype; kept in testing after the returns didn't clear costs. *(private, unreleased)*
+- **Blay** (2025) — AI trading agent on Bitlayer (Bitcoin L2): live price tracking, auto-swaps and AI insights from chat, with a delegated smart wallet and a $BLAY rewards economy. → [@BlayAgent](https://x.com/BlayAgent) · [whitepaper](https://blay.gitbook.io/blay)
+- **DegentsAI** (2024) — Multi-rail agent distribution engine and economic layer for the agent economy on Linea. → [@degents_ai](https://x.com/degents_ai)
+- **Pexu AI** (2024) — Decentralized AI hub for AI models, creators and IP owners. → [pexu.ai](https://pexu.ai)
+- **Autonomy Network** (2020) — Decentralized creator-economy network with token-issuance modules and community governance, built on Cosmos SDK and CosmWasm. → [github.com/AutonomyNetwork](https://github.com/AutonomyNetwork)
+- **Autonomy SDK** (open source) — TypeScript SDK for Autonomy Network: typed queries and transactions for the issuance, liquidity and NFT modules, built on CosmJS. → [npm](https://www.npmjs.com/package/@autonomysdk/ts-client) · [GitHub](https://github.com/AutonomyNetwork/ts-client)
+- **Golden Triangle MF & Mean-Reversion Screener** — Production fintech analytics tools (Python) for Indian equities and mutual funds. → [mf.prithvidev.in](https://mf.prithvidev.in)
+- **FreeFlix / OmniFlix** (2018) — Decentralized content-distribution platform. *Best Custom Zone, Game of Zones 2021.* → [github.com/OmniFlix](https://github.com/OmniFlix)
 
 ## Awards
 
