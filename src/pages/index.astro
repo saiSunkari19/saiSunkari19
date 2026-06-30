@@ -14,7 +14,7 @@ const ext = { target: '_blank', rel: 'noopener' };
 
 // Two proof pillars lead. Featured systems = the strongest three; the rest
 // follow as a compact "more systems" list. (Strategy: proof leads.)
-const featuredNames = ['DegentsAI', 'Autonomy Network', 'FreeFlix · OmniFlix'];
+const featuredNames = ['DegentsAI', 'Pexu AI', 'FreeFlix · OmniFlix'];
 const featured = featuredNames
   .map((n) => projects.find((p) => p.name === n))
   .filter((p): p is (typeof projects)[number] => Boolean(p));
@@ -36,8 +36,8 @@ const latest = (await getCollection('blog', ({ data }) => !data.draft))
 const year = new Date().getFullYear();
 ---
 <Base
-  title="Sai Krishna Sunkari · Blockchain Architect"
-  description="Sai Krishna Sunkari is an independent blockchain architect. Seven years shipping production protocols across EVM, Cosmos, Sui, Aptos & Movement, now building autonomous AI agents."
+  title="Sai Krishna Sunkari · AI × Blockchain Architect"
+  description="Sai Krishna Sunkari is an AI × blockchain architect. Seven years shipping production systems across EVM, Cosmos, Sui, Aptos & Movement, now building autonomous AI agents and the on-chain rails they run on."
 >
   <div class="hwrap">
     <div class="shell">
@@ -47,12 +47,12 @@ const year = new Date().getFullYear();
 
         <!-- 0 · ORIENT -->
         <header class="orient">
-          <p class="topline"><b>Sai Krishna Sunkari</b> · Blockchain Architect · Builder &amp; Advisor</p>
-          <h1>I architect decentralized systems, and <span class="em">lead the teams that ship them.</span></h1>
-          <p class="valueprop">I take the early, fragile idea you believe in and turn it into a protocol people trust in production, then lead the team that ships it. I've spent seven years doing exactly this across EVM, Cosmos, Sui, Aptos and Movement, and today I'm building the autonomous AI agents, and the rails they run on, that come next.</p>
+          <p class="topline"><b>Sai Krishna Sunkari</b> · AI × Blockchain Architect · Builder &amp; Advisor</p>
+          <h1>I architect AI agents and the decentralized systems they run on, and <span class="em">lead the teams that ship them.</span></h1>
+          <p class="valueprop">The hard part is rarely the demo. It's getting the thing you believe in to hold up in production, and keeping a team moving once it does. That's the work I do. For seven years it was protocols across EVM, Cosmos, Sui, Aptos and Movement. Lately it's the AI agents that run on top of them, and the on-chain rails they trade and transact over.</p>
           <div class="cred">
             <span class="cred-stats"><b>{projectStats.total >= 13 ? '7' : '7'}&nbsp;yrs</b><span class="d" aria-hidden="true">·</span><b>10+&nbsp;chains</b><span class="d" aria-hidden="true">·</span><b>{projectStats.total}+&nbsp;systems</b><span class="d" aria-hidden="true">·</span><b>2&nbsp;awards</b></span>
-            <span class="cred-eco">EVM · Cosmos · Sui · Aptos · Movement</span>
+            <span class="cred-eco">AI agents · EVM · Cosmos · Sui · Aptos · Movement</span>
           </div>
         </header>
 
@@ -62,18 +62,18 @@ const year = new Date().getFullYear();
           <div class="offer-grid">
             <div class="offer-col">
               <span class="offer-rule" aria-hidden="true"></span>
-              <h3 class="offer-t">Architecture</h3>
-              <p class="offer-d">I design the cross-chain protocols, DeFi primitives and token economics your product runs on, across EVM, Cosmos SDK app-chains, Sui, Aptos and Movement.</p>
+              <h3 class="offer-t">AI agents</h3>
+              <p class="offer-d">I build autonomous agents with LangGraph, CrewAI and Eliza, then wire them into MCP, A2A and Agent Commerce Protocol so they can actually act on-chain, not just talk about it.</p>
             </div>
             <div class="offer-col">
               <span class="offer-rule" aria-hidden="true"></span>
-              <h3 class="offer-t">Strategy</h3>
-              <p class="offer-d">I help you weigh L1/L2 trade-offs, threat-model early and hold audit-ready standards, so security and decentralization never cost you your speed to market.</p>
+              <h3 class="offer-t">Decentralized systems</h3>
+              <p class="offer-d">I design the protocols, DeFi primitives and token economics your product sits on, across EVM, Cosmos SDK app-chains, Sui, Aptos and Movement.</p>
             </div>
             <div class="offer-col">
               <span class="offer-rule" aria-hidden="true"></span>
-              <h3 class="offer-t">Leadership</h3>
-              <p class="offer-d">I own roadmap, hiring and delivery from 0→1 through scale, and keep the team steady across smart contracts, backend and AI-agent layers.</p>
+              <h3 class="offer-t">Architecture &amp; leadership</h3>
+              <p class="offer-d">I own the roadmap, the hiring and the delivery, from the first commit through scale, and I keep the standards high enough to survive an audit.</p>
             </div>
           </div>
         </section>
@@ -178,7 +178,7 @@ const year = new Date().getFullYear();
         </section>
 
         <footer class="colophon">
-          <span>© {year} Sai Krishna Sunkari · Blockchain Architect</span>
+          <span>© {year} Sai Krishna Sunkari · AI × Blockchain Architect</span>
           <span>Hyderabad, India · UTC+5:30</span>
         </footer>
 
@@ -192,7 +192,7 @@ const year = new Date().getFullYear();
             <Image src={profile} alt="Sai Krishna Sunkari" width={280} height={340} class="rail-photo" loading="eager" />
             <div class="rail-id-text">
               <span class="rail-name">Sai Krishna Sunkari</span>
-              <span class="rail-role">Blockchain Architect · Builder &amp; Advisor</span>
+              <span class="rail-role">AI × Blockchain Architect · Builder &amp; Advisor</span>
             </div>
           </div>
 

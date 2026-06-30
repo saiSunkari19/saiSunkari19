@@ -9,13 +9,13 @@ export interface Role {
 export const roles: Role[] = [
   {
     period: '2026 → now · Hyderabad',
-    title: 'Independent Blockchain Architect',
+    title: 'Independent AI × Blockchain Architect',
     current: true,
     body: "These days I partner with Web3 and enterprise teams as their architect, advisor and fractional engineering lead. Right now I'm with Blunova Systems (since April 2026), standing up a Hyperledger Fabric network and the transaction flows that run on it. Alongside that, I'm building autonomous AI-agent systems (LangGraph, CrewAI, Eliza) and the A2A, MCP and Agent Commerce Protocol integrations that let those agents transact on-chain across EVM, Cosmos, Sui, Aptos and Movement.",
   },
   {
     period: '2024 → 2026',
-    title: 'Blockchain Architect · Pexu.ai',
+    title: 'AI × Blockchain Architect · Pexu.ai',
     sub: '(formerly Autonomy)',
     body: 'I owned the engineering strategy end to end for an AI-native Web3 platform: the technical roadmap, the hiring, and delivery across smart contracts, backend and AI-agent layers, including autonomous agents that execute on-chain.',
   },

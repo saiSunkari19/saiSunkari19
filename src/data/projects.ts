@@ -25,9 +25,22 @@ export interface Project {
   caption?: string;
 }
 
-export const projectStats = { total: 13, web3: 8, web2: 5 };
+export const projectStats = { total: 16, web3: 11, web2: 5 };
 
 export const projects: Project[] = [
+  {
+    name: 'Epoch',
+    cat: 'web3',
+    meta: 'AI AGENT · ETHEREX · 2025',
+    blurb: 'An autonomous DeFi agent for Etherex (Linea): a multi-agent system that rebalances a portfolio by opening, adjusting and closing concentrated-liquidity positions at a chosen risk level. Built end to end (FastAPI backend, Next.js front end), then kept in testing rather than shipped after the returns failed to clear costs.',
+  },
+  {
+    name: 'Blay',
+    cat: 'web3',
+    meta: 'AI TRADING AGENT · BITLAYER · 2025',
+    blurb: 'An AI trading agent on Bitlayer (Bitcoin L2): live price tracking, auto-swaps at chain speed and AI insights from chat, backed by a delegated smart wallet, a $BLAY rewards economy and a strategy marketplace.',
+    link: { href: 'https://x.com/BlayAgent', label: 'X ↗' },
+  },
   {
     name: 'DegentsAI',
     cat: 'web3',
@@ -51,6 +64,13 @@ export const projects: Project[] = [
     blurb: 'Decentralized creator-economy network with token-issuance modules and community governance.',
     logo: '/logos/logo-autonomy.jpg',
     link: { href: 'https://github.com/AutonomyNetwork', label: 'GitHub ↗' },
+  },
+  {
+    name: 'Autonomy SDK',
+    cat: 'web3',
+    meta: 'OPEN SOURCE · COSMOS · NPM',
+    blurb: 'The TypeScript SDK for Autonomy Network (@autonomysdk/ts-client): typed queries and transactions for the issuance, liquidity and NFT modules, built on CosmJS and published on npm.',
+    link: { href: 'https://www.npmjs.com/package/@autonomysdk/ts-client', label: 'npm ↗' },
   },
   {
     name: 'Interchange DEX',

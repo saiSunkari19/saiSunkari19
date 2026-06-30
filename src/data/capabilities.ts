@@ -1,15 +1,23 @@
 export const capabilities: { label: string; items: string[] }[] = [
   {
+    label: 'Onchain agents',
+    items: ['GOAT SDK', 'Coinbase AgentKit', 'MCP', 'A2A', 'Agent Commerce Protocol'],
+  },
+  {
+    label: 'Agent orchestration',
+    items: ['LangGraph', 'LangChain', 'CrewAI', 'Eliza', 'LLM integration (Claude · Gemini · OpenAI)'],
+  },
+  {
     label: 'Chains',
-    items: ['Ethereum', 'Base', 'Polygon', 'Cosmos SDK', 'Sui', 'Aptos', 'Movement', 'Hyperledger Fabric'],
+    items: ['Ethereum', 'Cosmos SDK', 'Linea', 'Base', 'Polygon', 'Sui', 'Aptos', 'Movement', 'Hyperledger Fabric'],
   },
   {
     label: 'Languages & contracts',
-    items: ['Go', 'Solidity', 'Rust', 'Move', 'CosmWasm', 'TypeScript'],
+    items: ['Go', 'Solidity', 'TypeScript', 'Python', 'CosmWasm', 'Rust', 'Move'],
   },
   {
-    label: 'AI agents & infra',
-    items: ['LangGraph', 'CrewAI', 'Eliza', 'ACP / MCP / A2A', 'IBC', 'Tendermint', 'Kubernetes'],
+    label: 'Infra & platform',
+    items: ['IBC', 'Tendermint', 'Docker', 'Kubernetes'],
   },
 ];
 
