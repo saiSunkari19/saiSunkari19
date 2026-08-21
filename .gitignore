@@ -24,3 +24,28 @@ yarn-error.log*
 # handoff bundle (kept locally, not part of the app)
 Portfolio website variations-handoff.zip
 portfolio-website-variations/
+
+go-snippets/
+
+# personal Obsidian vault — THIS REPO IS PUBLIC, keep the vault local only
+vault/
+# local vault viewer output (public repo — do not publish)
+.vault-site/
+
+# generated resume output (public repo — do not publish)
+.resume/
+
+# Personal finance working notes that happen to sit under tools/. Not part of
+# the site, and not for a public repo.
+tools/readme.md
+tools/defi-dashboard.html
+
+# Notes derived from the private vault. They stay local for the same reason
+# vault/ does.
+docs/
+
+# Local agent tooling, not part of the site
+.codex/
+.impeccable/
+# Locally installed skill (2.2MB, absent from skills-lock.json)
+.agents/skills/impeccable/

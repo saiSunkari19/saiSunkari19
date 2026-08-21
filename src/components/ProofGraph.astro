@@ -1,0 +1,615 @@
+---
+// The proof map — an Obsidian-style graph view of the project/technology
+// relation.
+//
+// Dependency-free on purpose: at this size a force layout plus a pan/zoom
+// transform is arithmetic, not a reason to add a graph library to a project
+// whose entire dependency list is `astro`.
+//
+// It is an INDEX, not the content. Every node is an anchored row in the page
+// markup already, and the canvas is aria-hidden because that text is the
+// accessible equivalent. If this script never runs, the page loses a picture
+// and nothing else.
+import { graph as fullGraph, slug, type GraphNode, type GraphEdge } from '../lib/proof';
+
+export interface Props {
+  /** Defaults to the whole relation. Pass localGraph(id) for one project. */
+  data?: { nodes: GraphNode[]; edges: GraphEdge[] };
+  /** Node id to emphasise — the project whose page this is. */
+  focus?: string;
+  /**
+   * 'map'    full-bleed explorable band, breaks its reading column
+   * 'column' fills whatever column it is given; the page owns any bleed
+   * 'inset'  small, sits inside the text column
+   */
+  variant?: 'map' | 'column' | 'inset';
+  search?: boolean;
+}
+
+const { data = fullGraph, focus, variant = 'map', search = variant !== 'inset' } = Astro.props;
+
+// Destinations are resolved here, not in the browser, so the script holds no
+// opinion about the site's URL scheme and every node is a real link.
+const payload = {
+  nodes: data.nodes.map((n) => ({
+    ...n,
+    href: n.kind === 'project' ? `/projects/${slug(n.label)}` : `/proof#${slug(n.label)}`,
+  })),
+  edges: data.edges,
+};
+
+const counts = {
+  project: data.nodes.filter((n) => n.kind === 'project').length,
+  tech: data.nodes.filter((n) => n.kind === 'tech').length,
+  chain: data.nodes.filter((n) => n.kind === 'chain').length,
+};
+---
+<figure class:list={['pg', `pg-${variant}`]} data-graph={JSON.stringify(payload)} data-focus={focus}>
+  <div class="pg-stage">
+    <canvas class="pg-c" aria-hidden="true"></canvas>
+
+    <div class="pg-ui">
+      {search && (
+        <label class="pg-find">
+          <span class="sr-only">Filter the map</span>
+          <input class="pg-input" type="search" placeholder="Filter…" autocomplete="off" spellcheck="false" />
+        </label>
+      )}
+      <div class="pg-zoom" role="group" aria-label="Zoom">
+        <button class="pg-btn" type="button" data-z="out" aria-label="Zoom out">&#8722;</button>
+        <button class="pg-btn" type="button" data-z="in" aria-label="Zoom in">+</button>
+        <button class="pg-btn pg-btn-w" type="button" data-z="reset">Reset</button>
+      </div>
+    </div>
+
+    <p class="pg-read" aria-hidden="true">
+      <span class="pg-read-i">{counts.project} projects · {counts.tech} technologies · {counts.chain} chains</span>
+    </p>
+  </div>
+
+  <figcaption class="pg-cap">
+    <span class="pg-keys">
+      <span class="k k-p"></span>project
+      <span class="k k-t"></span>technology
+      <span class="k k-c"></span>chain
+    </span>
+    <span class="pg-hint">Drag to pan · scroll to zoom · click a node to open it</span>
+  </figcaption>
+</figure>
+
+<style>
+  /* Base first: its `margin` shorthand would otherwise reset the breakout
+     below it, since both selectors carry the same specificity. */
+  .pg { margin: 0 0 2.6rem; padding: 0; scroll-margin-top: 1rem; }
+  .pg-inset { margin-bottom: 2.2rem; }
+
+  /* Breaks the 760px reading column without touching 100vw, which would
+     overflow by the scrollbar width on platforms that reserve one. */
+  .pg-map {
+    --band: min(1180px, calc(100vw - 2 * var(--gutter)));
+    width: var(--band);
+    margin-left: calc((100% - var(--band)) / 2);
+  }
+
+  .pg-stage {
+    position: relative;
+    background: var(--paper-2);
+    border-top: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
+  }
+  .pg-map .pg-stage { height: clamp(460px, 74vh, 860px); }
+  .pg-column .pg-stage { height: clamp(420px, 56vh, 620px); }
+  .pg-inset .pg-stage { height: 340px; border: 1px solid var(--hair); }
+
+  .pg-c {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    cursor: grab;
+  }
+  .pg-c.is-panning { cursor: grabbing; }
+  .pg-c.is-node { cursor: pointer; }
+
+  /* Controls sit on the paper, separated by hairlines only — no card, no
+     shadow, per the ink-on-paper rule. */
+  .pg-ui {
+    position: absolute;
+    top: 0; right: 0;
+    display: flex;
+    align-items: stretch;
+    border-left: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
+    background: var(--paper);
+  }
+  .pg-find { display: flex; }
+  .pg-input {
+    font-family: var(--mono);
+    font-size: .74rem;
+    color: var(--ink);
+    background: none;
+    border: 0;
+    border-right: 1px solid var(--hair);
+    padding: .5rem .7rem;
+    width: 8.5rem;
+    outline-offset: -2px;
+  }
+  .pg-input::placeholder { color: var(--faint); }
+  .pg-input:focus-visible { outline: 2px solid var(--accent); }
+
+  .pg-zoom { display: flex; }
+  .pg-btn {
+    font-family: var(--mono);
+    font-size: .74rem;
+    line-height: 1;
+    color: var(--muted);
+    background: none;
+    border: 0;
+    border-right: 1px solid var(--hair);
+    padding: .5rem 0;
+    width: 2rem;
+    cursor: pointer;
+    outline-offset: -2px;
+  }
+  .pg-btn-w { width: auto; padding-inline: .7rem; border-right: 0; }
+  .pg-btn:hover { color: var(--accent); }
+  .pg-btn:focus-visible { outline: 2px solid var(--accent); }
+
+  /* Live readout: names what the pointer is on. Accent is earned here because
+     it reports a live state. */
+  .pg-read {
+    position: absolute;
+    left: 0; bottom: 0;
+    margin: 0;
+    padding: .5rem .75rem;
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .02em;
+    color: var(--faint);
+    background: var(--paper);
+    border-top: 1px solid var(--hair);
+    border-right: 1px solid var(--hair);
+    max-width: min(28rem, 70%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .pg-read-i b { color: var(--ink); font-weight: 600; }
+  .pg-read-i i { color: var(--accent); font-style: normal; }
+
+  .pg-cap {
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--faint);
+    letter-spacing: .02em;
+    margin-top: .6rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .pg-keys { display: flex; align-items: center; gap: .35rem; }
+  .k { width: 7px; height: 7px; display: inline-block; }
+  .k:not(:first-child) { margin-left: .75rem; }
+  .k-p { background: var(--ink); }
+  .k-t { background: var(--accent); border-radius: 50%; }
+  .k-c { border: 1px solid var(--ink-2); transform: rotate(45deg); }
+  .pg-hint { margin-left: auto; color: var(--faint); }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  @media (max-width: 720px) {
+    .pg-map { --band: calc(100vw - 2 * var(--gutter)); }
+    .pg-map .pg-stage { height: clamp(380px, 60vh, 520px); }
+    .pg-column .pg-stage { height: clamp(360px, 52vh, 480px); }
+    .pg-input { width: 6rem; }
+    .pg-hint { margin-left: 0; flex-basis: 100%; }
+    .pg-read { max-width: 60%; }
+  }
+</style>
+
+<script>
+  for (const fig of document.querySelectorAll<HTMLElement>('.pg')) {
+    const canvas = fig.querySelector<HTMLCanvasElement>('.pg-c');
+    const readout = fig.querySelector<HTMLElement>('.pg-read-i');
+    const input = fig.querySelector<HTMLInputElement>('.pg-input');
+    if (!canvas) continue;
+
+    type N = {
+      id: string; kind: string; label: string; href?: string;
+      cat?: string; count?: number; signature?: boolean; year?: number;
+      x: number; y: number; vx: number; vy: number; r: number; deg: number;
+      pinned?: boolean;
+    };
+
+    const raw = JSON.parse(fig.dataset.graph!) as {
+      nodes: Omit<N, 'x' | 'y' | 'vx' | 'vy' | 'r' | 'deg'>[];
+      edges: { s: string; t: string }[];
+    };
+    const focusId = fig.dataset.focus || null;
+
+    // The simulation runs in its own world, which is shaped to the canvas's
+    // aspect. Laying out in a square world and then stretching the result to a
+    // wide band smears the clusters; giving the world the right proportions in
+    // the first place lets the layout genuinely fill it.
+    const AREA = 700 * 700;
+    let WW = 1000, WH = 680, aspect = 0;
+    function shapeWorld() {
+      const ar = Math.min(Math.max(cw / ch, 0.6), 3.2);
+      WW = Math.sqrt(AREA * ar);
+      WH = Math.sqrt(AREA / ar);
+      aspect = ar;
+    }
+
+    const css = getComputedStyle(document.documentElement);
+    const tok = (n: string) => css.getPropertyValue(n).trim() || '#000';
+    const INK = tok('--ink'), INK2 = tok('--ink-2'), ACCENT = tok('--accent');
+    const MUTED = tok('--muted'), HAIR = tok('--hair-2'), FAINT = tok('--faint');
+
+    const deg: Record<string, number> = {};
+    for (const e of raw.edges) { deg[e.s] = (deg[e.s] ?? 0) + 1; deg[e.t] = (deg[e.t] ?? 0) + 1; }
+
+    const nodes: N[] = raw.nodes.map((n) => ({
+      ...n, x: 0, y: 0, vx: 0, vy: 0,
+      deg: deg[n.id] ?? 0,
+      r: n.kind === 'project'
+        ? 4 + Math.min(deg[n.id] ?? 0, 10) * 0.5
+        : 2.8 + Math.min(n.count ?? 1, 9) * 0.34,
+    }));
+    const idx = new Map(nodes.map((n) => [n.id, n]));
+    const links = raw.edges.map((e) => ({ a: idx.get(e.s)!, b: idx.get(e.t)! })).filter((l) => l.a && l.b);
+
+    const nbr = new Map<string, Set<string>>(nodes.map((n) => [n.id, new Set<string>()]));
+    for (const l of links) { nbr.get(l.a.id)!.add(l.b.id); nbr.get(l.b.id)!.add(l.a.id); }
+
+    // --- force layout: Fruchterman-Reingold with cooling ------------------
+    // Slightly wider than textbook FR: the extra spacing is what buys room
+    // for every project label in the dense middle of the graph.
+    const K = 0.64 * Math.sqrt(AREA / nodes.length);
+    const ITER = 340;
+    let temp = 80;
+
+    // Deterministic seeding: the same picture on every load, at any size.
+    function seed() {
+      const ring = Math.min(WW, WH);
+      nodes.forEach((n, i) => {
+        const a = (i / nodes.length) * Math.PI * 2;
+        const rad = n.kind === 'project' ? ring * 0.2 : ring * 0.36;
+        n.x = WW / 2 + Math.cos(a) * rad;
+        n.y = WH / 2 + Math.sin(a) * rad;
+        n.vx = 0; n.vy = 0; n.pinned = false;
+      });
+      temp = WW / 12;
+    }
+
+    function step() {
+      for (const n of nodes) { n.vx = 0; n.vy = 0; }
+      for (let i = 0; i < nodes.length; i++) {
+        const a = nodes[i];
+        for (let j = i + 1; j < nodes.length; j++) {
+          const b = nodes[j];
+          let dx = a.x - b.x, dy = a.y - b.y;
+          let d = Math.hypot(dx, dy);
+          if (d < 0.01) { dx = (i % 7) - 3 + 0.5; dy = (j % 5) - 2 + 0.5; d = Math.hypot(dx, dy); }
+          const f = (K * K) / d;
+          a.vx += (dx / d) * f; a.vy += (dy / d) * f;
+          b.vx -= (dx / d) * f; b.vy -= (dy / d) * f;
+        }
+      }
+      for (const l of links) {
+        const dx = l.a.x - l.b.x, dy = l.a.y - l.b.y;
+        const d = Math.hypot(dx, dy) || 0.01;
+        const f = (d * d) / K;
+        l.a.vx -= (dx / d) * f; l.a.vy -= (dy / d) * f;
+        l.b.vx += (dx / d) * f; l.b.vy += (dy / d) * f;
+      }
+      // Gravity is what actually shapes the blob: even pull on both axes gives
+      // a circle no matter how wide the world is. Weighting it by the frame's
+      // aspect - weak across, strong down - is what makes the layout fill a
+      // wide band instead of floating in the middle of one.
+      const w = Math.sqrt(aspect);
+      const gx = 0.07 / w, gy = 0.07 * w;
+      for (const n of nodes) {
+        n.vx += (WW / 2 - n.x) * gx;
+        n.vy += (WH / 2 - n.y) * gy;
+      }
+      for (const n of nodes) {
+        if (n.pinned) continue;
+        const d = Math.hypot(n.vx, n.vy) || 1;
+        const cap = Math.min(d, temp);
+        n.x += (n.vx / d) * cap;
+        n.y += (n.vy / d) * cap;
+      }
+      temp = Math.max(temp * 0.977, 0.35);
+    }
+
+    // --- view: fit + user pan/zoom ---------------------------------------
+    const ctx = canvas.getContext('2d')!;
+    let cw = 0, ch = 0;                       // canvas size in CSS pixels
+    const fit = { sx: 1, sy: 1, ox: 0, oy: 0 };
+    const cam = { k: 1, tx: 0, ty: 0 };
+
+    function refit() {
+      const pad = 46;
+      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      for (const n of nodes) {
+        if (n.x < x0) x0 = n.x; if (n.x > x1) x1 = n.x;
+        if (n.y < y0) y0 = n.y; if (n.y > y1) y1 = n.y;
+      }
+      let sx = (cw - pad * 2) / Math.max(x1 - x0, 1);
+      let sy = (ch - pad * 2) / Math.max(y1 - y0, 1);
+      // Node radii are in screen pixels and do not scale with the fit, so
+      // scaling up only spreads the nodes apart. The cap exists to stop a
+      // degenerate two-node graph exploding, not to hold the map small.
+      sx = Math.min(sx, 9); sy = Math.min(sy, 9);
+      const lo = Math.min(sx, sy);
+      sx = Math.min(sx, lo * 2.2); sy = Math.min(sy, lo * 2.2);
+      fit.sx = sx; fit.sy = sy;
+      fit.ox = (cw - (x1 - x0) * sx) / 2 - x0 * sx;
+      fit.oy = (ch - (y1 - y0) * sy) / 2 - y0 * sy;
+    }
+
+    const px = (n: N) => (n.x * fit.sx + fit.ox) * cam.k + cam.tx;
+    const py = (n: N) => (n.y * fit.sy + fit.oy) * cam.k + cam.ty;
+    const toWorldX = (sxp: number) => ((sxp - cam.tx) / cam.k - fit.ox) / fit.sx;
+    const toWorldY = (syp: number) => ((syp - cam.ty) / cam.k - fit.oy) / fit.sy;
+
+    function measure() {
+      const rect = canvas!.getBoundingClientRect();
+      cw = Math.max(rect.width, 1);
+      ch = Math.max(rect.height, 1);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas!.width = Math.round(cw * dpr);
+      canvas!.height = Math.round(ch * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      shapeWorld();
+    }
+
+    function settleNow() {
+      seed();
+      for (let i = 0; i < ITER; i++) step();
+      refit();
+    }
+
+    // --- state -----------------------------------------------------------
+    let hot: N | null = null;
+    let query = '';
+    const matches = (n: N) => !query || n.label.toLowerCase().includes(query);
+    const related = (n: N) => (hot ? hot.id === n.id || nbr.get(hot.id)!.has(n.id) : true);
+    const lit = (n: N) => matches(n) && related(n);
+
+    function color(n: N) {
+      if (n.kind === 'project') return INK;
+      if (n.kind === 'chain') return INK2;
+      return n.signature ? ACCENT : MUTED;
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, cw, ch);
+
+      for (const l of links) {
+        const live = hot && (l.a === hot || l.b === hot);
+        const on = lit(l.a) && lit(l.b);
+        ctx.globalAlpha = live ? 1 : on ? (hot || query ? 0.5 : 1) : 0.12;
+        ctx.strokeStyle = live ? ACCENT : HAIR;
+        ctx.lineWidth = live ? 1.2 : 0.7;
+        ctx.beginPath();
+        ctx.moveTo(px(l.a), py(l.a));
+        ctx.lineTo(px(l.b), py(l.b));
+        ctx.stroke();
+      }
+
+      for (const n of nodes) {
+        ctx.globalAlpha = lit(n) ? 1 : 0.14;
+        const c = color(n);
+        ctx.fillStyle = c; ctx.strokeStyle = c;
+        const x = px(n), y = py(n), r = n.r * Math.min(Math.max(cam.k, 0.8), 1.7);
+        if (n.kind === 'project') {
+          ctx.fillRect(x - r, y - r, r * 2, r * 2);
+        } else if (n.kind === 'chain') {
+          ctx.save(); ctx.translate(x, y); ctx.rotate(Math.PI / 4);
+          ctx.lineWidth = 1.2; ctx.strokeRect(-r, -r, r * 2, r * 2); ctx.restore();
+        } else {
+          ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+        }
+        if (n.id === focusId || (hot === n)) {
+          ctx.strokeStyle = ACCENT; ctx.lineWidth = 1.3;
+          ctx.beginPath(); ctx.arc(x, y, r + 5.5, 0, Math.PI * 2); ctx.stroke();
+        }
+      }
+      ctx.globalAlpha = 1;
+
+      // Labels: focus and the live neighbourhood first, then projects, then by
+      // degree. Greedy collision skip, trying the right of a node then the left.
+      ctx.font = '11px "Spline Sans Mono", ui-monospace, monospace';
+      ctx.textBaseline = 'middle';
+      // Seed the occupancy map with the node glyphs themselves, so a label can
+      // never be placed on top of another node.
+      const taken: number[][] = [];
+      for (const n of nodes) {
+        if (!lit(n)) continue;
+        const r = n.r * Math.min(Math.max(cam.k, 0.8), 1.7) + 1.5;
+        taken.push([px(n) - r, py(n) - r, px(n) + r, py(n) + r]);
+      }
+      const free = (b: number[]) =>
+        b[0] > 1 && b[2] < cw - 1 && b[1] > 0 && b[3] < ch &&
+        !taken.some((t) => b[0] < t[2] && b[2] > t[0] && b[1] < t[3] && b[3] > t[1]);
+
+      const rank = (n: N) =>
+        (n === hot ? 0 : n.id === focusId ? 1 : hot && nbr.get(hot.id)!.has(n.id) ? 2
+          : n.kind === 'project' ? 3 : 4);
+
+      for (const n of [...nodes].sort((a, b) => rank(a) - rank(b) || b.deg - a.deg)) {
+        if (!lit(n)) continue;
+        const w = ctx.measureText(n.label).width;
+        const y = py(n), r = n.r * Math.min(Math.max(cam.k, 0.8), 1.7);
+        const right = [px(n) + r + 4, y - 7, px(n) + r + 8 + w, y + 7];
+        const left = [px(n) - r - 8 - w, y - 7, px(n) - r - 4, y + 7];
+        const box = free(right) ? right : free(left) ? left : null;
+        if (!box) continue;
+        taken.push(box);
+        ctx.fillStyle = n === hot ? ACCENT : n.kind === 'project' ? INK2 : FAINT;
+        ctx.fillText(n.label, box[0], y);
+      }
+    }
+
+    const KIND = { project: 'project', tech: 'technology', chain: 'chain' } as Record<string, string>;
+    const base = readout?.innerHTML ?? '';
+    function report() {
+      if (!readout) return;
+      if (hot) {
+        const n = nbr.get(hot.id)!.size;
+        readout.innerHTML =
+          `<b>${hot.label}</b> · ${KIND[hot.kind] ?? hot.kind} · ${n} link${n === 1 ? '' : 's'} · <i>open</i>`;
+      } else if (query) {
+        const n = nodes.filter(matches).length;
+        readout.textContent = `${n} match${n === 1 ? '' : 'es'} for “${query}”`;
+      } else {
+        readout.innerHTML = base;
+      }
+    }
+
+    // --- run -------------------------------------------------------------
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    measure();
+
+    if (still) {
+      settleNow();
+      draw();
+    } else {
+      seed();
+      let frames = 0;
+      const tick = () => {
+        step(); refit(); draw();
+        if (++frames < ITER) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+
+    let settled = still;
+    setTimeout(() => { settled = true; }, still ? 0 : 3000);
+
+    // Re-lay-out only when the frame's proportions really change. A scrollbar
+    // appearing, or a mobile browser's chrome collapsing, must not rearrange
+    // the map under the reader.
+    const ro = new ResizeObserver(() => {
+      const prev = aspect;
+      measure();
+      if (prev && Math.abs(aspect - prev) / prev > 0.12) settleNow();
+      else refit();
+      draw();
+    });
+    ro.observe(canvas);
+
+    // --- hit testing ------------------------------------------------------
+    const localPt = (ev: { clientX: number; clientY: number }) => {
+      const b = canvas!.getBoundingClientRect();
+      return { x: ev.clientX - b.left, y: ev.clientY - b.top };
+    };
+    function pick(p: { x: number; y: number }) {
+      let best: N | null = null, bd = 16 * 16;
+      for (const n of nodes) {
+        if (!lit(n)) continue;
+        const d = (px(n) - p.x) ** 2 + (py(n) - p.y) ** 2;
+        if (d < bd) { bd = d; best = n; }
+      }
+      return best;
+    }
+
+    // --- pan, zoom, drag --------------------------------------------------
+    let drag: { node: N | null; x: number; y: number; moved: boolean } | null = null;
+
+    canvas.addEventListener('pointerdown', (ev) => {
+      canvas.setPointerCapture(ev.pointerId);
+      const p = localPt(ev);
+      const n = pick(p);
+      drag = { node: n, x: p.x, y: p.y, moved: false };
+      if (n) n.pinned = true;
+      canvas.classList.toggle('is-panning', !n);
+    });
+
+    canvas.addEventListener('pointermove', (ev) => {
+      const p = localPt(ev);
+      if (drag) {
+        const dx = p.x - drag.x, dy = p.y - drag.y;
+        if (Math.abs(dx) > 2 || Math.abs(dy) > 2) drag.moved = true;
+        if (drag.node) {
+          drag.node.x = toWorldX(p.x);
+          drag.node.y = toWorldY(p.y);
+        } else {
+          cam.tx += dx; cam.ty += dy;
+        }
+        drag.x = p.x; drag.y = p.y;
+        draw();
+        return;
+      }
+      const n = pick(p);
+      canvas.classList.toggle('is-node', !!n);
+      if (n !== hot) { hot = n; report(); draw(); }
+    });
+
+    const endDrag = (ev: PointerEvent) => {
+      if (!drag) return;
+      const wasNode = drag.node, moved = drag.moved;
+      drag = null;
+      canvas.classList.remove('is-panning');
+      // A press that never moved is a click, not a drag.
+      if (wasNode && !moved && wasNode.href) {
+        const url = new URL(wasNode.href, location.href);
+        if (url.pathname === location.pathname && url.hash) {
+          const row = document.getElementById(url.hash.slice(1));
+          if (row) {
+            history.replaceState(null, '', url.hash);
+            row.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'center' });
+            return;
+          }
+        }
+        location.href = wasNode.href;
+      }
+    };
+    canvas.addEventListener('pointerup', endDrag);
+    canvas.addEventListener('pointercancel', endDrag);
+
+    canvas.addEventListener('mouseleave', () => {
+      if (hot) { hot = null; report(); draw(); }
+      canvas.classList.remove('is-node');
+    });
+
+    function zoomAt(factor: number, cx: number, cy: number) {
+      const k = Math.min(Math.max(cam.k * factor, 0.4), 5);
+      const f = k / cam.k;
+      cam.tx = cx - (cx - cam.tx) * f;
+      cam.ty = cy - (cy - cam.ty) * f;
+      cam.k = k;
+      draw();
+    }
+
+    canvas.addEventListener('wheel', (ev) => {
+      ev.preventDefault();
+      const p = localPt(ev);
+      zoomAt(Math.exp(-ev.deltaY * 0.0016), p.x, p.y);
+    }, { passive: false });
+
+    for (const btn of fig.querySelectorAll<HTMLButtonElement>('.pg-btn')) {
+      btn.addEventListener('click', () => {
+        const z = btn.dataset.z;
+        if (z === 'reset') {
+          cam.k = 1; cam.tx = 0; cam.ty = 0;
+          if (!settled) { draw(); return; }
+          settleNow();
+          hot = null; report(); draw();
+          return;
+        }
+        zoomAt(z === 'in' ? 1.3 : 1 / 1.3, cw / 2, ch / 2);
+      });
+    }
+
+    input?.addEventListener('input', () => {
+      query = input.value.trim().toLowerCase();
+      report(); draw();
+    });
+  }
+</script>

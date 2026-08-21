@@ -18,7 +18,7 @@ export const ventures: Venture[] = [
     year: '2026',
     name: 'TaruLease',
     role: 'FOUNDER',
-    blurb: 'A leasing platform that brings listings, agreements and day-to-day management together in one place.',
+    blurb: 'Corporate gifting built on fresh fruit hampers, sourced straight from the farmer orchards we lease trees from.',
     link: { href: 'https://tarulease.in/', label: 'Visit ↗' },
   },
   {

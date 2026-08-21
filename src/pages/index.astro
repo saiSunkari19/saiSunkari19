@@ -4,9 +4,11 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import profile from '../assets/sai-profile.png';
 import { CALENDLY_URL } from '../data/site';
-import { projects, projectStats } from '../data/projects';
+import { projects, projectStats, GROUP_LABEL } from '../data/projects';
+import proofMatrix from '../data/proof-matrix.json';
+import { slug } from '../lib/proof';
+import ProofGraph from '../components/ProofGraph.astro';
 import { roles } from '../data/timeline';
-import { ventures } from '../data/ventures';
 import { capabilities, recognition, education } from '../data/capabilities';
 
 const email = 'saisunkari19@protonmail.com';
@@ -19,6 +21,12 @@ const featured = featuredNames
   .map((n) => projects.find((p) => p.name === n))
   .filter((p): p is (typeof projects)[number] => Boolean(p));
 const more = projects.filter((p) => !featuredNames.includes(p.name));
+// Mirrors the resume's three project sections, in the same order.
+const grouped = (['oss', 'work', 'independent'] as const).map((g) => ({
+  key: g,
+  label: GROUP_LABEL[g],
+  items: projects.filter((p) => p.group === g),
+}));
 
 function splitMeta(meta: string): { tech: string; year: string } {
   const parts = meta.split('·').map((s) => s.trim());
@@ -55,6 +63,19 @@ const year = new Date().getFullYear();
             <span class="cred-eco">AI agents · EVM · Cosmos · Sui · Aptos · Movement</span>
           </div>
         </header>
+
+        <!-- 1 · THE MAP — the first proof, before any claim about the work.
+             It bleeds left to the page gutter and stops at the content column's
+             hairline, so the pinned rail and its Book-a-call stay untouched. -->
+        <section id="map" class="mapband" aria-label="Map of shipped work">
+          <p class="map-lede">
+            Every technology mapped to the projects that prove it, generated from
+            project records rather than self-assessed. <a href="/proof">Read it as text →</a>
+          </p>
+          <div class="mapbleed">
+            <ProofGraph variant="column" />
+          </div>
+        </section>
 
         <!-- What I do: the offer, above the proof pillars -->
         <section id="do" class="offer" aria-labelledby="do-h">
@@ -101,57 +122,32 @@ const year = new Date().getFullYear();
         <!-- PILLAR TWO · SELECTED WORK -->
         <section id="work" class="pillar" aria-labelledby="work-h">
           <div class="sec-head">
-            <h2 id="work-h">Selected work</h2>
+            <h2 id="work-h">Work</h2>
             <span class="count">{projectStats.total} shipped · {projectStats.web3} web3 · {projectStats.web2} web2</span>
           </div>
 
-          <div class="feat-list">
-            {featured.map((p) => {
-              const { tech, year: yr } = splitMeta(p.meta);
-              return (
-                <a class="feat" href={p.link?.href ?? '#'} {...(p.link ? ext : {})}>
-                  <div class="feat-top">
-                    <span class="feat-name">{p.name}</span>
-                    <span class="feat-tag">{tech}{yr && ` · ${yr}`}</span>
-                    <span class="feat-arrow" aria-hidden="true">↗</span>
-                  </div>
-                  <p class="feat-blurb">{p.blurb}</p>
-                  {p.award && <span class="feat-outcome"><span class="star" aria-hidden="true">★</span> Award-winning · Game of Zones</span>}
-                </a>
-              );
-            })}
-          </div>
-
-          <div class="more">
-            <p class="more-label">More systems</p>
-            <div class="more-list">
-              {more.map((p) => {
-                const { tech, year: yr } = splitMeta(p.meta);
-                const Tag = p.link ? 'a' : 'div';
-                const linkAttrs = p.link ? { href: p.link.href, ...ext } : {};
-                return (
-                  <Tag class="more-row" {...linkAttrs}>
-                    <span class="more-name">{p.name}<span class="more-tag">{tech}{yr && ` · ${yr}`}</span></span>
-                    <span class="more-desc">{p.blurb}</span>
-                  </Tag>
-                );
-              })}
+          {grouped.map((g) => (
+            <div class="wgroup">
+              <p class="wgroup-label">{g.label}<span class="wgroup-n">{g.items.length}</span></p>
+              <div class="more-list">
+                {g.items.map((p) => {
+                  const { tech, year: yr } = splitMeta(p.meta);
+                  // Rows now open the project's own page rather than jumping
+                  // straight out. The outbound link is still the first thing
+                  // on that page, alongside the stack and the nearest work.
+                  return (
+                    <a class="more-row" href={`/projects/${slug(p.name)}`}>
+                      <span class="more-name">{p.name}<span class="more-tag">{tech}{yr && ` · ${yr}`}</span></span>
+                      <span class="more-desc">{p.blurb}</span>
+                    </a>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          ))}
         </section>
 
         <!-- LIGHTER · Ventures -->
-        <section id="ventures" class="light" aria-labelledby="vent-h">
-          <div class="sec-head"><h2 id="vent-h">Ventures founded</h2></div>
-          <div class="vent-list">
-            {ventures.map((v) => (
-              <a class="vent-row" href={v.link.href} {...ext}>
-                <span class="vent-name">{v.name}<span class="vent-role">{v.role.toLowerCase()}</span></span>
-                <span class="vent-year">{v.year}</span>
-              </a>
-            ))}
-          </div>
-        </section>
 
         <!-- LIGHTER · Capabilities -->
         <section id="stack" class="light" aria-labelledby="stack-h">
@@ -164,6 +160,29 @@ const year = new Date().getFullYear();
               </div>
             ))}
           </dl>
+        </section>
+
+        <!-- LIGHTER · Proof matrix (generated from the private vault) -->
+        <section id="proof" class="light" aria-labelledby="proof-h">
+          <div class="sec-head">
+            <h2 id="proof-h">Proof</h2>
+            <span class="count">{proofMatrix.projectCount} shipped projects</span>
+          </div>
+          <p class="proof-note">What I build with, and the shipped projects behind each group. Counted from real work, not a self-assessment.</p>
+          {proofMatrix.categories.map((c) => (
+            <div class="pcat">
+              <p class="pcat-head">{c.label}<span class="pcat-meta">{c.projects.length}&nbsp;projects{c.since ? ` · since ${c.since}` : ''}</span></p>
+              <p class="pcat-tech">{c.tech.join('  ·  ')}</p>
+              <p class="pcat-proj">{c.projects.join('  ·  ')}</p>
+            </div>
+          ))}
+          <div class="pcat">
+            <p class="pcat-head">Chains<span class="pcat-meta">{proofMatrix.chains.length}&nbsp;shipped on</span></p>
+            <p class="pcat-tech">{proofMatrix.chains.map((c) => c.tech).join('  ·  ')}</p>
+          </div>
+          <p class="proof-more">
+            <a href="/proof">Every technology mapped to the projects that prove it →</a>
+          </p>
         </section>
 
         <!-- LIGHTER · Recognition + Education -->
@@ -257,6 +276,19 @@ const year = new Date().getFullYear();
     padding: clamp(2.5rem,5vw,4.5rem) 0 2.5rem clamp(1.75rem,3.5vw,3.25rem);
   }
 
+  /* ---------- the map ---------- */
+  .mapband { scroll-margin-top: 1rem; margin: clamp(2rem, 4vw, 3rem) 0 clamp(2.5rem, 5vw, 3.75rem); }
+  /* Cancels .content's right padding so the band meets the rail hairline, and
+     bleeds left by the wrap gutter to buy width where nothing else lives. */
+  .mapbleed {
+    margin-right: calc(-1 * clamp(1.75rem, 3.5vw, 3.5rem));
+    margin-left: calc(-1 * var(--gut));
+  }
+  .map-lede {
+    font-family: var(--mono); font-size: .72rem; color: var(--faint);
+    line-height: 1.7; margin: 0 0 1rem; max-width: 60ch;
+  }
+
   /* ---------- orient ---------- */
   .topline { font-family: var(--mono); font-size: .8125rem; color: var(--muted); letter-spacing: .02em; margin: 0 0 1.4rem; overflow-wrap: anywhere; }
   .topline b { color: var(--ink); font-weight: 500; }
@@ -342,6 +374,22 @@ const year = new Date().getFullYear();
   .cap-row dt { font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--faint); }
   .cap-row dd { margin: 0; font-family: var(--mono); font-size: .8125rem; color: var(--ink-2); line-height: 1.7; }
 
+  .wgroup { margin-top: 1.8rem; }
+  .wgroup:first-of-type { margin-top: .4rem; }
+  .wgroup-label { font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .1em;
+    color: var(--faint); margin: 0 0 .3rem; display: flex; align-items: baseline; gap: .5rem; }
+  .wgroup-n { font-variant-numeric: tabular-nums; }
+
+  .proof-note { font-family: var(--mono); font-size: .76rem; color: var(--faint); margin: 0 0 1.2rem; line-height: 1.6; }
+  .proof-more { font-family: var(--mono); font-size: .76rem; margin: 1.1rem 0 0; }
+  .pcat { padding: .85rem 0; border-top: 1px solid var(--hair); }
+  .pcat:last-of-type { border-bottom: 1px solid var(--hair); }
+  .pcat-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .8rem; margin: 0 0 .35rem;
+    font-weight: 600; font-size: .95rem; color: var(--ink); }
+  .pcat-meta { font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--faint); font-weight: 400; }
+  .pcat-tech { margin: 0 0 .25rem; font-family: var(--mono); font-size: .8rem; color: var(--ink-2); line-height: 1.75; }
+  .pcat-proj { margin: 0; font-family: var(--mono); font-size: .74rem; color: var(--faint); line-height: 1.7; }
+
   .rec-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hair); }
   .rec-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem 1rem; padding: .7rem 0; border-bottom: 1px solid var(--hair); }
   .rec-t { font-weight: 600; font-size: .95rem; color: var(--ink); }
@@ -383,6 +431,7 @@ const year = new Date().getFullYear();
   @media (max-width: 860px) {
     .shell { grid-template-columns: 1fr; }
     .content { border-right: none; padding: 1.25rem 0 5.5rem; order: 2; }
+    .mapbleed { margin-inline: calc(-1 * var(--gut)); }
     .rail { position: static; padding: clamp(1.75rem,5vw,2.5rem) 0 1.75rem; border-bottom: 1px solid var(--hair); order: 1; }
     .rail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; align-items: start; }
     .rail .rail-id { grid-column: 1 / -1; display: flex; align-items: center; gap: 1rem; margin-bottom: 0; }
@@ -406,6 +455,7 @@ const year = new Date().getFullYear();
     .rail .book-block { padding: 0; }
     .more-row { grid-template-columns: 1fr; gap: .2rem; }
     .cap-row { grid-template-columns: 1fr; gap: .15rem; }
+    .proof-row { grid-template-columns: 1fr; gap: .2rem; }
     .feat-arrow { display: none; }
     .traj-years { margin-left: 0; }
   }

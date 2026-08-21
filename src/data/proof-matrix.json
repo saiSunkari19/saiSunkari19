@@ -1,0 +1,813 @@
+{
+  "generated": "2026-08-21",
+  "projectCount": 19,
+  "categories": [
+    {
+      "key": "ai",
+      "label": "AI & agents",
+      "tech": [
+        "Agentic RAG",
+        "Azure OpenAI",
+        "GOAT SDK",
+        "LangChain",
+        "LangGraph",
+        "MCP tool integration"
+      ],
+      "projects": [
+        "Blay",
+        "DeFi Yield Scout",
+        "GitMate"
+      ],
+      "since": 2025
+    },
+    {
+      "key": "blockchain",
+      "label": "Blockchain",
+      "tech": [
+        "Envio",
+        "Privy",
+        "Cosmos SDK",
+        "Akash Network",
+        "ERC721",
+        "Hardhat",
+        "OpenZeppelin",
+        "Tendermint"
+      ],
+      "projects": [
+        "Autonomy Network",
+        "Cosmic Compass",
+        "DegentsAI",
+        "Epoch",
+        "FreeFlix · OmniFlix",
+        "Pexu AI",
+        "PrithviDevs",
+        "Sepa Screener"
+      ],
+      "since": 2018
+    },
+    {
+      "key": "language",
+      "label": "Languages",
+      "tech": [
+        "CosmWasm",
+        "Move",
+        "TypeScript",
+        "Python",
+        "FastAPI",
+        "Go",
+        "Solidity"
+      ],
+      "projects": [
+        "Autonomy Network",
+        "Autonomy SDK",
+        "Bento Skills",
+        "Blay",
+        "Cosmic Compass",
+        "DeFi Yield Scout",
+        "DegentsAI",
+        "Epoch",
+        "GitMate",
+        "Golden Triangle MF",
+        "Injective Relayer API",
+        "Pexu AI",
+        "PrithviDevs",
+        "Sepa Screener",
+        "TaruLease"
+      ],
+      "since": 2019
+    }
+  ],
+  "chains": [
+    {
+      "tech": "Base",
+      "count": 3,
+      "since": 2024,
+      "projects": [
+        {
+          "name": "GitMate",
+          "year": 2025,
+          "proof": "https://docs.gitmate.ai/"
+        },
+        {
+          "name": "DegentsAI",
+          "year": 2024,
+          "proof": "https://x.com/degents_ai"
+        },
+        {
+          "name": "Pexu AI",
+          "year": 2024,
+          "proof": "https://x.com/pexuai"
+        }
+      ]
+    },
+    {
+      "tech": "Cosmos",
+      "count": 3,
+      "since": 2020,
+      "projects": [
+        {
+          "name": "Autonomy Network",
+          "year": 2020,
+          "proof": "https://github.com/AutonomyNetwork"
+        },
+        {
+          "name": "PrithviDevs",
+          "year": 2020,
+          "proof": "https://github.com/PrithviDevs"
+        },
+        {
+          "name": "Autonomy SDK",
+          "year": null,
+          "proof": "https://www.npmjs.com/package/@autonomysdk/ts-client"
+        }
+      ]
+    },
+    {
+      "tech": "Linea",
+      "count": 3,
+      "since": 2024,
+      "projects": [
+        {
+          "name": "Epoch",
+          "year": 2025,
+          "proof": null
+        },
+        {
+          "name": "DegentsAI",
+          "year": 2024,
+          "proof": "https://x.com/degents_ai"
+        },
+        {
+          "name": "Pexu AI",
+          "year": 2024,
+          "proof": "https://x.com/pexuai"
+        }
+      ]
+    },
+    {
+      "tech": "Autonomy Chain",
+      "count": 2,
+      "since": 2020,
+      "projects": [
+        {
+          "name": "Autonomy Network",
+          "year": 2020,
+          "proof": "https://github.com/AutonomyNetwork"
+        },
+        {
+          "name": "Autonomy SDK",
+          "year": null,
+          "proof": "https://www.npmjs.com/package/@autonomysdk/ts-client"
+        }
+      ]
+    },
+    {
+      "tech": "Bitlayer",
+      "count": 2,
+      "since": 2024,
+      "projects": [
+        {
+          "name": "Blay",
+          "year": 2025,
+          "proof": "https://x.com/BlayAgent"
+        },
+        {
+          "name": "Pexu AI",
+          "year": 2024,
+          "proof": "https://x.com/pexuai"
+        }
+      ]
+    },
+    {
+      "tech": "Sepolia",
+      "count": 2,
+      "since": 2024,
+      "projects": [
+        {
+          "name": "DegentsAI",
+          "year": 2024,
+          "proof": "https://x.com/degents_ai"
+        },
+        {
+          "name": "Pexu AI",
+          "year": 2024,
+          "proof": "https://x.com/pexuai"
+        }
+      ]
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "t:Agentic RAG",
+        "kind": "tech",
+        "label": "Agentic RAG",
+        "cat": "ai",
+        "count": 1,
+        "since": 2025,
+        "signature": true
+      },
+      {
+        "id": "p:GitMate",
+        "kind": "project",
+        "label": "GitMate",
+        "year": 2025,
+        "proof": "https://docs.gitmate.ai/"
+      },
+      {
+        "id": "t:Azure OpenAI",
+        "kind": "tech",
+        "label": "Azure OpenAI",
+        "cat": "ai",
+        "count": 1,
+        "since": 2025,
+        "signature": true
+      },
+      {
+        "id": "p:Blay",
+        "kind": "project",
+        "label": "Blay",
+        "year": 2025,
+        "proof": "https://x.com/BlayAgent"
+      },
+      {
+        "id": "t:CosmWasm",
+        "kind": "tech",
+        "label": "CosmWasm",
+        "cat": "language",
+        "count": 1,
+        "since": 2020,
+        "signature": true
+      },
+      {
+        "id": "p:Autonomy Network",
+        "kind": "project",
+        "label": "Autonomy Network",
+        "year": 2020,
+        "proof": "https://github.com/AutonomyNetwork"
+      },
+      {
+        "id": "t:Envio",
+        "kind": "tech",
+        "label": "Envio",
+        "cat": "blockchain",
+        "count": 1,
+        "since": 2024,
+        "signature": true
+      },
+      {
+        "id": "p:DegentsAI",
+        "kind": "project",
+        "label": "DegentsAI",
+        "year": 2024,
+        "proof": "https://x.com/degents_ai"
+      },
+      {
+        "id": "t:GOAT SDK",
+        "kind": "tech",
+        "label": "GOAT SDK",
+        "cat": "ai",
+        "count": 1,
+        "since": 2025,
+        "signature": true
+      },
+      {
+        "id": "t:LangChain",
+        "kind": "tech",
+        "label": "LangChain",
+        "cat": "ai",
+        "count": 1,
+        "since": 2025,
+        "signature": true
+      },
+      {
+        "id": "t:LangGraph",
+        "kind": "tech",
+        "label": "LangGraph",
+        "cat": "ai",
+        "count": 1,
+        "since": 2025,
+        "signature": true
+      },
+      {
+        "id": "t:MCP tool integration",
+        "kind": "tech",
+        "label": "MCP tool integration",
+        "cat": "ai",
+        "count": 1,
+        "since": null,
+        "signature": true
+      },
+      {
+        "id": "p:DeFi Yield Scout",
+        "kind": "project",
+        "label": "DeFi Yield Scout",
+        "year": null,
+        "proof": "https://github.com/saiSunkari19/skills/tree/main/skills/defi/defi-yield-scout"
+      },
+      {
+        "id": "t:Move",
+        "kind": "tech",
+        "label": "Move",
+        "cat": "language",
+        "count": 1,
+        "since": 2024,
+        "signature": true
+      },
+      {
+        "id": "p:Pexu AI",
+        "kind": "project",
+        "label": "Pexu AI",
+        "year": 2024,
+        "proof": "https://x.com/pexuai"
+      },
+      {
+        "id": "t:Privy",
+        "kind": "tech",
+        "label": "Privy",
+        "cat": "blockchain",
+        "count": 1,
+        "since": 2025,
+        "signature": true
+      },
+      {
+        "id": "p:Epoch",
+        "kind": "project",
+        "label": "Epoch",
+        "year": 2025,
+        "proof": null
+      },
+      {
+        "id": "t:TypeScript",
+        "kind": "tech",
+        "label": "TypeScript",
+        "cat": "language",
+        "count": 9,
+        "since": 2020,
+        "signature": false
+      },
+      {
+        "id": "p:TaruLease",
+        "kind": "project",
+        "label": "TaruLease",
+        "year": 2026,
+        "proof": "https://tarulease.in/"
+      },
+      {
+        "id": "p:Golden Triangle MF",
+        "kind": "project",
+        "label": "Golden Triangle MF",
+        "year": 2025,
+        "proof": "https://mf.prithvidev.in/"
+      },
+      {
+        "id": "p:Sepa Screener",
+        "kind": "project",
+        "label": "Sepa Screener",
+        "year": 2024,
+        "proof": "https://sepa.prithvidev.in/screener"
+      },
+      {
+        "id": "p:PrithviDevs",
+        "kind": "project",
+        "label": "PrithviDevs",
+        "year": 2020,
+        "proof": "https://github.com/PrithviDevs"
+      },
+      {
+        "id": "p:Autonomy SDK",
+        "kind": "project",
+        "label": "Autonomy SDK",
+        "year": null,
+        "proof": "https://www.npmjs.com/package/@autonomysdk/ts-client"
+      },
+      {
+        "id": "p:Bento Skills",
+        "kind": "project",
+        "label": "Bento Skills",
+        "year": null,
+        "proof": "https://github.com/saiSunkari19/bento-skills"
+      },
+      {
+        "id": "t:Python",
+        "kind": "tech",
+        "label": "Python",
+        "cat": "language",
+        "count": 7,
+        "since": 2020,
+        "signature": false
+      },
+      {
+        "id": "t:FastAPI",
+        "kind": "tech",
+        "label": "FastAPI",
+        "cat": "language",
+        "count": 5,
+        "since": 2024,
+        "signature": false
+      },
+      {
+        "id": "t:Cosmos SDK",
+        "kind": "tech",
+        "label": "Cosmos SDK",
+        "cat": "blockchain",
+        "count": 4,
+        "since": 2018,
+        "signature": false
+      },
+      {
+        "id": "p:Cosmic Compass",
+        "kind": "project",
+        "label": "Cosmic Compass",
+        "year": 2019,
+        "proof": "https://github.com/CosmicCompass/post-chain"
+      },
+      {
+        "id": "p:FreeFlix · OmniFlix",
+        "kind": "project",
+        "label": "FreeFlix · OmniFlix",
+        "year": 2018,
+        "proof": "https://github.com/OmniFlix"
+      },
+      {
+        "id": "t:Go",
+        "kind": "tech",
+        "label": "Go",
+        "cat": "language",
+        "count": 4,
+        "since": 2019,
+        "signature": false
+      },
+      {
+        "id": "p:Injective Relayer API",
+        "kind": "project",
+        "label": "Injective Relayer API",
+        "year": 2021,
+        "proof": null
+      },
+      {
+        "id": "t:Akash Network",
+        "kind": "tech",
+        "label": "Akash Network",
+        "cat": "blockchain",
+        "count": 2,
+        "since": 2020,
+        "signature": false
+      },
+      {
+        "id": "t:ERC721",
+        "kind": "tech",
+        "label": "ERC721",
+        "cat": "blockchain",
+        "count": 2,
+        "since": 2024,
+        "signature": false
+      },
+      {
+        "id": "t:Hardhat",
+        "kind": "tech",
+        "label": "Hardhat",
+        "cat": "blockchain",
+        "count": 2,
+        "since": 2024,
+        "signature": false
+      },
+      {
+        "id": "t:OpenZeppelin",
+        "kind": "tech",
+        "label": "OpenZeppelin",
+        "cat": "blockchain",
+        "count": 2,
+        "since": 2024,
+        "signature": false
+      },
+      {
+        "id": "t:Solidity",
+        "kind": "tech",
+        "label": "Solidity",
+        "cat": "language",
+        "count": 2,
+        "since": 2024,
+        "signature": false
+      },
+      {
+        "id": "t:Tendermint",
+        "kind": "tech",
+        "label": "Tendermint",
+        "cat": "blockchain",
+        "count": 2,
+        "since": 2019,
+        "signature": false
+      },
+      {
+        "id": "c:Base",
+        "kind": "chain",
+        "label": "Base",
+        "count": 3,
+        "since": 2024
+      },
+      {
+        "id": "c:Cosmos",
+        "kind": "chain",
+        "label": "Cosmos",
+        "count": 3,
+        "since": 2020
+      },
+      {
+        "id": "c:Linea",
+        "kind": "chain",
+        "label": "Linea",
+        "count": 3,
+        "since": 2024
+      },
+      {
+        "id": "c:Autonomy Chain",
+        "kind": "chain",
+        "label": "Autonomy Chain",
+        "count": 2,
+        "since": 2020
+      },
+      {
+        "id": "c:Bitlayer",
+        "kind": "chain",
+        "label": "Bitlayer",
+        "count": 2,
+        "since": 2024
+      },
+      {
+        "id": "c:Sepolia",
+        "kind": "chain",
+        "label": "Sepolia",
+        "count": 2,
+        "since": 2024
+      }
+    ],
+    "edges": [
+      {
+        "s": "p:GitMate",
+        "t": "t:Agentic RAG"
+      },
+      {
+        "s": "p:Blay",
+        "t": "t:Azure OpenAI"
+      },
+      {
+        "s": "p:Autonomy Network",
+        "t": "t:CosmWasm"
+      },
+      {
+        "s": "p:DegentsAI",
+        "t": "t:Envio"
+      },
+      {
+        "s": "p:Blay",
+        "t": "t:GOAT SDK"
+      },
+      {
+        "s": "p:Blay",
+        "t": "t:LangChain"
+      },
+      {
+        "s": "p:GitMate",
+        "t": "t:LangGraph"
+      },
+      {
+        "s": "p:DeFi Yield Scout",
+        "t": "t:MCP tool integration"
+      },
+      {
+        "s": "p:Pexu AI",
+        "t": "t:Move"
+      },
+      {
+        "s": "p:Epoch",
+        "t": "t:Privy"
+      },
+      {
+        "s": "p:TaruLease",
+        "t": "t:TypeScript"
+      },
+      {
+        "s": "p:Blay",
+        "t": "t:TypeScript"
+      },
+      {
+        "s": "p:Golden Triangle MF",
+        "t": "t:TypeScript"
+      },
+      {
+        "s": "p:DegentsAI",
+        "t": "t:TypeScript"
+      },
+      {
+        "s": "p:Pexu AI",
+        "t": "t:TypeScript"
+      },
+      {
+        "s": "p:Sepa Screener",
+        "t": "t:TypeScript"
+      },
+      {
+        "s": "p:PrithviDevs",
+        "t": "t:TypeScript"
+      },
+      {
+        "s": "p:Autonomy SDK",
+        "t": "t:TypeScript"
+      },
+      {
+        "s": "p:Bento Skills",
+        "t": "t:TypeScript"
+      },
+      {
+        "s": "p:Blay",
+        "t": "t:Python"
+      },
+      {
+        "s": "p:Epoch",
+        "t": "t:Python"
+      },
+      {
+        "s": "p:GitMate",
+        "t": "t:Python"
+      },
+      {
+        "s": "p:Golden Triangle MF",
+        "t": "t:Python"
+      },
+      {
+        "s": "p:Sepa Screener",
+        "t": "t:Python"
+      },
+      {
+        "s": "p:PrithviDevs",
+        "t": "t:Python"
+      },
+      {
+        "s": "p:DeFi Yield Scout",
+        "t": "t:Python"
+      },
+      {
+        "s": "p:Blay",
+        "t": "t:FastAPI"
+      },
+      {
+        "s": "p:Epoch",
+        "t": "t:FastAPI"
+      },
+      {
+        "s": "p:GitMate",
+        "t": "t:FastAPI"
+      },
+      {
+        "s": "p:Golden Triangle MF",
+        "t": "t:FastAPI"
+      },
+      {
+        "s": "p:Sepa Screener",
+        "t": "t:FastAPI"
+      },
+      {
+        "s": "p:Autonomy Network",
+        "t": "t:Cosmos SDK"
+      },
+      {
+        "s": "p:PrithviDevs",
+        "t": "t:Cosmos SDK"
+      },
+      {
+        "s": "p:Cosmic Compass",
+        "t": "t:Cosmos SDK"
+      },
+      {
+        "s": "p:FreeFlix · OmniFlix",
+        "t": "t:Cosmos SDK"
+      },
+      {
+        "s": "p:Injective Relayer API",
+        "t": "t:Go"
+      },
+      {
+        "s": "p:Autonomy Network",
+        "t": "t:Go"
+      },
+      {
+        "s": "p:PrithviDevs",
+        "t": "t:Go"
+      },
+      {
+        "s": "p:Cosmic Compass",
+        "t": "t:Go"
+      },
+      {
+        "s": "p:Sepa Screener",
+        "t": "t:Akash Network"
+      },
+      {
+        "s": "p:PrithviDevs",
+        "t": "t:Akash Network"
+      },
+      {
+        "s": "p:DegentsAI",
+        "t": "t:ERC721"
+      },
+      {
+        "s": "p:Pexu AI",
+        "t": "t:ERC721"
+      },
+      {
+        "s": "p:DegentsAI",
+        "t": "t:Hardhat"
+      },
+      {
+        "s": "p:Pexu AI",
+        "t": "t:Hardhat"
+      },
+      {
+        "s": "p:DegentsAI",
+        "t": "t:OpenZeppelin"
+      },
+      {
+        "s": "p:Pexu AI",
+        "t": "t:OpenZeppelin"
+      },
+      {
+        "s": "p:DegentsAI",
+        "t": "t:Solidity"
+      },
+      {
+        "s": "p:Pexu AI",
+        "t": "t:Solidity"
+      },
+      {
+        "s": "p:Autonomy Network",
+        "t": "t:Tendermint"
+      },
+      {
+        "s": "p:Cosmic Compass",
+        "t": "t:Tendermint"
+      },
+      {
+        "s": "p:GitMate",
+        "t": "c:Base"
+      },
+      {
+        "s": "p:DegentsAI",
+        "t": "c:Base"
+      },
+      {
+        "s": "p:Pexu AI",
+        "t": "c:Base"
+      },
+      {
+        "s": "p:Autonomy Network",
+        "t": "c:Cosmos"
+      },
+      {
+        "s": "p:PrithviDevs",
+        "t": "c:Cosmos"
+      },
+      {
+        "s": "p:Autonomy SDK",
+        "t": "c:Cosmos"
+      },
+      {
+        "s": "p:Epoch",
+        "t": "c:Linea"
+      },
+      {
+        "s": "p:DegentsAI",
+        "t": "c:Linea"
+      },
+      {
+        "s": "p:Pexu AI",
+        "t": "c:Linea"
+      },
+      {
+        "s": "p:Autonomy Network",
+        "t": "c:Autonomy Chain"
+      },
+      {
+        "s": "p:Autonomy SDK",
+        "t": "c:Autonomy Chain"
+      },
+      {
+        "s": "p:Blay",
+        "t": "c:Bitlayer"
+      },
+      {
+        "s": "p:Pexu AI",
+        "t": "c:Bitlayer"
+      },
+      {
+        "s": "p:DegentsAI",
+        "t": "c:Sepolia"
+      },
+      {
+        "s": "p:Pexu AI",
+        "t": "c:Sepolia"
+      }
+    ]
+  },
+  "unmapped": []
+}

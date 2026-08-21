@@ -1,0 +1,158 @@
+---
+// One page per project. This is what makes a graph node a destination:
+// without it every node could only ever scroll you somewhere on /proof.
+//
+// The prose (blurb, meta, outbound link) is the site's own copy from
+// src/data/projects.ts. The stack, the proof link and the neighbourhood come
+// from the generated graph, so they cannot drift from what /proof argues.
+import Reading from '../../layouts/Reading.astro';
+import ProofGraph from '../../components/ProofGraph.astro';
+import { projects, GROUP_LABEL } from '../../data/projects';
+import { slug, projectNode, stackOf, relatedTo, localGraph } from '../../lib/proof';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: slug(p.name) }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const node = projectNode(project.name);
+
+// Projects with nothing recorded in the vault's frontmatter get a page without
+// a graph rather than a page with an empty box.
+const stack = node ? stackOf(node.id) : [];
+const related = node ? relatedTo(node.id) : [];
+const local = node && stack.length ? localGraph(node.id) : null;
+
+const tech = stack.filter((n) => n.kind === 'tech');
+const chains = stack.filter((n) => n.kind === 'chain');
+
+const desc = project.blurb.length > 155 ? project.blurb.slice(0, 152).trimEnd() + '…' : project.blurb;
+---
+<Reading title={`${project.name} · Sai Krishna Sunkari`} description={desc}>
+  <p class="crumb"><a href="/#work">Work</a> <span aria-hidden="true">/</span> {GROUP_LABEL[project.group]}</p>
+
+  <h1 class="statement p-name">{project.name}</h1>
+  <p class="p-meta">{project.meta}{project.award && <span class="award"> · Award</span>}</p>
+
+  <p class="standfirst">{project.blurb}</p>
+
+  <p class="p-links">
+    {project.link && (
+      <a class="cta" href={project.link.href} target="_blank" rel="noopener">{project.link.label}</a>
+    )}
+    {node?.proof && node.proof !== project.link?.href && (
+      <a class="cta" href={node.proof} target="_blank" rel="noopener">Proof ↗</a>
+    )}
+    {project.caption && <span class="p-caption">{project.caption}</span>}
+  </p>
+
+  {local && (
+    <ProofGraph data={local} focus={node!.id} variant="inset" />
+  )}
+
+  {(tech.length > 0 || chains.length > 0) && (
+    <section class="p-sec" aria-labelledby="h-stack">
+      <h2 id="h-stack" class="ghead">Built with</h2>
+      {tech.length > 0 && (
+        <p class="chips">
+          {tech.map((t) => (
+            <a class="chip" href={`/proof#${slug(t.label)}`}>{t.label}</a>
+          ))}
+        </p>
+      )}
+      {chains.length > 0 && (
+        <p class="chips">
+          {chains.map((c) => (
+            <a class="chip chip-chain" href={`/proof#${slug(c.label)}`}>{c.label}</a>
+          ))}
+        </p>
+      )}
+    </section>
+  )}
+
+  {related.length > 0 && (
+    <section class="p-sec" aria-labelledby="h-related">
+      <h2 id="h-related" class="ghead">Nearest work</h2>
+      <p class="p-note">Ranked by how much of the stack they share with this one.</p>
+      <dl class="rel">
+        {related.map((r) => (
+          <div class="rel-row">
+            <dt><a href={`/projects/${slug(r.node.label)}`}>{r.node.label}</a>
+              {r.node.year && <span class="since">{r.node.year}</span>}
+            </dt>
+            <dd>{r.shared.map((s) => s.label).join('  ·  ')}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  )}
+
+  {!node && (
+    <p class="p-note">
+      No stack is recorded for this project yet, so it has no map here. The work is
+      listed on <a href="/proof">the proof page</a> only where there are records behind it.
+    </p>
+  )}
+
+  <p class="p-back"><a href="/proof">← All technologies and the projects that prove them</a></p>
+</Reading>
+
+<style>
+  .crumb {
+    font-family: var(--mono); font-size: .7rem; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--faint); margin: 0 0 1.4rem;
+  }
+  .crumb span { margin: 0 .4em; color: var(--leader); }
+
+  .p-name { margin-bottom: .5rem; }
+  .p-meta {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .06em;
+    color: var(--faint); margin: 0 0 1.4rem;
+  }
+  .award { color: var(--accent); }
+
+  /* The global standfirst reserves up to 72px below itself for the homepage's
+     hero. On a project page the links belong with the blurb, not a screen down. */
+  .standfirst { margin-bottom: 1.5rem; }
+
+  .p-links { display: flex; flex-wrap: wrap; gap: 1rem; align-items: baseline; margin: 0 0 2.4rem; }
+  .cta { font-family: var(--mono); font-size: .76rem; }
+  .p-caption { font-family: var(--mono); font-size: .72rem; color: var(--faint); }
+
+  .p-sec { margin: 0 0 2.6rem; }
+  .ghead {
+    font-family: var(--mono); font-size: .74rem; font-weight: 500; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted); margin: 0 0 .9rem;
+  }
+  .p-note { font-family: var(--mono); font-size: .72rem; color: var(--faint); margin: 0 0 1rem; line-height: 1.7; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0 0 .5rem; }
+  .chip {
+    font-family: var(--mono); font-size: .72rem; line-height: 1;
+    padding: .38rem .55rem; border: 1px solid var(--hair-2);
+    color: var(--ink-2); text-decoration: none; background: var(--paper-2);
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+  .chip-chain { background: none; border-style: dashed; }
+
+  .rel { margin: 0; }
+  .rel-row {
+    display: grid; grid-template-columns: 210px 1fr; gap: .3rem 1.2rem;
+    padding: .5rem 0; border-top: 1px solid var(--hair);
+  }
+  .rel-row dt { font-weight: 600; font-size: .92rem; }
+  .rel-row dt a { color: var(--ink); text-decoration: none; }
+  .rel-row dt a:hover { color: var(--accent); }
+  .rel-row dd { margin: 0; font-size: .84rem; color: var(--muted); line-height: 1.6; }
+  .since {
+    display: block; font-family: var(--mono); font-size: .68rem;
+    font-weight: 400; color: var(--faint);
+  }
+
+  .p-back { font-family: var(--mono); font-size: .74rem; margin: 2.6rem 0 0; padding-top: 1.2rem; border-top: 1px solid var(--hair); }
+
+  @media (max-width: 620px) {
+    .rel-row { grid-template-columns: 1fr; gap: .15rem; }
+    .since { display: inline; margin-left: .5em; }
+  }
+</style>

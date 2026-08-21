@@ -1,0 +1,196 @@
+---
+// The proof relation, rendered as text.
+//
+// This is the page the proof graph enhances, not a fallback bolted on after.
+// Every node and edge the graph draws is here first as crawlable HTML with a
+// stable anchor, so the argument survives no-JS, a screen reader, and a
+// crawler that never runs the island.
+//
+// Data comes from src/data/proof-matrix.json, generated out of the private
+// vault by `node tools/proof-matrix.mjs`. Read that file's header before
+// widening anything here — the vault is gitignored for good reasons.
+import Reading from '../layouts/Reading.astro';
+import ProofGraph from '../components/ProofGraph.astro';
+import proofMatrix from '../data/proof-matrix.json';
+import { graph, slug, stackOf, projectsOf, type GraphNode } from '../lib/proof';
+
+const { projectCount, generated } = proofMatrix;
+
+const CATEGORY_LABEL: Record<string, string> = {
+  ai: 'AI & agents',
+  blockchain: 'Blockchain',
+  language: 'Languages',
+};
+
+const techIn = (cat: string) =>
+  graph.nodes
+    .filter((n) => n.kind === 'tech' && n.cat === cat)
+    .sort((a, b) => (b.count ?? 0) - (a.count ?? 0) || a.label.localeCompare(b.label));
+
+const chainNodes = graph.nodes
+  .filter((n) => n.kind === 'chain')
+  .sort((a, b) => (b.count ?? 0) - (a.count ?? 0) || a.label.localeCompare(b.label));
+
+const projectNodes = graph.nodes
+  .filter((n) => n.kind === 'project')
+  .sort((a, b) => (b.year ?? 0) - (a.year ?? 0) || a.label.localeCompare(b.label));
+
+const sections = [
+  ...Object.keys(CATEGORY_LABEL).map((k) => ({ key: k, label: CATEGORY_LABEL[k], rows: techIn(k) })),
+  { key: 'chain', label: 'Chains', rows: chainNodes },
+].filter((s) => s.rows.length);
+
+const edgeCount = graph.edges.length;
+---
+<Reading
+  title="Proof · Sai Krishna Sunkari"
+  description="Every technology Sai Krishna Sunkari has shipped with, mapped to the projects that prove it — generated from source, not self-assessed."
+>
+  <h1 class="statement">What I've shipped with, and what proves it.</h1>
+  <p class="standfirst">
+    Each technology below lists the projects it was actually used on. Nothing here is a
+    self-rating out of five. It is generated from project records, so a name only appears
+    if there is work behind it.
+  </p>
+  <p class="genline">
+    {projectCount} projects · {graph.nodes.length} nodes · {edgeCount} links · generated {generated}
+  </p>
+
+  <ProofGraph />
+
+  {sections.map((sec) => (
+    <section class="pgroup" aria-labelledby={`h-${sec.key}`}>
+      <h2 id={`h-${sec.key}`} class="ghead">
+        {sec.label}<span class="gcount">{sec.rows.length}</span>
+      </h2>
+      <dl class="rel">
+        {sec.rows.map((n) => (
+          <div class="rel-row" id={slug(n.label)}>
+            <dt>
+              <a class="anchor" href={`#${slug(n.label)}`}>
+                {n.label}
+              </a>
+              {n.signature && <span class="sig" title="Signature technology">◆</span>}
+              {n.since && <span class="since">since {n.since}</span>}
+            </dt>
+            <dd>
+              {projectsOf(n.id).map((p, i) => (
+                  <>
+                    {i > 0 && <span class="sep" aria-hidden="true"> · </span>}
+                    <a href={`/projects/${slug(p.label)}`}>{p.label}</a>
+                  </>
+                ))}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  ))}
+
+  <section class="pgroup" aria-labelledby="h-projects">
+    <h2 id="h-projects" class="ghead">By project<span class="gcount">{projectNodes.length}</span></h2>
+    <dl class="rel">
+      {projectNodes.map((p) => (
+        <div class="rel-row" id={`p-${slug(p.label)}`}>
+          <dt>
+            <a class="anchor" href={`/projects/${slug(p.label)}`}>{p.label}</a>
+            {p.year && <span class="since">{p.year}</span>}
+          </dt>
+          <dd>
+            {stackOf(p.id).map((t, i) => (
+                <>
+                  {i > 0 && <span class="sep" aria-hidden="true"> · </span>}
+                  <a href={`#${slug(t.label)}`}>{t.label}</a>
+                </>
+              ))}
+            {p.proof && (
+              <a class="proof-lk" href={p.proof} target="_blank" rel="noopener">proof ↗</a>
+            )}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+</Reading>
+
+<style>
+  .genline {
+    font-family: var(--mono);
+    font-size: .72rem;
+    color: var(--faint);
+    letter-spacing: .02em;
+    margin: 0 0 2.6rem;
+    padding-bottom: .9rem;
+    border-bottom: 1px solid var(--hair);
+  }
+
+  .pgroup { margin: 0 0 2.8rem; }
+
+  .ghead {
+    font-family: var(--mono);
+    font-size: .74rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 .9rem;
+    display: flex;
+    align-items: baseline;
+    gap: .6rem;
+  }
+  .gcount { color: var(--leader); font-size: .68rem; }
+
+  .rel { margin: 0; }
+
+  .rel-row {
+    display: grid;
+    grid-template-columns: 210px 1fr;
+    gap: .3rem 1.2rem;
+    padding: .5rem 0;
+    border-top: 1px solid var(--hair);
+    scroll-margin-top: 1.5rem;
+  }
+  .rel-row:target { background: var(--paper-2); }
+
+  .rel-row dt {
+    font-weight: 600;
+    font-size: .92rem;
+    line-height: 1.45;
+  }
+  .rel-row dd {
+    margin: 0;
+    font-size: .88rem;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+
+  .anchor { color: var(--ink); text-decoration: none; }
+  .anchor:hover { color: var(--accent); }
+
+  .sig { color: var(--accent); font-size: .6rem; vertical-align: .25em; margin-left: .3em; }
+
+  .since {
+    display: block;
+    font-family: var(--mono);
+    font-size: .68rem;
+    font-weight: 400;
+    color: var(--faint);
+    letter-spacing: .02em;
+  }
+
+  .rel-row dd a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--hair-2); }
+  .rel-row dd a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  .sep { color: var(--leader); }
+
+  .proof-lk {
+    font-family: var(--mono);
+    font-size: .68rem;
+    margin-left: .5rem;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 620px) {
+    .rel-row { grid-template-columns: 1fr; gap: .15rem; }
+    .since { display: inline; margin-left: .5em; }
+  }
+</style>
